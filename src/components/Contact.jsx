@@ -101,7 +101,7 @@ export default function Contact() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-wide px-3 py-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 hover:shadow-[0_0_12px_rgba(0,245,212,0.08)] transition-all duration-300"
+                  className="inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-wide px-3 py-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
                 >
                   <s.icon size={14} />
                   {s.label}
@@ -164,7 +164,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 font-mono text-[0.75rem] uppercase tracking-wide px-6 py-2.5 bg-accent text-white rounded hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(123,111,240,0.3)] transition-all duration-300 self-start disabled:opacity-70 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center gap-2 font-mono text-[0.75rem] uppercase tracking-wide px-6 py-2.5 bg-accent text-[var(--on-accent)] rounded hover:-translate-y-0.5 hover:shadow-[0_6px_24px_var(--card-hover-glow)] transition-all duration-300 self-start disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 "Sending..."

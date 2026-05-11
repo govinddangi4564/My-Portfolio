@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#060610',
-        surface: '#0d0d1a',
-        card: '#111122',
-        accent: '#7b6ff0',
-        accent2: '#00f5d4',
-        accent3: '#ff6b6b',
-        text: '#eeeef8',
-        muted: '#555570',
-        dimmed: '#333350',
+        bg: 'var(--bg)',
+        surface: 'var(--surface)',
+        card: 'var(--card)',
+        accent: 'var(--accent)',
+        accent2: 'var(--accent2)',
+        accent3: 'var(--accent3)',
+        text: 'var(--text)',
+        muted: 'var(--muted)',
+        dimmed: 'var(--dimmed)',
       },
       fontFamily: {
         syne: ['Syne', 'sans-serif'],

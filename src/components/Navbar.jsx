@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -54,9 +54,19 @@ export default function Navbar() {
 
         {/* CTA + Mobile Toggle */}
         <div className="flex items-center gap-4">
+          <button
+            onClick={onToggleTheme}
+            className="inline-flex items-center gap-1 font-mono text-[0.65rem] uppercase tracking-[1px] px-3 py-2 border border-[var(--border)] text-muted rounded hover:border-accent2/40 hover:text-accent2 transition-all duration-300"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          >
+            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
+
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.72rem] uppercase tracking-[1px] px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-white transition-all duration-300"
+            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.72rem] uppercase tracking-[1px] px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all duration-300"
           >
             Hire Me <span className="text-xs">↗</span>
           </a>
@@ -96,7 +106,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="font-mono text-[0.72rem] uppercase tracking-[1px] px-5 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-white transition-all"
+                className="font-mono text-[0.72rem] uppercase tracking-[1px] px-5 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all"
               >
                 Hire Me ↗
               </a>

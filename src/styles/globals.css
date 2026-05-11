@@ -13,10 +13,44 @@
   --accent2: #00f5d4;
   --accent3: #ff6b6b;
   --text: #eeeef8;
-  --muted: #555570;
+  --muted: #8888aa;
   --dimmed: #333350;
   --border: rgba(123, 111, 240, 0.18);
   --border2: rgba(0, 245, 212, 0.12);
+  --on-accent: #ffffff;
+
+  /* Glows */
+  --hero-glow-1: rgba(123, 111, 240, 0.08);
+  --hero-glow-2: rgba(0, 245, 212, 0.06);
+  --card-hover-glow: rgba(123, 111, 240, 0.15);
+  --card-inner-glow: rgba(123, 111, 240, 0.1);
+  --accent2-soft-glow: rgba(0, 245, 212, 0.15);
+  --photo-glow: rgba(123, 111, 240, 0.2);
+  --selection-bg: rgba(123, 111, 240, 0.3);
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --accent: #5a53d8;
+  --accent2: #009e91;
+  --accent3: #ef4444;
+  --text: #0f172a;
+  --muted: #64748b;
+  --dimmed: #e2e8f0;
+  --border: rgba(90, 83, 216, 0.12);
+  --border2: rgba(0, 158, 145, 0.12);
+  --on-accent: #ffffff;
+
+  /* Glows */
+  --hero-glow-1: rgba(90, 83, 216, 0.05);
+  --hero-glow-2: rgba(0, 158, 145, 0.04);
+  --card-hover-glow: rgba(90, 83, 216, 0.1);
+  --card-inner-glow: rgba(90, 83, 216, 0.05);
+  --accent2-soft-glow: rgba(0, 158, 145, 0.1);
+  --photo-glow: rgba(90, 83, 216, 0.15);
+  --selection-bg: rgba(90, 83, 216, 0.2);
 }
 
 /* ============================================
@@ -36,18 +70,19 @@ html {
 }
 
 body {
-  font-family: 'Space Mono', monospace;
+  font-family: "Space Mono", monospace;
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-  background: rgba(123, 111, 240, 0.3);
-  color: #fff;
+  background: var(--selection-bg);
+  color: var(--text);
 }
 
 /* Scrollbar */
@@ -78,7 +113,7 @@ body {
 }
 
 .section-tag {
-  font-family: 'Space Mono', monospace;
+  font-family: "Space Mono", monospace;
   font-size: 0.68rem;
   color: var(--accent);
   letter-spacing: 2px;
@@ -87,7 +122,7 @@ body {
 }
 
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
   color: var(--text);
@@ -97,24 +132,30 @@ body {
 /* Dot-grid background */
 .dot-grid-bg {
   background-image:
-    linear-gradient(rgba(123, 111, 240, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(123, 111, 240, 0.04) 1px, transparent 1px);
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 /* Glass effect */
 .glass {
-  background: rgba(6, 6, 16, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(6, 6, 16, 0.85);
 }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #fff 30%, rgba(123, 111, 240, 0.7) 100%);
+  background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  transition: background 0.3s ease;
 }
 
 /* Gradient bar (top of cards) */
@@ -124,7 +165,7 @@ body {
 }
 
 .gradient-bar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -141,7 +182,6 @@ body {
 
 /* Blinking cursor */
 @keyframes blink-cursor {
-
   0%,
   100% {
     opacity: 1;
@@ -153,7 +193,7 @@ body {
 }
 
 .blink-cursor::after {
-  content: '▌';
+  content: "▌";
   animation: blink-cursor 1s step-end infinite;
   color: var(--accent2);
   margin-left: 2px;
@@ -166,7 +206,7 @@ body {
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -182,13 +222,24 @@ body {
   transform: scaleX(1);
 }
 
+/* Global transitions for theme-aware elements */
+button, 
+a, 
+.bg-card, 
+.bg-surface, 
+.border,
+input,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, shadow 0.3s ease, transform 0.3s ease;
+}
+
 /* Stat gradient bottom border */
 .stat-hover-border {
   position: relative;
 }
 
 .stat-hover-border::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;

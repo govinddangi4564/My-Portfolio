@@ -49,7 +49,7 @@ export default function Skills() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.06 }}
-            className="group p-4 flex items-center justify-center gap-3 rounded-lg border border-[var(--border)] bg-card hover:-translate-y-1 hover:border-accent2/40 hover:shadow-[0_8px_24px_rgba(0,245,212,0.06)] transition-all duration-300"
+            className="group p-4 flex items-center justify-center gap-3 rounded-lg border border-[var(--border)] bg-card hover:-translate-y-1 hover:border-accent2/40 hover:shadow-[0_8px_24px_var(--accent2-soft-glow)] transition-all duration-300"
           >
             <span className="text-[1.6rem]">{skill.icon}</span>
             <span className="font-mono text-[0.75rem] font-semibold uppercase tracking-wide text-text">{skill.name}</span>

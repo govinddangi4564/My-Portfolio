@@ -1,78 +1,137 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, OrbitControls } from "@react-three/drei";
+import { Float, OrbitControls, Text, Billboard } from "@react-three/drei";
 import * as THREE from "three";
 
-/* ── Holographic Inner Core ───────────────────── */
-function InnerCore() {
-  const ref = useRef();
+/* -- Theme Config -- */
+const getColors = (theme) => ({
+  accent: theme === 'light' ? '#5a53d8' : '#7b6ff0',
+  accent2: theme === 'light' ? '#009e91' : '#00f5d4',
+  text: theme === 'light' ? '#171928' : '#ffffff',
+  outline: theme === 'light' ? '#ffffff' : '#0a0a0f',
+  wireframe: theme === 'light' ? '#949bb0' : '#ffffff',
+});
 
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.y += delta * 0.5;
-      ref.current.rotation.x += delta * 0.3;
-    }
-  });
-
+/* -- Central Core ------------------------------- */
+function CentralCore({ colors }) {
   return (
-    <mesh ref={ref}>
-      <icosahedronGeometry args={[1, 0]} />
-      {/* Glowing neon wireframe */}
-      <meshBasicMaterial color="#00f5d4" wireframe />
-      {/* Inner solid to catch light */}
-      <mesh scale={0.95}>
-        <icosahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color="#00f5d4"
-          emissive="#00f5d4"
-          emissiveIntensity={0.2}
-          transparent
-          opacity={0.6}
-        />
+    <Float speed={3} rotationIntensity={1} floatIntensity={1}>
+      <mesh>
+        <sphereGeometry args={[0.6, 16, 16]} />
+        <meshStandardMaterial color={colors.accent2} wireframe />
       </mesh>
-    </mesh>
+      <mesh scale={0.9}>
+        <sphereGeometry args={[0.6, 16, 16]} />
+        <meshStandardMaterial color={colors.accent} emissive={colors.accent} emissiveIntensity={0.5} transparent opacity={0.8} />
+      </mesh>
+      <Billboard>
+        <Text 
+          position={[0, 0, 0]} 
+          fontSize={0.25} 
+          color={colors.text} 
+          fontWeight="bold" 
+          outlineWidth={0.02} 
+          outlineColor={colors.outline}
+        >
+          Full Stack
+        </Text>
+      </Billboard>
+    </Float>
   );
 }
 
-/* ── Glass Torus Knot Outer ───────────────────── */
-function GlassTorus() {
-  const ref = useRef();
+/* -- Floating Skill Node ----------------------- */
+function SkillNode({ text, color, radius, speed, angle, yOffset, colors }) {
+  const groupRef = useRef();
 
   useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.y -= delta * 0.15;
-      ref.current.rotation.z += delta * 0.1;
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * speed;
     }
   });
 
   return (
-    <mesh ref={ref}>
-      <torusKnotGeometry args={[1.5, 0.15, 120, 16]} />
-      <meshPhysicalMaterial
-        color="#7b6ff0"
-        transmission={0.9} // Glass effect
-        opacity={1}
-        metalness={0.2}
-        roughness={0.1}
-        ior={1.5}
-        thickness={0.5}
-        transparent={true}
-      />
-    </mesh>
+    <group ref={groupRef}>
+      <group position={[Math.cos(angle) * radius, yOffset, Math.sin(angle) * radius]}>
+        <Float speed={2} rotationIntensity={2} floatIntensity={1.5}>
+          <mesh>
+            <octahedronGeometry args={[0.35, 0]} />
+            <meshStandardMaterial color={color} wireframe />
+          </mesh>
+          <Billboard>
+            <Text
+              position={[0, -0.6, 0]}
+              fontSize={0.28}
+              color={color}
+              outlineWidth={0.04}
+              outlineColor={colors.outline}
+            >
+              {text}
+            </Text>
+          </Billboard>
+        </Float>
+      </group>
+    </group>
   );
 }
 
-/* ── Floating Tech Particles ──────────────────── */
-function TechParticles({ count = 30 }) {
-  const mesh = useRef();
+/* -- Revolving Skills Orbit --------------------- */
+function OrbitingSkills({ colors }) {
+  const skills = [
+    { text: "React", color: colors.accent2, radius: 2.2, speed: 0.3, angle: 0, yOffset: 0.5 },
+    { text: "Java", color: colors.accent, radius: 2.6, speed: 0.2, angle: Math.PI / 3, yOffset: -0.5 },
+    { text: "Spring Boot", color: colors.accent2, radius: 2.4, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 0.8 },
+    { text: "MySQL", color: colors.accent, radius: 2.8, speed: 0.25, angle: Math.PI, yOffset: -0.8 },
+    { text: "Python", color: colors.accent2, radius: 2.3, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.3 },
+    { text: "JavaScript", color: colors.accent, radius: 2.5, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.4 },
+  ];
 
+  return (
+    <group>
+      {skills.map((skill, i) => (
+        <SkillNode key={i} {...skill} colors={colors} />
+      ))}
+    </group>
+  );
+}
+
+/* -- Decorative Orbit Rings --------------------- */
+function OrbitRings({ colors }) {
+  const ref = useRef();
+  useFrame((_, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x += delta * 0.05;
+      ref.current.rotation.y += delta * 0.05;
+    }
+  });
+  return (
+    <group ref={ref}>
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.5, 0.01, 32, 100]} />
+        <meshBasicMaterial color={colors.wireframe} transparent opacity={0.15} />
+      </mesh>
+      <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.8, 0.01, 32, 100]} />
+        <meshBasicMaterial color={colors.accent} transparent opacity={0.2} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
+        <torusGeometry args={[2.3, 0.01, 32, 100]} />
+        <meshBasicMaterial color={colors.accent2} transparent opacity={0.2} />
+      </mesh>
+    </group>
+  );
+}
+
+/* -- Floating Data Particles -------------------- */
+function DataParticles({ count = 30, colors }) {
+  const mesh = useRef();
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
   const particles = useMemo(() => {
     const temp = [];
     for (let i = 0; i < count; i++) {
       const t = Math.random() * Math.PI * 2;
-      const r = 2.5 + Math.random() * 2;
+      const r = 1.5 + Math.random() * 2.5;
       const y = (Math.random() - 0.5) * 4;
       temp.push({
         position: [Math.cos(t) * r, y, Math.sin(t) * r],
@@ -88,7 +147,7 @@ function TechParticles({ count = 30 }) {
 
   useFrame(() => {
     particles.forEach((particle, i) => {
-      let { factor, speed, position, xFactor, yFactor, zFactor } = particle;
+      let { speed, position, xFactor, yFactor, zFactor } = particle;
       const t = (particle.factor += speed);
       dummy.position.set(
         position[0] + Math.cos(t) * xFactor,
@@ -96,7 +155,7 @@ function TechParticles({ count = 30 }) {
         position[2] + Math.cos(t) * zFactor,
       );
       dummy.rotation.set(t, t, t);
-      dummy.scale.setScalar(0.08);
+      dummy.scale.setScalar(0.04);
       dummy.updateMatrix();
       mesh.current.setMatrixAt(i, dummy.matrix);
     });
@@ -106,85 +165,39 @@ function TechParticles({ count = 30 }) {
   return (
     <instancedMesh ref={mesh} args={[null, null, count]}>
       <octahedronGeometry args={[1, 0]} />
-      <meshStandardMaterial color="#7b6ff0" wireframe />
+      <meshStandardMaterial color={colors.accent2} wireframe />
     </instancedMesh>
   );
 }
 
-/* ── Main Scene ────────────────────────────────── */
-function OrbitRings() {
-  const ref = useRef();
-
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x += delta * 0.2;
-      ref.current.rotation.y += delta * 0.3;
-    }
-  });
-
-  return (
-    <group ref={ref}>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[2.5, 0.02, 16, 100]} />
-        <meshBasicMaterial color="#00f5d4" transparent opacity={0.3} />
-      </mesh>
-      <mesh rotation={[0, Math.PI / 2, 0]}>
-        <torusGeometry args={[2.6, 0.02, 16, 100]} />
-        <meshBasicMaterial color="#7b6ff0" transparent opacity={0.3} />
-      </mesh>
-      <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-        <torusGeometry args={[2.7, 0.02, 16, 100]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.2} />
-      </mesh>
-    </group>
-  );
-}
-
-function Scene() {
+/* -- Main Scene Composition -------------------- */
+function Scene({ theme }) {
+  const colors = getColors(theme);
+  
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight
-        position={[10, 10, 10]}
-        intensity={1.5}
-        color="#00f5d4"
-      />
-      <directionalLight
-        position={[-10, -10, -10]}
-        intensity={1}
-        color="#7b6ff0"
-      />
+      <ambientLight intensity={theme === 'light' ? 0.9 : 0.6} />
+      <directionalLight position={[10, 10, 10]} intensity={1.5} color={colors.accent2} />
+      <directionalLight position={[-10, -10, -10]} intensity={1.2} color={colors.accent} />
 
-      <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-        <InnerCore />
-        <GlassTorus />
-        <OrbitRings />
-      </Float>
-
-      <TechParticles count={50} />
+      <CentralCore colors={colors} />
+      <OrbitingSkills colors={colors} />
+      <OrbitRings colors={colors} />
+      <DataParticles count={30} colors={colors} />
     </>
   );
 }
 
-/* ── Exported Canvas Component ─────────────────── */
-export default function HeroCanvas() {
+/* -- Exported Canvas Component ------------------ */
+export default function HeroCanvas({ theme }) {
   return (
     <div
       className="w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] mx-auto relative cursor-grab active:cursor-grabbing"
       style={{ touchAction: "none" }}
     >
-      <Canvas
-        camera={{ position: [0, 0, 7], fov: 45 }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <Scene />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={1.5}
-        />
+      <Canvas camera={{ position: [0, 0, 8.5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+        <Scene theme={theme} />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.0} />
       </Canvas>
     </div>
   );

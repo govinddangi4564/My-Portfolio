@@ -36,7 +36,7 @@ export const skillTabs = {
     },
     {
       name: "Three.js",
-      icon: <SiThreedotjs className="text-white" />,
+      icon: <SiThreedotjs className="text-text" />,
       level: 60,
     },
   ],
@@ -63,7 +63,7 @@ export const skillTabs = {
   tools: [
     {
       name: "Git/GitHub",
-      icon: <SiGithub className="text-white" />,
+      icon: <SiGithub className="text-text" />,
       level: 85,
     },
     {

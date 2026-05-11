@@ -15,7 +15,7 @@ const timelineItems = [
   },
   {
     date: "2023 · present",
-    title: "B.Tech CSE @ Prestige Institute",
+    title: "B.Tech CSE @PIEMR, Indore",
     desc: "Started engineering at PIEMR · CGPA 6.96 · Indore, MP",
     dotColor: "bg-accent3",
   },

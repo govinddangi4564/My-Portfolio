@@ -27,7 +27,7 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           whileHover={{ y: -8, rotateY: 10, rotateX: 5, scale: 1.02 }}
-          className="relative w-[200px] h-[260px] sm:w-[220px] sm:h-[280px] shrink-0 rounded-2xl border border-accent/30 bg-card overflow-hidden shadow-[0_0_30px_rgba(123,111,240,0.15)] group z-10"
+          className="relative w-[200px] h-[260px] sm:w-[220px] sm:h-[280px] shrink-0 rounded-2xl border border-accent/30 bg-card overflow-hidden shadow-[0_0_30px_var(--photo-glow)] group z-10"
           style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
         >
           {/* Animated scanning line effect */}
@@ -55,7 +55,7 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }} 
           viewport={{ once: true, amount: 0.2 }} 
           transition={{ duration: 0.5, delay: 0.2 }} 
-          className="flex-1 font-body text-[0.95rem] text-text/90 leading-[1.9] space-y-4 text-center md:text-left"
+          className="flex-1 font-body text-[0.85rem] text-muted leading-[1.8] space-y-4 text-center md:text-left"
         >
           <p>I&apos;m a B.Tech CSE student at Prestige Institute of Engineering Management and Research, Indore — focused on building efficient and responsive web applications that deliver real value to users.</p>
           <p>I work across the full stack with Java, Spring Boot, Servlets, JSP, and MySQL on the backend, and HTML, CSS, JavaScript, and React on the frontend. My recent work includes an NLP-based resume screening system (HireDrift) and a full-stack pathology lab management system with 2FA auth.</p>
