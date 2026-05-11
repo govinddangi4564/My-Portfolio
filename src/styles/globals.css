@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+   ============================================ */
+:root {
+  --bg: #060610;
+  --surface: #0d0d1a;
+  --card: #111122;
+  --accent: #7b6ff0;
+  --accent2: #00f5d4;
+  --accent3: #ff6b6b;
+  --text: #eeeef8;
+  --muted: #555570;
+  --dimmed: #333350;
+  --border: rgba(123, 111, 240, 0.18);
+  --border2: rgba(0, 245, 212, 0.12);
+}
+
+/* ============================================
+   BASE RESET & TYPOGRAPHY
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Space Mono', monospace;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(123, 111, 240, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent2);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.section-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+.section-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+/* Dot-grid background */
+.dot-grid-bg {
+  background-image:
+    linear-gradient(rgba(123, 111, 240, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 111, 240, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(6, 6, 16, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 30%, rgba(123, 111, 240, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient bar (top of cards) */
+.gradient-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.gradient-bar:hover::before {
+  transform: scaleX(1);
+}
+
+/* Blinking cursor */
+@keyframes blink-cursor {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink-cursor::after {
+  content: '▌';
+  animation: blink-cursor 1s step-end infinite;
+  color: var(--accent2);
+  margin-left: 2px;
+  font-size: 0.75em;
+}
+
+/* Underline hover effect for nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Stat gradient bottom border */
+.stat-hover-border {
+  position: relative;
+}
+
+.stat-hover-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-hover-border:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* CSS Ring animations */
+.ring-outer {
+  animation: spin 20s linear infinite;
+}
+
+.ring-inner {
+  animation: spin 35s linear infinite reverse;
+}
+
+/* Skill bar fill animation */
+@keyframes fill-bar {
+  from {
+    width: 0;
+  }
+}
+
+.skill-bar-fill {
+  animation: fill-bar 1s ease-out forwards;
+}
+
+/* ============================================
+   RESPONSIVE HELPERS
+   ============================================ */
+@media (max-width: 640px) {
+  .section-container {
+    padding: 3rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
