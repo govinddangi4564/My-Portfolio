@@ -1,6 +1,6 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, OrbitControls, Text, Billboard } from "@react-three/drei";
+import { Float, OrbitControls, Text, Billboard, Image } from "@react-three/drei";
 import * as THREE from "three";
 
 /* -- Theme Config -- */
@@ -25,12 +25,12 @@ function CentralCore({ colors }) {
         <meshStandardMaterial color={colors.accent} emissive={colors.accent} emissiveIntensity={0.5} transparent opacity={0.8} />
       </mesh>
       <Billboard>
-        <Text 
-          position={[0, 0, 0]} 
-          fontSize={0.25} 
-          color={colors.text} 
-          fontWeight="bold" 
-          outlineWidth={0.02} 
+        <Text
+          position={[0, 0, 0]}
+          fontSize={0.25}
+          color={colors.text}
+          fontWeight="bold"
+          outlineWidth={0.02}
           outlineColor={colors.outline}
         >
           Full Stack
@@ -41,7 +41,7 @@ function CentralCore({ colors }) {
 }
 
 /* -- Floating Skill Node ----------------------- */
-function SkillNode({ text, color, radius, speed, angle, yOffset, colors }) {
+function SkillNode({ text, color, radius, speed, angle, yOffset, colors, logo }) {
   const groupRef = useRef();
 
   useFrame((_, delta) => {
@@ -54,14 +54,26 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors }) {
     <group ref={groupRef}>
       <group position={[Math.cos(angle) * radius, yOffset, Math.sin(angle) * radius]}>
         <Float speed={2} rotationIntensity={2} floatIntensity={1.5}>
-          <mesh>
-            <octahedronGeometry args={[0.35, 0]} />
-            <meshStandardMaterial color={color} wireframe />
+          {/* Logo Billboard */}
+          <Billboard>
+            <Image
+              url={logo}
+              scale={[0.6, 0.6]}
+              transparent
+              opacity={0.9}
+              toneMapped={false}
+            />
+          </Billboard>
+
+          <mesh position={[0, 0, 0]}>
+            <octahedronGeometry args={[0.4, 0]} />
+            <meshStandardMaterial color={color} wireframe transparent opacity={0.3} />
           </mesh>
+
           <Billboard>
             <Text
               position={[0, -0.6, 0]}
-              fontSize={0.28}
+              fontSize={0.25}
               color={color}
               outlineWidth={0.04}
               outlineColor={colors.outline}
@@ -77,13 +89,15 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors }) {
 
 /* -- Revolving Skills Orbit --------------------- */
 function OrbitingSkills({ colors }) {
+  const devIconBase = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/";
+
   const skills = [
-    { text: "React", color: colors.accent2, radius: 2.2, speed: 0.3, angle: 0, yOffset: 0.5 },
-    { text: "Java", color: colors.accent, radius: 2.6, speed: 0.2, angle: Math.PI / 3, yOffset: -0.5 },
-    { text: "Spring Boot", color: colors.accent2, radius: 2.4, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 0.8 },
-    { text: "MySQL", color: colors.accent, radius: 2.8, speed: 0.25, angle: Math.PI, yOffset: -0.8 },
-    { text: "Python", color: colors.accent2, radius: 2.3, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.3 },
-    { text: "JavaScript", color: colors.accent, radius: 2.5, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.4 },
+    { text: "React", color: colors.accent2, radius: 2.6, speed: 0.3, angle: 0, yOffset: 0.6, logo: `${devIconBase}react/react-original.svg` },
+    { text: "Java", color: colors.accent, radius: 3.0, speed: 0.2, angle: Math.PI / 3, yOffset: -0.6, logo: `${devIconBase}java/java-original.svg` },
+    { text: "Spring", color: colors.accent2, radius: 2.8, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 1.0, logo: `${devIconBase}spring/spring-original.svg` },
+    { text: "MySQL", color: colors.accent, radius: 3.3, speed: 0.25, angle: Math.PI, yOffset: -1.0, logo: `${devIconBase}mysql/mysql-original.svg` },
+    { text: "Python", color: colors.accent2, radius: 2.7, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.4, logo: `${devIconBase}python/python-original.svg` },
+    { text: "JS", color: colors.accent, radius: 2.9, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.5, logo: `${devIconBase}javascript/javascript-original.svg` },
   ];
 
   return (
@@ -98,12 +112,12 @@ function OrbitingSkills({ colors }) {
 /* -- Connection Lines --------------------------- */
 function ConnectionLines({ colors }) {
   const skills = [
-    { radius: 2.2, speed: 0.3, angle: 0, yOffset: 0.5 },
-    { radius: 2.6, speed: 0.2, angle: Math.PI / 3, yOffset: -0.5 },
-    { radius: 2.4, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 0.8 },
-    { radius: 2.8, speed: 0.25, angle: Math.PI, yOffset: -0.8 },
-    { radius: 2.3, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.3 },
-    { radius: 2.5, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.4 },
+    { radius: 2.6, speed: 0.3, angle: 0, yOffset: 0.6 },
+    { radius: 3.0, speed: 0.2, angle: Math.PI / 3, yOffset: -0.6 },
+    { radius: 2.8, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 1.0 },
+    { radius: 3.3, speed: 0.25, angle: Math.PI, yOffset: -1.0 },
+    { radius: 2.7, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.4 },
+    { radius: 2.9, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.5 },
   ];
 
   const lineRefs = useRef([]);
@@ -116,7 +130,7 @@ function ConnectionLines({ colors }) {
         const x = Math.cos(skill.angle) * skill.radius;
         const z = Math.sin(skill.angle) * skill.radius;
         const y = skill.yOffset;
-        
+
         const positions = new Float32Array([0, 0, 0, x, y, z]);
         line.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         line.geometry.attributes.position.needsUpdate = true;
@@ -148,15 +162,15 @@ function OrbitRings({ colors }) {
   return (
     <group ref={ref}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[2.5, 0.02, 32, 100]} />
+        <torusGeometry args={[3.2, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.wireframe} transparent opacity={0.15} />
       </mesh>
       <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[2.8, 0.02, 32, 100]} />
+        <torusGeometry args={[3.6, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.accent} transparent opacity={0.2} />
       </mesh>
       <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
-        <torusGeometry args={[2.3, 0.02, 32, 100]} />
+        <torusGeometry args={[2.9, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.accent2} transparent opacity={0.2} />
       </mesh>
     </group>
@@ -216,7 +230,7 @@ function DataParticles({ count = 30, colors }) {
 /* -- Main Scene Composition -------------------- */
 function Scene({ theme }) {
   const colors = getColors(theme);
-  
+
   return (
     <>
       <ambientLight intensity={theme === 'light' ? 0.35 : 0.4} />
@@ -236,10 +250,10 @@ function Scene({ theme }) {
 export default function HeroCanvas({ theme }) {
   return (
     <div
-      className="w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] mx-auto relative cursor-grab active:cursor-grabbing"
+      className="w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] mx-auto relative cursor-grab active:cursor-grabbing"
       style={{ touchAction: "none" }}
     >
-      <Canvas camera={{ position: [0, 0, 8.5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+      <Canvas camera={{ position: [0, 0, 11], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
         <Scene theme={theme} />
         <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.0} />
       </Canvas>

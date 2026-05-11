@@ -1,9 +1,44 @@
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-[var(--border)] py-6 px-6">
-      <div className="max-w-[1100px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[0.65rem] text-dimmed">
-        <span>© 2025 <span className="text-accent2">Govind Dangi</span></span>
-        <span>Indore · MP · India 🇮🇳</span>
+    <footer className="border-t border-[var(--border)] py-8 px-6 bg-surface">
+      <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col items-center md:items-start gap-1">
+          <span className="font-mono text-[0.8rem] text-text font-bold uppercase tracking-wider">
+            Govind <span className="text-accent2">Dangi</span>
+          </span>
+          <span className="font-mono text-[0.65rem] text-dimmed">
+            © {currentYear} · Built with React & Three.js
+          </span>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/govinddangi4564"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
+            aria-label="GitHub"
+          >
+            <FaGithub size={16} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/govinddangi4564/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
+            aria-label="LinkedIn"
+          >
+            <FaLinkedin size={16} />
+          </a>
+        </div>
+
+        <div className="font-mono text-[0.65rem] text-dimmed">
+          Indore · MP · India 🇮🇳
+        </div>
       </div>
     </footer>
   );

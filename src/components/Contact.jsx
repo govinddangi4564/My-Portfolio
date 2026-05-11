@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, FileText, Code2, Briefcase, Phone } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const socials = [
-  { icon: Code2, label: "GitHub", href: "https://github.com/govinddangi4564" },
+  { icon: FaGithub, label: "GitHub", href: "https://github.com/govinddangi4564" },
   {
-    icon: Briefcase,
+    icon: FaLinkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/govinddangi4564/",
   },
