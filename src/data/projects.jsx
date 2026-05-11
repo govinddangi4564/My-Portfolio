@@ -16,8 +16,8 @@ export const projects = [
       { num: "REST", label: "API Design" },
     ],
     tags: ["React", "Node.js", "Express", "Google Gemini AI", "REST API"],
-    github: "#",
-    live: "#",
+    github: "https://github.com/govinddangi4564/DELAYSHIELD-AI",
+    live: "https://delayshield-ai.vercel.app/",
   },
   {
     id: 2,
@@ -42,7 +42,7 @@ export const projects = [
       "HTML/CSS",
       "JavaScript",
     ],
-    github: "https://github.com/govinddangi4564",
+    github: "https://github.com/govinddangi4564/HireDrift",
     live: "#",
   },
   {
@@ -58,8 +58,8 @@ export const projects = [
       { num: "ACID", label: "DB Design" },
     ],
     tags: ["Java", "JSP", "Jakarta Servlet API", "MySQL", "BCrypt", "Maven"],
-    github: "https://github.com/govinddangi4564",
-    live: "#",
+    github: "https://github.com/govinddangi4564/PathlogyLab-Java-Project",
+    live: "https://pathology-lab-java.onrender.com/",
   },
   {
     id: 4,

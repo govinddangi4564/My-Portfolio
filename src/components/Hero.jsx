@@ -42,7 +42,7 @@ export default function Hero({ theme }) {
           >
             <span className="w-2 h-2 rounded-full bg-accent2 animate-pulse-dot" />
             <span className="font-mono text-[0.8rem] text-accent2/80 tracking-wide">
-              Open to opportunities · B.Tech CSE · 2023–2027
+              Open to opportunities | B.Tech CSE | 2023-2027
             </span>
           </motion.div>
 
@@ -68,7 +68,7 @@ export default function Hero({ theme }) {
             {...fadeUp(0.4)}
             className="font-mono text-[1rem] text-muted leading-[1.8] border-l-2 border-dimmed pl-4 max-w-md"
           >
-            I build efficient and responsive full-stack web applications — from
+            I build efficient and responsive full-stack web applications - from
             Java Servlets &amp; Spring Boot backends to clean frontend UIs.
             Currently sharpening my skills through DSA and exploring scalable
             architectures.
