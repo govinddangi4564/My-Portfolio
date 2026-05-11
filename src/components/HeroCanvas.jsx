@@ -1,12 +1,12 @@
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
+import { useRef, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
 
 /* ── Holographic Inner Core ───────────────────── */
 function InnerCore() {
   const ref = useRef();
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta * 0.5;
@@ -22,7 +22,13 @@ function InnerCore() {
       {/* Inner solid to catch light */}
       <mesh scale={0.95}>
         <icosahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial color="#00f5d4" emissive="#00f5d4" emissiveIntensity={0.2} transparent opacity={0.6} />
+        <meshStandardMaterial
+          color="#00f5d4"
+          emissive="#00f5d4"
+          emissiveIntensity={0.2}
+          transparent
+          opacity={0.6}
+        />
       </mesh>
     </mesh>
   );
@@ -31,7 +37,7 @@ function InnerCore() {
 /* ── Glass Torus Knot Outer ───────────────────── */
 function GlassTorus() {
   const ref = useRef();
-  
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y -= delta * 0.15;
@@ -42,7 +48,7 @@ function GlassTorus() {
   return (
     <mesh ref={ref}>
       <torusKnotGeometry args={[1.5, 0.15, 120, 16]} />
-      <meshPhysicalMaterial 
+      <meshPhysicalMaterial
         color="#7b6ff0"
         transmission={0.9} // Glass effect
         opacity={1}
@@ -59,9 +65,9 @@ function GlassTorus() {
 /* ── Floating Tech Particles ──────────────────── */
 function TechParticles({ count = 30 }) {
   const mesh = useRef();
-  
+
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  
+
   const particles = useMemo(() => {
     const temp = [];
     for (let i = 0; i < count; i++) {
@@ -87,7 +93,7 @@ function TechParticles({ count = 30 }) {
       dummy.position.set(
         position[0] + Math.cos(t) * xFactor,
         position[1] + Math.sin(t) * yFactor,
-        position[2] + Math.cos(t) * zFactor
+        position[2] + Math.cos(t) * zFactor,
       );
       dummy.rotation.set(t, t, t);
       dummy.scale.setScalar(0.08);
@@ -106,19 +112,56 @@ function TechParticles({ count = 30 }) {
 }
 
 /* ── Main Scene ────────────────────────────────── */
+function OrbitRings() {
+  const ref = useRef();
+
+  useFrame((_, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x += delta * 0.2;
+      ref.current.rotation.y += delta * 0.3;
+    }
+  });
+
+  return (
+    <group ref={ref}>
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.5, 0.02, 16, 100]} />
+        <meshBasicMaterial color="#00f5d4" transparent opacity={0.3} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]}>
+        <torusGeometry args={[2.6, 0.02, 16, 100]} />
+        <meshBasicMaterial color="#7b6ff0" transparent opacity={0.3} />
+      </mesh>
+      <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.7, 0.02, 16, 100]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.2} />
+      </mesh>
+    </group>
+  );
+}
+
 function Scene() {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 10]} intensity={1.5} color="#00f5d4" />
-      <directionalLight position={[-10, -10, -10]} intensity={1} color="#7b6ff0" />
-      
+      <directionalLight
+        position={[10, 10, 10]}
+        intensity={1.5}
+        color="#00f5d4"
+      />
+      <directionalLight
+        position={[-10, -10, -10]}
+        intensity={1}
+        color="#7b6ff0"
+      />
+
       <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
         <InnerCore />
         <GlassTorus />
+        <OrbitRings />
       </Float>
-      
-      <TechParticles />
+
+      <TechParticles count={50} />
     </>
   );
 }
@@ -126,15 +169,18 @@ function Scene() {
 /* ── Exported Canvas Component ─────────────────── */
 export default function HeroCanvas() {
   return (
-    <div className="w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] mx-auto relative cursor-grab active:cursor-grabbing" style={{ touchAction: 'none' }}>
+    <div
+      className="w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] mx-auto relative cursor-grab active:cursor-grabbing"
+      style={{ touchAction: "none" }}
+    >
       <Canvas
         camera={{ position: [0, 0, 7], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
       >
         <Scene />
-        <OrbitControls 
-          enableZoom={false} 
+        <OrbitControls
+          enableZoom={false}
           enablePan={false}
           autoRotate
           autoRotateSpeed={1.5}
