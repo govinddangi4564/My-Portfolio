@@ -41,7 +41,7 @@ export default function Hero({ theme }) {
             className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-accent2/25 bg-accent2/5"
           >
             <span className="w-2 h-2 rounded-full bg-accent2 animate-pulse-dot" />
-            <span className="font-mono text-[0.65rem] text-accent2/80 tracking-wide">
+            <span className="font-mono text-[0.8rem] text-accent2/80 tracking-wide">
               Open to opportunities · B.Tech CSE · 2023–2027
             </span>
           </motion.div>
@@ -58,7 +58,7 @@ export default function Hero({ theme }) {
           {/* Role */}
           <motion.div {...fadeUp(0.3)} className="flex items-center gap-3">
             <div className="w-6 h-[1px] bg-accent" />
-            <span className="font-mono text-[0.9rem] sm:text-[1rem] text-accent font-semibold">
+            <span className="font-mono text-[1.1rem] sm:text-[1.2rem] text-accent font-semibold">
               Full Stack Web Developer
             </span>
           </motion.div>
@@ -66,7 +66,7 @@ export default function Hero({ theme }) {
           {/* Description */}
           <motion.p
             {...fadeUp(0.4)}
-            className="font-mono text-[0.8rem] text-muted leading-[1.8] border-l-2 border-dimmed pl-4 max-w-md"
+            className="font-mono text-[1rem] text-muted leading-[1.8] border-l-2 border-dimmed pl-4 max-w-md"
           >
             I build efficient and responsive full-stack web applications — from
             Java Servlets &amp; Spring Boot backends to clean frontend UIs.
@@ -78,7 +78,7 @@ export default function Hero({ theme }) {
           <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-3">
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 font-mono text-[0.75rem] uppercase tracking-wide px-5 py-2.5 bg-accent text-[var(--on-accent)] rounded hover:-translate-y-0.5 hover:shadow-[0_6px_24px_var(--card-hover-glow)] transition-all duration-300"
+              className="inline-flex items-center gap-2 font-mono text-[0.85rem] uppercase tracking-wide px-5 py-2.5 bg-accent text-[var(--on-accent)] rounded hover:-translate-y-0.5 hover:shadow-[0_6px_24px_var(--card-hover-glow)] transition-all duration-300"
             >
               View My Work <ArrowDown size={14} />
             </a>
@@ -86,7 +86,7 @@ export default function Hero({ theme }) {
               href="/govind-resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-mono text-[0.75rem] uppercase tracking-wide px-5 py-2.5 border border-dimmed text-muted rounded hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_16px_var(--accent2-soft-glow)] transition-all duration-300"
+              className="inline-flex items-center gap-2 font-mono text-[0.85rem] uppercase tracking-wide px-5 py-2.5 border border-dimmed text-muted rounded hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_16px_var(--accent2-soft-glow)] transition-all duration-300"
             >
               <Download size={14} /> Download CV
             </a>
@@ -95,7 +95,7 @@ export default function Hero({ theme }) {
           {/* Tech Micro-line */}
           <motion.div
             {...fadeUp(0.6)}
-            className="flex items-center gap-2 font-mono text-[0.62rem] text-muted"
+            className="flex items-center gap-2 font-mono text-[0.75rem] text-muted"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             <span>Java · Spring Boot · JSP</span>
@@ -106,7 +106,7 @@ export default function Hero({ theme }) {
 
           {/* Scroll Hint */}
           <motion.div {...fadeUp(0.7)} className="animate-bounce-slow mt-2">
-            <span className="font-mono text-[0.65rem] text-dimmed select-none">
+            <span className="font-mono text-[0.75rem] text-dimmed select-none">
               ↓ scroll to explore
             </span>
           </motion.div>
@@ -121,10 +121,6 @@ export default function Hero({ theme }) {
         >
           {/* Rotating Rings */}
           <div className="relative w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] flex items-center justify-center">
-            {/* Outer Ring */}
-            <div className="absolute inset-0 rounded-full border border-accent/10 ring-outer" />
-            {/* Inner Ring */}
-            <div className="absolute inset-4 rounded-full border border-dashed border-accent2/[0.07] ring-inner" />
             {/* Canvas */}
             <HeroCanvas theme={theme} />
           </div>

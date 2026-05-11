@@ -95,6 +95,47 @@ function OrbitingSkills({ colors }) {
   );
 }
 
+/* -- Connection Lines --------------------------- */
+function ConnectionLines({ colors }) {
+  const skills = [
+    { radius: 2.2, speed: 0.3, angle: 0, yOffset: 0.5 },
+    { radius: 2.6, speed: 0.2, angle: Math.PI / 3, yOffset: -0.5 },
+    { radius: 2.4, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 0.8 },
+    { radius: 2.8, speed: 0.25, angle: Math.PI, yOffset: -0.8 },
+    { radius: 2.3, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.3 },
+    { radius: 2.5, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.4 },
+  ];
+
+  const lineRefs = useRef([]);
+
+  useFrame((state, delta) => {
+    lineRefs.current.forEach((line, i) => {
+      if (line) {
+        const skill = skills[i];
+        skill.angle += delta * skill.speed; // Sync with SkillNode rotation
+        const x = Math.cos(skill.angle) * skill.radius;
+        const z = Math.sin(skill.angle) * skill.radius;
+        const y = skill.yOffset;
+        
+        const positions = new Float32Array([0, 0, 0, x, y, z]);
+        line.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        line.geometry.attributes.position.needsUpdate = true;
+      }
+    });
+  });
+
+  return (
+    <group>
+      {skills.map((_, i) => (
+        <line key={i} ref={(el) => (lineRefs.current[i] = el)}>
+          <bufferGeometry />
+          <lineBasicMaterial color={i % 2 === 0 ? colors.accent : colors.accent2} transparent opacity={0.15} />
+        </line>
+      ))}
+    </group>
+  );
+}
+
 /* -- Decorative Orbit Rings --------------------- */
 function OrbitRings({ colors }) {
   const ref = useRef();
@@ -107,20 +148,21 @@ function OrbitRings({ colors }) {
   return (
     <group ref={ref}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[2.5, 0.01, 32, 100]} />
+        <torusGeometry args={[2.5, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.wireframe} transparent opacity={0.15} />
       </mesh>
       <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[2.8, 0.01, 32, 100]} />
+        <torusGeometry args={[2.8, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.accent} transparent opacity={0.2} />
       </mesh>
       <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
-        <torusGeometry args={[2.3, 0.01, 32, 100]} />
+        <torusGeometry args={[2.3, 0.02, 32, 100]} />
         <meshBasicMaterial color={colors.accent2} transparent opacity={0.2} />
       </mesh>
     </group>
   );
 }
+
 
 /* -- Floating Data Particles -------------------- */
 function DataParticles({ count = 30, colors }) {
@@ -131,15 +173,16 @@ function DataParticles({ count = 30, colors }) {
     const temp = [];
     for (let i = 0; i < count; i++) {
       const t = Math.random() * Math.PI * 2;
-      const r = 1.5 + Math.random() * 2.5;
-      const y = (Math.random() - 0.5) * 4;
+      const r = 1.0 + Math.random() * 3.5;
+      const y = (Math.random() - 0.5) * 5;
       temp.push({
         position: [Math.cos(t) * r, y, Math.sin(t) * r],
         factor: 0.1 + Math.random(),
-        speed: 0.01 + Math.random() * 0.015,
+        speed: 0.005 + Math.random() * 0.01,
         xFactor: Math.random() * 2 - 1,
         yFactor: Math.random() * 2 - 1,
         zFactor: Math.random() * 2 - 1,
+        scale: 0.01 + Math.random() * 0.04,
       });
     }
     return temp;
@@ -147,7 +190,7 @@ function DataParticles({ count = 30, colors }) {
 
   useFrame(() => {
     particles.forEach((particle, i) => {
-      let { speed, position, xFactor, yFactor, zFactor } = particle;
+      let { speed, position, xFactor, yFactor, zFactor, scale } = particle;
       const t = (particle.factor += speed);
       dummy.position.set(
         position[0] + Math.cos(t) * xFactor,
@@ -155,7 +198,7 @@ function DataParticles({ count = 30, colors }) {
         position[2] + Math.cos(t) * zFactor,
       );
       dummy.rotation.set(t, t, t);
-      dummy.scale.setScalar(0.04);
+      dummy.scale.setScalar(scale);
       dummy.updateMatrix();
       mesh.current.setMatrixAt(i, dummy.matrix);
     });
@@ -176,14 +219,15 @@ function Scene({ theme }) {
   
   return (
     <>
-      <ambientLight intensity={theme === 'light' ? 0.9 : 0.6} />
-      <directionalLight position={[10, 10, 10]} intensity={1.5} color={colors.accent2} />
-      <directionalLight position={[-10, -10, -10]} intensity={1.2} color={colors.accent} />
+      <ambientLight intensity={theme === 'light' ? 0.35 : 0.4} />
+      <directionalLight position={[10, 10, 10]} intensity={theme === 'light' ? 0.6 : 1.0} color={colors.accent2} />
+      <directionalLight position={[-10, -10, -10]} intensity={theme === 'light' ? 0.5 : 0.8} color={colors.accent} />
 
       <CentralCore colors={colors} />
       <OrbitingSkills colors={colors} />
+      <ConnectionLines colors={colors} />
       <OrbitRings colors={colors} />
-      <DataParticles count={30} colors={colors} />
+      <DataParticles count={80} colors={colors} />
     </>
   );
 }

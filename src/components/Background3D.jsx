@@ -85,9 +85,9 @@ export default function Background3D({ theme }) {
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none opacity-50">
       <Canvas camera={{ position: [0, 0, 1] }}>
-        <ambientLight intensity={theme === 'light' ? 0.6 : 0.2} />
-        <directionalLight position={[10, 10, 5]} intensity={1} color={colors.accent2} />
-        <directionalLight position={[-10, -10, -5]} intensity={1} color={colors.accent} />
+        <ambientLight intensity={theme === 'light' ? 0.25 : 0.15} />
+        <directionalLight position={[10, 10, 5]} intensity={theme === 'light' ? 0.5 : 0.6} color={colors.accent2} />
+        <directionalLight position={[-10, -10, -5]} intensity={theme === 'light' ? 0.5 : 0.6} color={colors.accent} />
         <MovingStars theme={theme} />
         <FloatingShapes colors={colors} />
       </Canvas>

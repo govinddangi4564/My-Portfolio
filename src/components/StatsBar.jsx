@@ -27,10 +27,10 @@ export default function StatsBar() {
             <span className="font-mono text-[1.8rem] font-extrabold text-accent2 leading-none">
               {stat.num}
             </span>
-            <span className="font-mono text-[0.65rem] uppercase tracking-[1.5px] text-text mt-2">
+            <span className="font-mono text-[0.85rem] uppercase tracking-[1.5px] text-text mt-2">
               {stat.label}
             </span>
-            <span className="font-mono text-[0.58rem] text-dimmed mt-0.5">
+            <span className="font-mono text-[0.72rem] text-dimmed mt-0.5">
               {stat.sub}
             </span>
           </div>

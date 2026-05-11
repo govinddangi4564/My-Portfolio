@@ -30,12 +30,12 @@ export default function Navbar({ theme, onToggleTheme }) {
     >
       <div className="max-w-[1100px] mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <a href="#" className="font-mono text-[0.9rem] select-none">
+        <a href="#" className="font-mono text-[1.1rem] select-none">
           <span className="text-accent/60">[</span>
           <span className="text-accent2">GD</span>
           <span className="text-accent2">.dev</span>
           <span className="text-accent/60">]</span>
-          <span className="inline-block w-[2px] h-[14px] bg-accent2 ml-1 align-middle"
+          <span className="inline-block w-[2px] h-[16px] bg-accent2 ml-1 align-middle"
                 style={{ animation: 'blink-cursor 1s step-end infinite' }} />
         </a>
 
@@ -45,7 +45,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             <a
               key={link.label}
               href={link.href}
-              className="nav-link font-mono text-[0.72rem] uppercase tracking-[1.5px] text-muted hover:text-accent2 transition-colors duration-200"
+              className="nav-link font-mono text-[0.85rem] uppercase tracking-[1.5px] text-muted hover:text-accent2 transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -56,19 +56,19 @@ export default function Navbar({ theme, onToggleTheme }) {
         <div className="flex items-center gap-4">
           <button
             onClick={onToggleTheme}
-            className="inline-flex items-center gap-1 font-mono text-[0.65rem] uppercase tracking-[1px] px-3 py-2 border border-[var(--border)] text-muted rounded hover:border-accent2/40 hover:text-accent2 transition-all duration-300"
+            className="inline-flex items-center gap-1 font-mono text-[0.78rem] uppercase tracking-[1px] px-3 py-2 border border-[var(--border)] text-muted rounded hover:border-accent2/40 hover:text-accent2 transition-all duration-300"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
-            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
 
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.72rem] uppercase tracking-[1px] px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all duration-300"
+            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all duration-300"
           >
-            Hire Me <span className="text-xs">↗</span>
+            Hire Me <span className="text-sm">↗</span>
           </a>
 
           {/* Mobile Hamburger */}

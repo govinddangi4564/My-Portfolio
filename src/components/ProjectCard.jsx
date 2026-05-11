@@ -31,18 +31,18 @@ export default function ProjectCard({ project, featured = false }) {
         </div>
 
         {/* Name */}
-        <h3 className="font-syne text-[1.16rem] font-bold text-text mb-2">{project.name}</h3>
+        <h3 className="font-syne text-[1.3rem] font-bold text-text mb-2">{project.name}</h3>
 
         {/* Description */}
-        <p className="font-mono text-[0.8rem] text-muted leading-relaxed mb-4 flex-1">{project.description}</p>
+        <p className="font-mono text-[0.92rem] text-muted leading-relaxed mb-4 flex-1">{project.description}</p>
 
         {/* Metrics */}
         {project.metrics && (
           <div className="flex gap-4 mb-4">
             {project.metrics.map((m, i) => (
               <div key={i} className="text-center">
-                <span className="block font-mono text-[1rem] font-bold text-accent2">{m.num}</span>
-                <span className="font-mono text-[0.6rem] text-dimmed uppercase tracking-wide">{m.label}</span>
+                <span className="block font-mono text-[1.15rem] font-bold text-accent2">{m.num}</span>
+                <span className="font-mono text-[0.7rem] text-dimmed uppercase tracking-wide">{m.label}</span>
               </div>
             ))}
           </div>
@@ -51,7 +51,7 @@ export default function ProjectCard({ project, featured = false }) {
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {project.tags.map((tag) => (
-            <span key={tag} className="font-mono text-[0.6rem] px-2 py-0.5 rounded border border-[var(--border)] text-muted bg-bg">{tag}</span>
+            <span key={tag} className="font-mono text-[0.72rem] px-2 py-0.5 rounded border border-[var(--border)] text-muted bg-bg">{tag}</span>
           ))}
         </div>
 

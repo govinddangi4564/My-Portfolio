@@ -55,7 +55,7 @@ export default function About() {
           whileInView={{ opacity: 1, x: 0 }} 
           viewport={{ once: true, amount: 0.2 }} 
           transition={{ duration: 0.5, delay: 0.2 }} 
-          className="flex-1 font-body text-[0.85rem] text-muted leading-[1.8] space-y-4 text-center md:text-left"
+          className="flex-1 font-body text-[1rem] text-muted leading-[1.8] space-y-4 text-center md:text-left"
         >
           <p>I&apos;m a B.Tech CSE student at Prestige Institute of Engineering Management and Research, Indore — focused on building efficient and responsive web applications that deliver real value to users.</p>
           <p>I work across the full stack with Java, Spring Boot, Servlets, JSP, and MySQL on the backend, and HTML, CSS, JavaScript, and React on the frontend. My recent work includes an NLP-based resume screening system (HireDrift) and a full-stack pathology lab management system with 2FA auth.</p>
@@ -85,8 +85,8 @@ export default function About() {
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 mt-1">{h.icon}</div>
                 <div>
-                  <h4 className="font-syne text-[0.9rem] font-bold text-text">{h.title}</h4>
-                  <p className="font-body text-[0.85rem] text-muted mt-1 leading-relaxed">{h.body}</p>
+                  <h4 className="font-syne text-[1.1rem] font-bold text-text">{h.title}</h4>
+                  <p className="font-body text-[0.92rem] text-muted mt-1 leading-relaxed">{h.body}</p>
                 </div>
               </div>
             </motion.div>
