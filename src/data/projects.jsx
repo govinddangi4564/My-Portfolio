@@ -1,9 +1,11 @@
+import { Brain, FlaskConical, ShoppingCart } from 'lucide-react';
+
 export const projects = [
   {
     id: 1,
     name: "HireDrift — Resume Screening with NLP",
     shortName: "HireDrift",
-    icon: "🧠",
+    icon: <Brain size={32} className="text-accent" />,
     status: "complete",
     featured: true,
     description:
@@ -20,7 +22,7 @@ export const projects = [
   {
     id: 2,
     name: "PathLab Manager",
-    icon: "🧪",
+    icon: <FlaskConical size={32} className="text-accent2" />,
     status: "complete",
     featured: false,
     description:
@@ -36,7 +38,7 @@ export const projects = [
   {
     id: 3,
     name: "E-Commerce System",
-    icon: "🛒",
+    icon: <ShoppingCart size={32} className="text-accent3" />,
     status: "complete",
     featured: false,
     description:

@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import Timeline from './Timeline';
 
+import { Coffee, ShieldCheck, Layout, GraduationCap } from 'lucide-react';
+
 const highlights = [
-  { icon: '☕', title: 'Java-First Backend', body: 'Strong foundation in Java, Servlets, JSP, JDBC, and Spring Boot — building robust, scalable server-side applications.' },
-  { icon: '🔒', title: 'Security-Conscious', body: 'BCrypt password hashing, OTP-based 2FA authentication, role-based access control, and SQL-level auth checks.' },
-  { icon: '⚙️', title: 'Full-Stack Depth', body: 'Comfortable from MySQL database design and JDBC transactions all the way to HTML/CSS/JS frontend and REST APIs.' },
-  { icon: '📚', title: 'Continuous Learner', body: 'B.Tech CSE student actively sharpening DSA skills, exploring Spring Boot, and participating in GCP Codelabs & workshops.' },
+  { icon: <Coffee className="text-accent" size={24} />, title: 'Java-First Backend', body: 'Strong foundation in Java, Servlets, JSP, JDBC, and Spring Boot — building robust, scalable server-side applications.' },
+  { icon: <ShieldCheck className="text-accent2" size={24} />, title: 'Security-Conscious', body: 'BCrypt password hashing, OTP-based 2FA authentication, role-based access control, and SQL-level auth checks.' },
+  { icon: <Layout className="text-accent3" size={24} />, title: 'Full-Stack Depth', body: 'Comfortable from MySQL database design and JDBC transactions all the way to HTML/CSS/JS frontend and REST APIs.' },
+  { icon: <GraduationCap className="text-accent" size={24} />, title: 'Continuous Learner', body: 'B.Tech CSE student actively sharpening DSA skills, exploring Spring Boot, and participating in GCP Codelabs & workshops.' },
 ];
 
 export default function About() {
@@ -81,7 +83,7 @@ export default function About() {
               className="p-5 rounded-lg border border-[var(--border)] bg-card hover:translate-x-1 hover:border-accent/40 transition-all duration-300 cursor-default"
             >
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">{h.icon}</span>
+                <div className="flex-shrink-0 mt-1">{h.icon}</div>
                 <div>
                   <h4 className="font-syne text-[0.9rem] font-bold text-text">{h.title}</h4>
                   <p className="font-body text-[0.85rem] text-muted mt-1 leading-relaxed">{h.body}</p>

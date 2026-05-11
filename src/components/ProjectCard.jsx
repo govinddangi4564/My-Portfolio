@@ -13,7 +13,7 @@ export default function ProjectCard({ project, featured = false }) {
       {/* Featured icon panel */}
       {featured && (
         <div className="relative flex items-center justify-center p-8 bg-gradient-to-br from-accent/10 to-accent2/5 min-h-[180px]">
-          <span className="text-6xl">{project.icon}</span>
+          <div className="scale-[2]">{project.icon}</div>
           <span className="absolute top-3 left-3 font-mono text-[0.55rem] uppercase tracking-wider bg-accent/20 text-accent px-2 py-0.5 rounded">Featured</span>
           {/* Inner glow on hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 30% 30%, rgba(123,111,240,0.1) 0%, transparent 60%)' }} />
@@ -24,7 +24,7 @@ export default function ProjectCard({ project, featured = false }) {
       <div className="p-6 flex flex-col flex-1">
         {/* Top row: icon (non-featured) + status */}
         <div className="flex items-center justify-between mb-3">
-          {!featured && <span className="text-3xl">{project.icon}</span>}
+          {!featured && <div>{project.icon}</div>}
           <span className={`font-mono text-[0.58rem] uppercase tracking-wider px-2 py-0.5 rounded border ${statusColors[project.status]}`}>
             {statusLabels[project.status]}
           </span>
