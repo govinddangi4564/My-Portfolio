@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, FileText, Code2, Briefcase, Phone } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const socials = [
-  { icon: FaGithub, label: "GitHub", href: "https://github.com/govinddangi4564" },
+  {
+    icon: FaGithub,
+    label: "GitHub",
+    href: "https://github.com/govinddangi4564",
+  },
   {
     icon: FaLinkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/govinddangi4564/",
+  },
+  {
+    icon: FaInstagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/govind_dangiii/",
   },
   { icon: Phone, label: "Call", href: "tel:+917067624564" },
   { icon: FileText, label: "Resume", href: "/govind-resume.pdf" },
@@ -74,9 +83,9 @@ export default function Contact() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <p className="font-mono text-[0.8rem] text-muted leading-relaxed mb-6">
-              Open to internships, freelance projects &amp; full-time roles.
-              Whether it&apos;s a quick question or a big idea — my inbox is
-              always open.
+              I'm always open to discussing new projects, internships, or
+              full-time roles. Whether you have a question or just want to say
+              hello — my inbox is always open.
             </p>
             <div className="mb-6">
               <span className="font-mono text-[0.6rem] uppercase tracking-wider text-dimmed">
@@ -101,7 +110,7 @@ export default function Contact() {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer me"
                   className="inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-wide px-3 py-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
                 >
                   <s.icon size={14} />

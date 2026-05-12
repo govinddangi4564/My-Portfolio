@@ -1,6 +1,15 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Download } from "lucide-react";
 import HeroCanvas from "./HeroCanvas";
+import {
+  FaJava,
+  FaReact,
+  FaPython,
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+} from "react-icons/fa";
+import { SiSpringboot, SiMysql } from "react-icons/si";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -8,7 +17,13 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, delay, ease: "easeOut" },
 });
 
-const techPills = ["Java", "Spring Boot", "React", "MySQL", "Python"];
+const techPills = [
+  { name: "Java", icon: FaJava },
+  { name: "Spring Boot", icon: SiSpringboot },
+  { name: "React", icon: FaReact },
+  { name: "MySQL", icon: SiMysql },
+  { name: "Python", icon: FaPython },
+];
 
 export default function Hero({ theme }) {
   return (
@@ -75,7 +90,10 @@ export default function Hero({ theme }) {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div {...fadeUp(0.5)} className="flex flex-wrap gap-3">
+          <motion.div
+            {...fadeUp(0.5)}
+            className="flex flex-wrap items-center gap-3"
+          >
             <a
               href="#projects"
               className="inline-flex items-center gap-2 font-mono text-[0.85rem] uppercase tracking-wide px-5 py-2.5 bg-accent text-[var(--on-accent)] rounded hover:-translate-y-0.5 hover:shadow-[0_6px_24px_var(--card-hover-glow)] transition-all duration-300"
@@ -90,6 +108,35 @@ export default function Hero({ theme }) {
             >
               <Download size={14} /> Download CV
             </a>
+            <div className="flex gap-2">
+              <a
+                href="https://github.com/govinddangi4564"
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="p-2.5 rounded border border-dimmed text-muted hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
+                aria-label="GitHub"
+              >
+                <FaGithub size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/govinddangi4564/"
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="p-2.5 rounded border border-dimmed text-muted hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/govind_dangiii/"
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="p-2.5 rounded border border-dimmed text-muted hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={18} />
+              </a>
+            </div>
           </motion.div>
 
           {/* Tech Micro-line */}
@@ -134,10 +181,11 @@ export default function Hero({ theme }) {
           <div className="flex flex-wrap justify-center gap-2 mt-1">
             {techPills.map((pill) => (
               <span
-                key={pill}
-                className="font-mono text-[0.58rem] px-2.5 py-1 rounded border border-accent/20 bg-accent/5 text-muted"
+                key={pill.name}
+                className="inline-flex items-center gap-1.5 font-mono text-[0.58rem] px-2.5 py-1 rounded border border-accent/20 bg-accent/5 text-muted"
               >
-                {pill}
+                <pill.icon size={12} className="text-accent" />
+                {pill.name}
               </span>
             ))}
           </div>

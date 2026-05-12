@@ -1,15 +1,21 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, OrbitControls, Text, Billboard, Image } from "@react-three/drei";
+import {
+  Float,
+  OrbitControls,
+  Text,
+  Billboard,
+  Image,
+} from "@react-three/drei";
 import * as THREE from "three";
 
 /* -- Theme Config -- */
 const getColors = (theme) => ({
-  accent: theme === 'light' ? '#4338ca' : '#8b5cf6',
-  accent2: theme === 'light' ? '#0f766e' : '#10b981',
-  text: theme === 'light' ? '#1e293b' : '#f8fafc',
-  outline: theme === 'light' ? '#ffffff' : '#0f172a',
-  wireframe: theme === 'light' ? '#94a3b8' : '#ffffff',
+  accent: theme === "light" ? "#4338ca" : "#8b5cf6",
+  accent2: theme === "light" ? "#0f766e" : "#10b981",
+  text: theme === "light" ? "#1e293b" : "#f8fafc",
+  outline: theme === "light" ? "#ffffff" : "#0f172a",
+  wireframe: theme === "light" ? "#94a3b8" : "#ffffff",
 });
 
 /* -- Central Core ------------------------------- */
@@ -22,7 +28,13 @@ function CentralCore({ colors }) {
       </mesh>
       <mesh scale={0.9}>
         <sphereGeometry args={[0.6, 16, 16]} />
-        <meshStandardMaterial color={colors.accent} emissive={colors.accent} emissiveIntensity={0.5} transparent opacity={0.8} />
+        <meshStandardMaterial
+          color={colors.accent}
+          emissive={colors.accent}
+          emissiveIntensity={0.5}
+          transparent
+          opacity={0.8}
+        />
       </mesh>
       <Billboard>
         <Text
@@ -41,7 +53,16 @@ function CentralCore({ colors }) {
 }
 
 /* -- Floating Skill Node ----------------------- */
-function SkillNode({ text, color, radius, speed, angle, yOffset, colors, logo }) {
+function SkillNode({
+  text,
+  color,
+  radius,
+  speed,
+  angle,
+  yOffset,
+  colors,
+  logo,
+}) {
   const groupRef = useRef();
 
   useFrame((_, delta) => {
@@ -52,7 +73,9 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors, logo })
 
   return (
     <group ref={groupRef}>
-      <group position={[Math.cos(angle) * radius, yOffset, Math.sin(angle) * radius]}>
+      <group
+        position={[Math.cos(angle) * radius, yOffset, Math.sin(angle) * radius]}
+      >
         <Float speed={2} rotationIntensity={2} floatIntensity={1.5}>
           {/* Logo Billboard */}
           <Billboard>
@@ -67,7 +90,12 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors, logo })
 
           <mesh position={[0, 0, 0]}>
             <octahedronGeometry args={[0.4, 0]} />
-            <meshStandardMaterial color={color} wireframe transparent opacity={0.3} />
+            <meshStandardMaterial
+              color={color}
+              wireframe
+              transparent
+              opacity={0.3}
+            />
           </mesh>
 
           <Billboard>
@@ -89,15 +117,63 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors, logo })
 
 /* -- Revolving Skills Orbit --------------------- */
 function OrbitingSkills({ colors }) {
-  const devIconBase = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/";
+  const iconBase = "https://cdn.iconscout.com/icon/free/png-256/";
 
   const skills = [
-    { text: "React", color: colors.accent2, radius: 2.6, speed: 0.3, angle: 0, yOffset: 0.6, logo: `${devIconBase}react/react-original.svg` },
-    { text: "Java", color: colors.accent, radius: 3.0, speed: 0.2, angle: Math.PI / 3, yOffset: -0.6, logo: `${devIconBase}java/java-original.svg` },
-    { text: "Spring", color: colors.accent2, radius: 2.8, speed: 0.4, angle: (Math.PI * 2) / 3, yOffset: 1.0, logo: `${devIconBase}spring/spring-original.svg` },
-    { text: "MySQL", color: colors.accent, radius: 3.3, speed: 0.25, angle: Math.PI, yOffset: -1.0, logo: `${devIconBase}mysql/mysql-original.svg` },
-    { text: "Python", color: colors.accent2, radius: 2.7, speed: 0.45, angle: (Math.PI * 4) / 3, yOffset: 0.4, logo: `${devIconBase}python/python-original.svg` },
-    { text: "JS", color: colors.accent, radius: 2.9, speed: 0.35, angle: (Math.PI * 5) / 3, yOffset: -0.5, logo: `${devIconBase}javascript/javascript-original.svg` },
+    {
+      text: "React",
+      color: colors.accent2,
+      radius: 2.6,
+      speed: 0.3,
+      angle: 0,
+      yOffset: 0.6,
+      logo: `${iconBase}free-react-1-282599.png`,
+    },
+    {
+      text: "Java",
+      color: colors.accent,
+      radius: 3.0,
+      speed: 0.2,
+      angle: Math.PI / 3,
+      yOffset: -0.6,
+      logo: `${iconBase}free-java-60-1174953.png`,
+    },
+    {
+      text: "Spring",
+      color: colors.accent2,
+      radius: 2.8,
+      speed: 0.4,
+      angle: (Math.PI * 2) / 3,
+      yOffset: 1.0,
+      logo: `${iconBase}free-spring-1-226065.png`,
+    },
+    {
+      text: "MySQL",
+      color: colors.accent,
+      radius: 3.3,
+      speed: 0.25,
+      angle: Math.PI,
+      yOffset: -1.0,
+      logo: `${iconBase}free-mysql-3521596-2945040.png`,
+    },
+    {
+      text: "Python",
+      color: colors.accent2,
+      radius: 2.7,
+      speed: 0.45,
+      angle: (Math.PI * 4) / 3,
+      yOffset: 0.4,
+      logo: `${iconBase}free-python-3521655-2945099.png`,
+    },
+    {
+      text: "JS",
+      color: colors.accent,
+      radius: 2.9,
+      speed: 0.35,
+      angle: (Math.PI * 5) / 3,
+      yOffset: -0.5,
+      logo: `${iconBase}free-javascript-1-225993.png`,
+    },
   ];
 
   return (
@@ -132,7 +208,10 @@ function ConnectionLines({ colors }) {
         const y = skill.yOffset;
 
         const positions = new Float32Array([0, 0, 0, x, y, z]);
-        line.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        line.geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(positions, 3),
+        );
         line.geometry.attributes.position.needsUpdate = true;
       }
     });
@@ -143,7 +222,11 @@ function ConnectionLines({ colors }) {
       {skills.map((_, i) => (
         <line key={i} ref={(el) => (lineRefs.current[i] = el)}>
           <bufferGeometry />
-          <lineBasicMaterial color={i % 2 === 0 ? colors.accent : colors.accent2} transparent opacity={0.15} />
+          <lineBasicMaterial
+            color={i % 2 === 0 ? colors.accent : colors.accent2}
+            transparent
+            opacity={0.15}
+          />
         </line>
       ))}
     </group>
@@ -163,7 +246,11 @@ function OrbitRings({ colors }) {
     <group ref={ref}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[3.2, 0.02, 32, 100]} />
-        <meshBasicMaterial color={colors.wireframe} transparent opacity={0.15} />
+        <meshBasicMaterial
+          color={colors.wireframe}
+          transparent
+          opacity={0.15}
+        />
       </mesh>
       <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
         <torusGeometry args={[3.6, 0.02, 32, 100]} />
@@ -176,7 +263,6 @@ function OrbitRings({ colors }) {
     </group>
   );
 }
-
 
 /* -- Floating Data Particles -------------------- */
 function DataParticles({ count = 30, colors }) {
@@ -233,9 +319,17 @@ function Scene({ theme }) {
 
   return (
     <>
-      <ambientLight intensity={theme === 'light' ? 0.35 : 0.4} />
-      <directionalLight position={[10, 10, 10]} intensity={theme === 'light' ? 0.6 : 1.0} color={colors.accent2} />
-      <directionalLight position={[-10, -10, -10]} intensity={theme === 'light' ? 0.5 : 0.8} color={colors.accent} />
+      <ambientLight intensity={theme === "light" ? 0.35 : 0.4} />
+      <directionalLight
+        position={[10, 10, 10]}
+        intensity={theme === "light" ? 0.6 : 1.0}
+        color={colors.accent2}
+      />
+      <directionalLight
+        position={[-10, -10, -10]}
+        intensity={theme === "light" ? 0.5 : 0.8}
+        color={colors.accent}
+      />
 
       <CentralCore colors={colors} />
       <OrbitingSkills colors={colors} />
@@ -253,9 +347,18 @@ export default function HeroCanvas({ theme }) {
       className="w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] mx-auto relative cursor-grab active:cursor-grabbing"
       style={{ touchAction: "none" }}
     >
-      <Canvas camera={{ position: [0, 0, 11], fov: 45 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+      <Canvas
+        camera={{ position: [0, 0, 11], fov: 45 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true }}
+      >
         <Scene theme={theme} />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.0} />
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          autoRotate
+          autoRotateSpeed={1.0}
+        />
       </Canvas>
     </div>
   );

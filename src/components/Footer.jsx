@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,7 +19,7 @@ export default function Footer() {
           <a
             href="https://github.com/govinddangi4564"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer me"
             className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
             aria-label="GitHub"
           >
@@ -28,11 +28,20 @@ export default function Footer() {
           <a
             href="https://www.linkedin.com/in/govinddangi4564/"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer me"
             className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
             aria-label="LinkedIn"
           >
             <FaLinkedin size={16} />
+          </a>
+          <a
+            href="https://www.instagram.com/govind_dangiii/"
+            target="_blank"
+            rel="noopener noreferrer me"
+            className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
+            aria-label="Instagram"
+          >
+            <FaInstagram size={16} />
           </a>
         </div>
 

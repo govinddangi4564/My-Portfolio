@@ -7,32 +7,32 @@
    ============================================ */
 :root {
   --bg: #0f172a;
-  --surface: #1e293b;
-  --card: #2d3748;
-  --accent: #8b5cf6;
+  --surface: #162032; /* slightly darker than #1e293b */
+  --card: #1e293b; /* slightly darker than #2d3748 */
+  --accent: #7c3aed;
   --accent2: #10b981;
   --accent3: #ef4444;
   --text: #f8fafc;
   --muted: #94a3b8;
   --dimmed: #64748b;
-  --border: rgba(139, 92, 246, 0.2);
+  --border: rgba(124, 58, 237, 0.2);
   --border2: rgba(16, 185, 129, 0.15);
   --on-accent: #ffffff;
 
   /* Glows */
-  --hero-glow-1: rgba(139, 92, 246, 0.1);
+  --hero-glow-1: rgba(124, 58, 237, 0.1);
   --hero-glow-2: rgba(16, 185, 129, 0.08);
-  --card-hover-glow: rgba(139, 92, 246, 0.2);
-  --card-inner-glow: rgba(139, 92, 246, 0.12);
+  --card-hover-glow: rgba(124, 58, 237, 0.2);
+  --card-inner-glow: rgba(124, 58, 237, 0.12);
   --accent2-soft-glow: rgba(16, 185, 129, 0.2);
-  --photo-glow: rgba(139, 92, 246, 0.25);
-  --selection-bg: rgba(139, 92, 246, 0.35);
+  --photo-glow: rgba(124, 58, 237, 0.25);
+  --selection-bg: rgba(124, 58, 237, 0.35);
 }
 
 [data-theme="light"] {
-  --bg: #e2e8f0;
-  --surface: #f1f5f9;
-  --card: #f8fafc;
+  --bg: #cbd5e1;
+  --surface: #e2e8f0;
+  --card: #f1f5f9;
   --accent: #4338ca;
   --accent2: #0f766e;
   --accent3: #b91c1c;
@@ -77,7 +77,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 ::selection {
@@ -139,10 +141,12 @@ body {
 
 /* Glass effect */
 .glass {
-  background: rgba(226, 232, 240, 0.7);
+  background: rgba(226, 232, 240, 0.4);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 [data-theme="dark"] .glass {
@@ -223,14 +227,19 @@ body {
 }
 
 /* Global transitions for theme-aware elements */
-button, 
-a, 
-.bg-card, 
-.bg-surface, 
+button,
+a,
+.bg-card,
+.bg-surface,
 .border,
 input,
 textarea {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 /* Stat gradient bottom border */
