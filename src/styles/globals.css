@@ -6,27 +6,27 @@
    DESIGN SYSTEM — CSS CUSTOM PROPERTIES
    ============================================ */
 :root {
-  --bg: #060610;
-  --surface: #0d0d1a;
-  --card: #111122;
-  --accent: #7b6ff0;
-  --accent2: #00f5d4;
-  --accent3: #ff6b6b;
-  --text: #eeeef8;
-  --muted: #8888aa;
-  --dimmed: #333350;
-  --border: rgba(123, 111, 240, 0.18);
-  --border2: rgba(0, 245, 212, 0.12);
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --card: #2d3748;
+  --accent: #8b5cf6;
+  --accent2: #10b981;
+  --accent3: #ef4444;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --dimmed: #64748b;
+  --border: rgba(139, 92, 246, 0.2);
+  --border2: rgba(16, 185, 129, 0.15);
   --on-accent: #ffffff;
 
   /* Glows */
-  --hero-glow-1: rgba(123, 111, 240, 0.08);
-  --hero-glow-2: rgba(0, 245, 212, 0.06);
-  --card-hover-glow: rgba(123, 111, 240, 0.15);
-  --card-inner-glow: rgba(123, 111, 240, 0.1);
-  --accent2-soft-glow: rgba(0, 245, 212, 0.15);
-  --photo-glow: rgba(123, 111, 240, 0.2);
-  --selection-bg: rgba(123, 111, 240, 0.3);
+  --hero-glow-1: rgba(139, 92, 246, 0.1);
+  --hero-glow-2: rgba(16, 185, 129, 0.08);
+  --card-hover-glow: rgba(139, 92, 246, 0.2);
+  --card-inner-glow: rgba(139, 92, 246, 0.12);
+  --accent2-soft-glow: rgba(16, 185, 129, 0.2);
+  --photo-glow: rgba(139, 92, 246, 0.25);
+  --selection-bg: rgba(139, 92, 246, 0.35);
 }
 
 [data-theme="light"] {
@@ -146,7 +146,7 @@ body {
 }
 
 [data-theme="dark"] .glass {
-  background: rgba(6, 6, 16, 0.85);
+  background: rgba(15, 23, 42, 0.8);
 }
 
 /* Gradient text */

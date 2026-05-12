@@ -58,7 +58,7 @@ export const skillTabs = {
       level: 70,
     },
     { name: "MySQL", icon: <SiMysql className="text-[#4479A1]" />, level: 82 },
-    { name: "REST API", icon: <TbApi className="text-[#00f5d4]" />, level: 80 },
+    { name: "REST API", icon: <TbApi className="text-accent2" />, level: 80 },
   ],
   tools: [
     {

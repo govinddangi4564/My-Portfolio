@@ -5,11 +5,11 @@ import * as THREE from "three";
 
 /* -- Theme Config -- */
 const getColors = (theme) => ({
-  accent: theme === 'light' ? '#5a53d8' : '#7b6ff0',
-  accent2: theme === 'light' ? '#009e91' : '#00f5d4',
-  text: theme === 'light' ? '#171928' : '#ffffff',
-  outline: theme === 'light' ? '#ffffff' : '#0a0a0f',
-  wireframe: theme === 'light' ? '#949bb0' : '#ffffff',
+  accent: theme === 'light' ? '#4338ca' : '#8b5cf6',
+  accent2: theme === 'light' ? '#0f766e' : '#10b981',
+  text: theme === 'light' ? '#1e293b' : '#f8fafc',
+  outline: theme === 'light' ? '#ffffff' : '#0f172a',
+  wireframe: theme === 'light' ? '#94a3b8' : '#ffffff',
 });
 
 /* -- Central Core ------------------------------- */

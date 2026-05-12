@@ -5,8 +5,8 @@ import * as THREE from "three";
 
 /* -- Theme Config -- */
 const getColors = (theme) => ({
-  accent: theme === 'light' ? '#5a53d8' : '#7b6ff0',
-  accent2: theme === 'light' ? '#009e91' : '#00f5d4',
+  accent: theme === 'light' ? '#4338ca' : '#8b5cf6',
+  accent2: theme === 'light' ? '#0f766e' : '#10b981',
 });
 
 function FloatingShapes({ colors }) {
