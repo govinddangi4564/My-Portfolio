@@ -8,15 +8,32 @@ import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import AllProjectsPage from "./components/AllProjectsPage";
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
+  const [currentPage, setCurrentPage] = useState("home");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "light" || savedTheme === "dark") {
       setTheme(savedTheme);
     }
+
+    // Simple hash-based router
+    const handleHashChange = () => {
+      if (window.location.hash === "#all-projects") {
+        setCurrentPage("all-projects");
+        window.scrollTo(0, 0);
+      } else {
+        setCurrentPage("home");
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange(); // check on mount
+
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   useEffect(() => {
@@ -32,14 +49,22 @@ export default function App() {
     <div className="min-h-screen bg-bg text-text relative">
       <Background3D theme={theme} />
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
-      <main>
-        <Hero theme={theme} />
-        <StatsBar />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
+
+      {currentPage === "home" ? (
+        <main>
+          <Hero theme={theme} />
+          <StatsBar />
+          <About />
+          <Projects />
+          <Skills />
+          <Contact />
+        </main>
+      ) : (
+        <main>
+          <AllProjectsPage />
+        </main>
+      )}
+
       <Footer />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Brain, FlaskConical, ShoppingCart, Ship } from "lucide-react";
+import { Brain, FlaskConical, ShoppingCart, Ship, Globe } from "lucide-react";
 
 export const projects = [
   {
@@ -76,5 +76,29 @@ export const projects = [
     tags: ["Java", "JDBC", "Servlets", "JSP", "MySQL", "Git"],
     github: "https://github.com/govinddangi4564",
     live: "#",
+  },
+  {
+    id: 5,
+    name: "ClimateAct - Gamified Eco Platform",
+    shortName: "ClimateAct",
+    icon: <Globe size={32} className="text-accent2" />,
+    status: "complete",
+    featured: true,
+    description:
+      "A premium, highly interactive full-stack web application dedicated to climate awareness, gamified carbon footprint tracking, and community eco-challenges. Features a Live Earth Vitals Dashboard, 1.5°C Climate Clock, and an Eco-Rewards Marketplace.",
+    metrics: [
+      { num: "Live", label: "Earth Vitals" },
+      { num: "XP", label: "Gamified Tracking" },
+    ],
+    tags: [
+      "React",
+      "Express",
+      "Node.js",
+      "MySQL",
+      "Sequelize ORM",
+      "Tailwind CSS",
+    ],
+    github: "https://github.com/govinddangi4564/climateact",
+    live: "https://climate-change-prediction.vercel.app",
   },
 ];
