@@ -165,7 +165,6 @@ body {
 /* Gradient bar (top of cards) */
 .gradient-bar {
   position: relative;
-  overflow: hidden;
 }
 
 .gradient-bar::before {
@@ -175,6 +174,8 @@ body {
   left: 0;
   right: 0;
   height: 2px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   transform: scaleX(0);
   transition: transform 0.4s ease;

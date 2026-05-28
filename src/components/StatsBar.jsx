@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 const stats = [
-  { num: '3+', label: 'Projects', sub: 'built & delivered' },
-  { num: '3', label: 'Tech Stacks', sub: 'Java · JS · Python' },
+  { num: '6+', label: 'Projects', sub: 'built & delivered' },
+  { num: '4', label: 'Core Stacks', sub: 'Java · React · Node · Python' },
   { num: 'B.Tech', label: 'CSE Student', sub: '2023 – 2027' },
   { num: '∞', label: 'Curiosity', sub: 'always learning' },
 ];

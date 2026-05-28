@@ -27,6 +27,18 @@ export default function App() {
         window.scrollTo(0, 0);
       } else {
         setCurrentPage("home");
+        if (window.location.hash && window.location.hash !== "#") {
+          setTimeout(() => {
+            const element = document.querySelector(window.location.hash);
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            } else {
+              window.scrollTo(0, 0);
+            }
+          }, 100);
+        } else {
+          window.scrollTo(0, 0);
+        }
       }
     };
 

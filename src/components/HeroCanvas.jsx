@@ -207,12 +207,13 @@ function ConnectionLines({ colors }) {
         const z = Math.sin(skill.angle) * skill.radius;
         const y = skill.yOffset;
 
-        const positions = new Float32Array([0, 0, 0, x, y, z]);
-        line.geometry.setAttribute(
-          "position",
-          new THREE.BufferAttribute(positions, 3),
-        );
-        line.geometry.attributes.position.needsUpdate = true;
+        const attr = line.geometry.attributes.position;
+        if (attr) {
+          attr.array[3] = x;
+          attr.array[4] = y;
+          attr.array[5] = z;
+          attr.needsUpdate = true;
+        }
       }
     });
   });
@@ -221,7 +222,14 @@ function ConnectionLines({ colors }) {
     <group>
       {skills.map((_, i) => (
         <line key={i} ref={(el) => (lineRefs.current[i] = el)}>
-          <bufferGeometry />
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              count={2}
+              array={new Float32Array(6)}
+              itemSize={3}
+            />
+          </bufferGeometry>
           <lineBasicMaterial
             color={i % 2 === 0 ? colors.accent : colors.accent2}
             transparent
@@ -349,7 +357,7 @@ export default function HeroCanvas({ theme }) {
     >
       <Canvas
         camera={{ position: [0, 0, 11], fov: 45 }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
       >
         <Scene theme={theme} />
