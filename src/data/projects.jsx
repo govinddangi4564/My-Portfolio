@@ -1,23 +1,28 @@
-import { Brain, FlaskConical, ShoppingCart, Ship, Globe } from "lucide-react";
+import {
+  Brain,
+  FlaskConical,
+  ShoppingCart,
+  Ship,
+  Globe,
+  HeartPulse,
+} from "lucide-react";
 
 export const projects = [
   {
     id: 1,
-    name: "Logistics & Shipment Tracker AI",
-    shortName: "ShipTrack AI",
-    icon: <Ship size={32} className="text-accent" />,
-    status: "wip",
+    name: "PathLab Manager",
+    icon: <FlaskConical size={32} className="text-accent3" />,
+    status: "complete",
     featured: false,
     description:
-      "A full-stack AI-powered logistics platform. Input a route and receive instant AI-generated shipment analysis: risk scoring, cost estimation, multi-modal freight comparison (Air, Ocean, Road), and delivery time predictions — all powered by Google Gemini.",
+      "Full-stack pathology lab management system with role-based access, OTP-based 2FA authentication, online appointment booking, digital reports, and real-time admin analytics dashboard.",
     metrics: [
-      { num: "3", label: "Freight Modes" },
-      { num: "AI", label: "Risk Scoring" },
-      { num: "REST", label: "API Design" },
+      { num: "2FA", label: "Auth" },
+      { num: "ACID", label: "DB Design" },
     ],
-    tags: ["React", "Node.js", "Express", "Google Gemini AI", "REST API"],
-    github: "https://github.com/govinddangi4564/DELAYSHIELD-AI",
-    live: "https://delayshield-ai.vercel.app/",
+    tags: ["Java", "JSP", "Jakarta Servlet API", "MySQL", "BCrypt", "Maven"],
+    github: "https://github.com/govinddangi4564/PathologyLab-Management-System",
+    live: "https://pathology-lab-java.onrender.com/",
   },
   {
     id: 2,
@@ -47,19 +52,21 @@ export const projects = [
   },
   {
     id: 3,
-    name: "PathLab Manager",
-    icon: <FlaskConical size={32} className="text-accent3" />,
-    status: "complete",
+    name: "Logistics & Shipment Tracker AI",
+    shortName: "ShipTrack AI",
+    icon: <Ship size={32} className="text-accent" />,
+    status: "wip",
     featured: false,
     description:
-      "Full-stack pathology lab management system with role-based access, OTP-based 2FA authentication, online appointment booking, digital reports, and real-time admin analytics dashboard.",
+      "A full-stack AI-powered logistics platform. Input a route and receive instant AI-generated shipment analysis: risk scoring, cost estimation, multi-modal freight comparison (Air, Ocean, Road), and delivery time predictions — all powered by Google Gemini.",
     metrics: [
-      { num: "2FA", label: "Auth" },
-      { num: "ACID", label: "DB Design" },
+      { num: "3", label: "Freight Modes" },
+      { num: "AI", label: "Risk Scoring" },
+      { num: "REST", label: "API Design" },
     ],
-    tags: ["Java", "JSP", "Jakarta Servlet API", "MySQL", "BCrypt", "Maven"],
-    github: "https://github.com/govinddangi4564/PathlogyLab-Java-Project",
-    live: "https://pathology-lab-java.onrender.com/",
+    tags: ["React", "Node.js", "Express", "Google Gemini AI", "REST API"],
+    github: "https://github.com/govinddangi4564/DELAYSHIELD-AI",
+    live: "https://delayshield-ai.vercel.app/",
   },
   {
     id: 4,
@@ -83,7 +90,7 @@ export const projects = [
     shortName: "ClimateAct",
     icon: <Globe size={32} className="text-accent2" />,
     status: "complete",
-    featured: true,
+    featured: false,
     description:
       "A premium, highly interactive full-stack web application dedicated to climate awareness, gamified carbon footprint tracking, and community eco-challenges. Features a Live Earth Vitals Dashboard, 1.5°C Climate Clock, and an Eco-Rewards Marketplace.",
     metrics: [
@@ -100,5 +107,33 @@ export const projects = [
     ],
     github: "https://github.com/govinddangi4564/climateact",
     live: "https://climate-change-prediction.vercel.app",
+  },
+  {
+    id: 6,
+    name: "LifeLine AI - Patient Side Module",
+    shortName: "LifeLine AI",
+    icon: <HeartPulse size={32} className="text-accent" />,
+    status: "complete",
+    featured: false,
+    description:
+      "Production-ready patient experience for AI-assisted emergency triage and hospital routing. Features symptom/voice input, report upload, AI triage analysis, and hospital recommendations with maps.",
+    metrics: [
+      { num: "AI", label: "Triage" },
+      { num: "Maps", label: "Routing" },
+      { num: "Voice", label: "Input" },
+    ],
+    tags: [
+      "Next.js",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Gemini API",
+      "Google Maps API",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Framer Motion",
+    ],
+    github: "https://github.com/govinddangi4564/MediRoute_AI", 
+    live: "https://medi-route-ai-frontend.vercel.app/", 
   },
 ];
