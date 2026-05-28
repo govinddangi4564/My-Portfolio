@@ -6,12 +6,20 @@ import {
   Globe,
   HeartPulse,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const projects = [
   {
     id: 1,
     name: "PathLab Manager",
-    icon: <FlaskConical size={32} className="text-accent3" />,
+    icon: (
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <FlaskConical size={32} className="text-accent3" />
+      </motion.div>
+    ),
     status: "complete",
     featured: false,
     description:
@@ -28,7 +36,14 @@ export const projects = [
     id: 2,
     name: "HireDrift — Resume Screening with NLP",
     shortName: "HireDrift",
-    icon: <Brain size={32} className="text-accent2" />,
+    icon: (
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.8, 1, 0.8] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Brain size={32} className="text-accent2" />
+      </motion.div>
+    ),
     status: "complete",
     featured: false,
     description:
@@ -54,7 +69,14 @@ export const projects = [
     id: 3,
     name: "Logistics & Shipment Tracker AI",
     shortName: "ShipTrack AI",
-    icon: <Ship size={32} className="text-accent" />,
+    icon: (
+      <motion.div
+        animate={{ rotate: [-6, 6, -6], y: [0, -2, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Ship size={32} className="text-accent" />
+      </motion.div>
+    ),
     status: "wip",
     featured: false,
     description:
@@ -71,7 +93,14 @@ export const projects = [
   {
     id: 4,
     name: "E-Commerce System",
-    icon: <ShoppingCart size={32} className="text-accent" />,
+    icon: (
+      <motion.div
+        animate={{ x: [0, 4, -4, 0], y: [0, -3, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <ShoppingCart size={32} className="text-accent" />
+      </motion.div>
+    ),
     status: "complete",
     featured: false,
     description:
@@ -88,7 +117,14 @@ export const projects = [
     id: 5,
     name: "ClimateAct - Gamified Eco Platform",
     shortName: "ClimateAct",
-    icon: <Globe size={32} className="text-accent2" />,
+    icon: (
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+      >
+        <Globe size={32} className="text-accent2" />
+      </motion.div>
+    ),
     status: "complete",
     featured: false,
     description:
@@ -112,7 +148,14 @@ export const projects = [
     id: 6,
     name: "LifeLine AI - Patient Side Module",
     shortName: "LifeLine AI",
-    icon: <HeartPulse size={32} className="text-accent" />,
+    icon: (
+      <motion.div
+        animate={{ scale: [1, 1.25, 1, 1.15, 1] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <HeartPulse size={32} className="text-accent" />
+      </motion.div>
+    ),
     status: "complete",
     featured: false,
     description:
