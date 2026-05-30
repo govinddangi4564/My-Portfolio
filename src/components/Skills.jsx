@@ -5,7 +5,7 @@ import { skillTabs } from '../data/skills';
 const tabKeys = [
   { key: 'frontend', label: 'Frontend' },
   { key: 'backend', label: 'Backend' },
-  { key: 'core', label: 'Core Concepts' },
+  // { key: 'core', label: 'Core Concepts' },
   { key: 'tools', label: 'Tools & Languages' },
 ];
 
@@ -20,14 +20,14 @@ export default function Skills() {
       </motion.div>
 
       {/* Tab Buttons */}
-      <div className="flex gap-2 mb-8">
+      <div className="flex flex-wrap gap-2 mb-8">
         {tabKeys.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActive(tab.key)}
             className={`font-mono text-[0.7rem] uppercase tracking-[1px] px-4 py-2 rounded border transition-all duration-300 ${active === tab.key
-                ? 'bg-accent/10 border-accent text-accent'
-                : 'border-[var(--border)] text-muted hover:border-accent/30 hover:text-text'
+              ? 'bg-accent/10 border-accent text-accent'
+              : 'border-[var(--border)] text-muted hover:border-accent/30 hover:text-text'
               }`}
           >
             {tab.label}
