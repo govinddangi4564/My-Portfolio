@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Terminal as TerminalIcon } from 'lucide-react';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
-export default function Navbar({ theme, onToggleTheme }) {
+export default function Navbar({ theme, onToggleTheme, onOpenTerminal }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -64,9 +64,19 @@ export default function Navbar({ theme, onToggleTheme }) {
             <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
 
+          <button
+            onClick={onOpenTerminal}
+            className="hidden md:inline-flex items-center gap-2 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 bg-accent/10 border border-accent/40 text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] shadow-[0_0_15px_var(--hero-glow-1)] hover:shadow-[0_0_25px_var(--hero-glow-1)] transition-all duration-300 relative group"
+          >
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent2 rounded-full animate-ping opacity-75"></span>
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent2 rounded-full"></span>
+            <TerminalIcon size={16} />
+            Terminal
+          </button>
+
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all duration-300"
+            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 border border-accent2 text-accent2 rounded hover:bg-accent2 hover:text-[var(--on-accent)] transition-all duration-300"
           >
             Hire Me <span className="text-sm">↗</span>
           </a>
@@ -103,10 +113,21 @@ export default function Navbar({ theme, onToggleTheme }) {
                   {link.label}
                 </a>
               ))}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  onOpenTerminal();
+                }}
+                className="font-mono text-[0.78rem] uppercase tracking-[1.5px] text-accent flex items-center gap-2 py-2"
+              >
+                <TerminalIcon size={16} />
+                Open Terminal
+              </button>
+              
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="font-mono text-[0.72rem] uppercase tracking-[1px] px-5 py-2 border border-accent text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] transition-all"
+                className="font-mono text-[0.72rem] uppercase tracking-[1px] px-5 py-2 border border-accent2 text-accent2 rounded hover:bg-accent2 hover:text-[var(--on-accent)] transition-all mt-2"
               >
                 Hire Me ↗
               </a>

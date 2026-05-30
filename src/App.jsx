@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Background3D from "./components/Background3D";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -9,10 +10,14 @@ import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import AllProjectsPage from "./components/AllProjectsPage";
+import CustomCursor from "./components/CustomCursor";
+import Terminal from "./components/Terminal";
+import GithubStats from "./components/GithubStats";
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
   const [currentPage, setCurrentPage] = useState("home");
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -53,31 +58,59 @@ export default function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === '`' || e.key === '~') {
+        e.preventDefault();
+        setIsTerminalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   return (
     <div className="min-h-screen bg-bg text-text relative">
+      <CustomCursor />
+      <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
       <Background3D theme={theme} />
-      <Navbar theme={theme} onToggleTheme={toggleTheme} />
+      <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
 
-      {currentPage === "home" ? (
-        <main>
-          <Hero theme={theme} />
-          <StatsBar />
-          <About />
-          <Projects />
-          <Skills />
-          <Contact />
-        </main>
-      ) : (
-        <main>
-          <AllProjectsPage />
-        </main>
-      )}
+      <AnimatePresence mode="wait">
+        {currentPage === "home" ? (
+          <motion.main
+            key="home"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Hero theme={theme} />
+            <StatsBar />
+            <About />
+            <GithubStats theme={theme} />
+            <Projects />
+            <Skills />
+            <Contact />
+          </motion.main>
+        ) : (
+          <motion.main
+            key="all-projects"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AllProjectsPage />
+          </motion.main>
+        )}
+      </AnimatePresence>
 
-      <Footer />
+      <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
     </div>
   );
 }

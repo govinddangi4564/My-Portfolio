@@ -15,7 +15,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section-container">
       <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5 }}>
-        <span className="section-tag">04. tools &amp; tech</span>
+        <span className="section-tag">05. tools &amp; tech</span>
         <h2 className="section-title">Tech Stack</h2>
       </motion.div>
 

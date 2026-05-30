@@ -18,7 +18,7 @@ export default function Projects() {
       >
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="text-accent w-4 h-4" />
-          <span className="section-tag m-0 text-accent bg-accent/10 border-accent/20">03. selected work</span>
+          <span className="section-tag m-0 text-accent bg-accent/10 border-accent/20">04. selected work</span>
         </div>
         <h2 className="section-title">Featured Projects</h2>
         <p className="font-mono text-[0.9rem] text-muted -mt-4 max-w-2xl leading-relaxed">

@@ -1,6 +1,6 @@
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaInstagram, FaTerminal } from "react-icons/fa";
 
-export default function Footer() {
+export default function Footer({ onOpenTerminal }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -43,6 +43,13 @@ export default function Footer() {
           >
             <FaInstagram size={16} />
           </a>
+          <button
+            onClick={onOpenTerminal}
+            className="p-2 rounded border border-[var(--border)] text-muted hover:text-accent hover:border-accent/40 transition-all duration-300"
+            aria-label="Open Terminal"
+          >
+            <FaTerminal size={16} />
+          </button>
         </div>
 
         <div className="font-mono text-[0.65rem] text-dimmed">
