@@ -53,10 +53,10 @@ export default function Hero({ theme }) {
           {/* Status Badge */}
           <motion.div
             {...fadeUp(0.1)}
-            className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-accent2/25 bg-accent2/5"
+            className="inline-flex items-center gap-2 self-start px-4 py-2 rounded-full border border-accent2/60 bg-accent2/15 shadow-[0_0_15px_var(--accent2-soft-glow)] backdrop-blur-sm"
           >
-            <span className="w-2 h-2 rounded-full bg-accent2 animate-pulse-dot" />
-            <span className="font-mono text-[0.8rem] text-accent2/80 tracking-wide">
+            <span className="w-2.5 h-2.5 rounded-full bg-accent2 animate-pulse-dot shadow-[0_0_8px_var(--accent2-soft-glow)]" />
+            <span className="font-mono text-[0.85rem] text-accent2 font-semibold tracking-wide">
               Open to opportunities | B.Tech CSE | 2023-2027
             </span>
           </motion.div>
@@ -71,10 +71,10 @@ export default function Hero({ theme }) {
           </motion.h1>
 
           {/* Role */}
-          <motion.div {...fadeUp(0.3)} className="flex items-center gap-3">
+          <motion.div {...fadeUp(0.3)} className="flex flex-wrap items-center gap-3">
             <div className="w-6 h-[1px] bg-accent" />
             <span className="font-mono text-[1.1rem] sm:text-[1.2rem] text-accent font-semibold">
-              Full Stack Web Developer
+              Java Full Stack Developer | Software Engineer
             </span>
           </motion.div>
 
@@ -83,10 +83,7 @@ export default function Hero({ theme }) {
             {...fadeUp(0.4)}
             className="font-mono text-[1rem] text-muted leading-[1.8] border-l-2 border-dimmed pl-4 max-w-md"
           >
-            I build efficient and responsive full-stack web applications - from
-            Java Servlets &amp; Spring Boot backends to clean frontend UIs.
-            Currently sharpening my skills through DSA and exploring scalable
-            architectures.
+            I build scalable web applications and backend systems - from Java Servlets &amp; Spring Boot to clean React frontend UIs. Seeking Software Engineer and Java Developer roles, while sharpening my skills in Data Structures and Algorithms.
           </motion.p>
 
           {/* Buttons */}

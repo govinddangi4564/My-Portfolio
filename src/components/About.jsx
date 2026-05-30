@@ -57,9 +57,9 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.2 }} 
           className="flex-1 font-body text-[1rem] text-muted leading-[1.8] space-y-4 text-center md:text-left"
         >
-          <p>I&apos;m a B.Tech CSE student at Prestige Institute of Engineering Management and Research, Indore — focused on building efficient and responsive web applications that deliver real value to users.</p>
-          <p>I work across the full stack with Java, Spring Boot, Servlets, JSP, and MySQL on the backend, and HTML, CSS, JavaScript, and React on the frontend. My recent work includes an NLP-based resume screening system (HireDrift) and a full-stack pathology lab management system with 2FA auth.</p>
-          <p>Currently I&apos;m strengthening my backend skills with Spring Boot, practicing Data Structures &amp; Algorithms, and actively participating in workshops like GCP Codelabs and Flutter &amp; Firebase training.</p>
+          <p>Hi, I&apos;m Govind Dangi, a Java Full Stack Developer and Software Engineer skilled in Java, Spring Boot, Hibernate, React, MySQL, REST APIs, and Full Stack Web Development.</p>
+          <p>I build scalable web applications and backend systems. My recent work includes an NLP-based resume screening system (HireDrift) and a full-stack pathology lab management system with 2FA auth.</p>
+          <p>Currently I&apos;m seeking Software Engineer, Java Developer, Backend Developer, and Full Stack Developer opportunities, while actively participating in workshops like GCP Codelabs and strengthening my Problem Solving and Data Structures &amp; Algorithms skills.</p>
         </motion.div>
       </div>
 

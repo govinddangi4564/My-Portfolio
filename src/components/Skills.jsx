@@ -5,6 +5,7 @@ import { skillTabs } from '../data/skills';
 const tabKeys = [
   { key: 'frontend', label: 'Frontend' },
   { key: 'backend', label: 'Backend' },
+  { key: 'core', label: 'Core Concepts' },
   { key: 'tools', label: 'Tools & Languages' },
 ];
 

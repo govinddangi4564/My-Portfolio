@@ -60,6 +60,12 @@ export const skillTabs = {
     { name: "MySQL", icon: <SiMysql className="text-[#4479A1]" />, level: 82 },
     { name: "REST API", icon: <TbApi className="text-accent2" />, level: 80 },
   ],
+  core: [
+    { name: "Data Structures", icon: <FaCode className="text-accent" />, level: 80 },
+    { name: "OOP", icon: <FaJava className="text-[#007396]" />, level: 85 },
+    { name: "Problem Solving", icon: <TbApi className="text-[#FF6C37]" />, level: 80 },
+    { name: "Database Mgmt", icon: <FaDatabase className="text-[#4479A1]" />, level: 80 },
+  ],
   tools: [
     {
       name: "Git/GitHub",
