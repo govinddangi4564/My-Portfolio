@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Background3D from "./components/Background3D";
+import ParticleGridBackground from "./components/ParticleGridBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import StatsBar from "./components/StatsBar";
@@ -74,16 +75,18 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-text relative">
+    <div className="min-h-screen bg-bg text-text relative overflow-hidden">
       <CustomCursor />
       <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
       <Background3D theme={theme} />
+      <ParticleGridBackground theme={theme} />
       <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
 
       <AnimatePresence mode="wait">
         {currentPage === "home" ? (
           <motion.main
             key="home"
+            className="relative z-10"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
@@ -100,6 +103,7 @@ export default function App() {
         ) : (
           <motion.main
             key="all-projects"
+            className="relative z-10"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -110,7 +114,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
+      <div className="relative z-10">
+        <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
+      </div>
     </div>
   );
 }
