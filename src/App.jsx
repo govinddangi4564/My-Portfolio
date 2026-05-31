@@ -14,18 +14,20 @@ import AllProjectsPage from "./components/AllProjectsPage";
 import CustomCursor from "./components/CustomCursor";
 import Terminal from "./components/Terminal";
 import GithubStats from "./components/GithubStats";
+import useMediaQuery from "./hooks/useMediaQuery";
 
 export default function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+  });
   const [currentPage, setCurrentPage] = useState("home");
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const isTouchDevice = useMediaQuery("(pointer: coarse)");
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const useLightVisuals = isTouchDevice || prefersReducedMotion;
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setTheme(savedTheme);
-    }
-
     // Simple hash-based router
     const handleHashChange = () => {
       if (window.location.hash === "#all-projects") {
@@ -78,8 +80,8 @@ export default function App() {
     <div className="min-h-screen bg-bg text-text relative overflow-hidden">
       <CustomCursor />
       <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
-      <Background3D theme={theme} />
-      <ParticleGridBackground theme={theme} />
+      <Background3D theme={theme} disabled={useLightVisuals} />
+      <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
       <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
 
       <AnimatePresence mode="wait">
@@ -92,7 +94,7 @@ export default function App() {
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.3 }}
           >
-            <Hero theme={theme} />
+            <Hero theme={theme} lightVisuals={useLightVisuals} />
             <StatsBar />
             <About />
             <GithubStats theme={theme} />

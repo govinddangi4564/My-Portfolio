@@ -79,8 +79,10 @@ function MovingStars({ theme }) {
   );
 }
 
-export default function Background3D({ theme }) {
+export default function Background3D({ theme, disabled = false }) {
   const colors = getColors(theme);
+
+  if (disabled) return null;
 
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none opacity-50">

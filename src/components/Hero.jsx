@@ -9,6 +9,7 @@ import {
   FaLinkedin,
   FaInstagram,
 } from "react-icons/fa";
+import { FaThreads } from "react-icons/fa6";
 import { SiSpringboot, SiMysql } from "react-icons/si";
 
 const fadeUp = (delay = 0) => ({
@@ -25,7 +26,7 @@ const techPills = [
   { name: "Python", icon: FaPython },
 ];
 
-export default function Hero({ theme }) {
+export default function Hero({ theme, lightVisuals = false }) {
   return (
     <section
       id="hero"
@@ -133,6 +134,15 @@ export default function Hero({ theme }) {
               >
                 <FaInstagram size={18} />
               </a>
+              <a
+                href="https://www.threads.net/@govind_dangiii"
+                target="_blank"
+                rel="noopener noreferrer me"
+                className="p-2.5 rounded border border-dimmed text-muted hover:border-accent2 hover:text-accent2 hover:shadow-[0_0_12px_var(--accent2-soft-glow)] transition-all duration-300"
+                aria-label="Threads"
+              >
+                <FaThreads size={18} />
+              </a>
             </div>
           </motion.div>
 
@@ -164,9 +174,8 @@ export default function Hero({ theme }) {
           className="flex flex-col items-center gap-4"
         >
           {/* Rotating Rings */}
-          <div className="relative w-[300px] h-[300px] sm:w-[340px] sm:h-[340px] flex items-center justify-center">
-            {/* Canvas */}
-            <HeroCanvas theme={theme} />
+          <div className="relative w-[340px] h-[340px] max-w-[92vw] max-h-[92vw] sm:w-[410px] sm:h-[410px] lg:w-[460px] lg:h-[460px] flex items-center justify-center">
+            <HeroCanvas theme={theme} lightMode={lightVisuals} />
           </div>
 
           {/* Canvas Label */}

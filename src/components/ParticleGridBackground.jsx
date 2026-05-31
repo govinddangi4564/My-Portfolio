@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const PARTICLE_COUNT = 430;
+const PARTICLE_COUNT = 700;
 
 function colorWithAlpha(color, alpha) {
   if (!color) return `rgba(255,255,255,${alpha})`;
@@ -27,7 +27,7 @@ function colorWithAlpha(color, alpha) {
   return value;
 }
 
-export default function ParticleGridBackground({ theme }) {
+export default function ParticleGridBackground({ theme, lightMode = false }) {
   const canvasRef = useRef(null);
   const particlesRef = useRef([]);
   const burstsRef = useRef([]);
@@ -46,7 +46,13 @@ export default function ParticleGridBackground({ theme }) {
     let lastTime = 0;
 
     const buildParticles = () => {
-      const count = window.innerWidth < 640 ? 145 : PARTICLE_COUNT;
+      const count = lightMode
+        ? window.innerWidth < 640
+          ? 55
+          : 120
+        : window.innerWidth < 640
+          ? 145
+          : PARTICLE_COUNT;
       particlesRef.current = Array.from({ length: count }, (_, index) => {
         const isLarge = index % 28 === 0;
 
@@ -69,7 +75,7 @@ export default function ParticleGridBackground({ theme }) {
       const bounds = canvas.getBoundingClientRect();
       width = bounds.width;
       height = bounds.height;
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      pixelRatio = Math.min(window.devicePixelRatio || 1, lightMode ? 1.25 : 2);
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
@@ -181,6 +187,11 @@ export default function ParticleGridBackground({ theme }) {
     };
 
     const draw = (time = 0) => {
+      if (lightMode && time - lastTime < 32) {
+        rafRef.current = window.requestAnimationFrame(draw);
+        return;
+      }
+
       const styles = getComputedStyle(document.documentElement);
       const accent = styles.getPropertyValue("--accent").trim();
       const accent2 = styles.getPropertyValue("--accent2").trim();
@@ -289,18 +300,22 @@ export default function ParticleGridBackground({ theme }) {
     resize();
     rafRef.current = window.requestAnimationFrame(draw);
     window.addEventListener("resize", resize);
-    window.addEventListener("pointerdown", createBurst);
+    if (!lightMode) {
+      window.addEventListener("pointerdown", createBurst);
+    }
 
     return () => {
       window.removeEventListener("resize", resize);
-      window.removeEventListener("pointerdown", createBurst);
+      if (!lightMode) {
+        window.removeEventListener("pointerdown", createBurst);
+      }
       if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
     };
-  }, [theme]);
+  }, [theme, lightMode]);
 
   return (
     <div
-      className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-80"
+      className={`fixed inset-0 z-0 pointer-events-none overflow-hidden ${lightMode ? "opacity-45" : "opacity-80"}`}
       aria-hidden="true"
       style={{
         backgroundImage:

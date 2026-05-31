@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function CustomCursor() {
+  const getCursorEnabled = () =>
+    window.matchMedia('(pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const [enabled, setEnabled] = useState(getCursorEnabled);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
@@ -27,14 +32,25 @@ export default function CustomCursor() {
       }
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
+    const pointerMedia = window.matchMedia('(pointer: fine)');
+    const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateEnabled = () => setEnabled(getCursorEnabled());
+
+    pointerMedia.addEventListener('change', updateEnabled);
+    motionMedia.addEventListener('change', updateEnabled);
+
+    if (enabled) {
+      window.addEventListener('mousemove', updateMousePosition);
+      window.addEventListener('mouseover', handleMouseOver);
+    }
 
     return () => {
+      pointerMedia.removeEventListener('change', updateEnabled);
+      motionMedia.removeEventListener('change', updateEnabled);
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [enabled]);
 
   const variants = {
     default: {
@@ -69,13 +85,13 @@ export default function CustomCursor() {
 
   // Hide the default cursor on desktop, but keep it on touch devices
   useEffect(() => {
-    if (window.matchMedia('(pointer: fine)').matches) {
-      document.body.style.cursor = 'none';
-      const clickableElements = document.querySelectorAll('a, button');
-      clickableElements.forEach((el) => {
-        el.style.cursor = 'none';
-      });
-    }
+    if (!enabled) return undefined;
+
+    document.body.style.cursor = 'none';
+    const clickableElements = document.querySelectorAll('a, button');
+    clickableElements.forEach((el) => {
+      el.style.cursor = 'none';
+    });
     
     return () => {
       document.body.style.cursor = 'auto';
@@ -84,7 +100,9 @@ export default function CustomCursor() {
         el.style.cursor = 'pointer';
       });
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

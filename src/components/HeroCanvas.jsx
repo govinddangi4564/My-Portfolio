@@ -116,7 +116,7 @@ function SkillNode({
 }
 
 /* -- Revolving Skills Orbit --------------------- */
-function OrbitingSkills({ colors }) {
+function OrbitingSkills({ colors, lightMode = false }) {
   const iconBase = "https://cdn.iconscout.com/icon/free/png-256/";
 
   const skills = [
@@ -204,7 +204,7 @@ function OrbitingSkills({ colors }) {
 }
 
 /* -- Connection Lines --------------------------- */
-function ConnectionLines({ colors }) {
+function ConnectionLines({ colors, lightMode = false }) {
   const skills = [
     { radius: 2.6, speed: 0.3, angle: 0, yOffset: 0.6 },
     { radius: 3.0, speed: 0.2, angle: Math.PI / 4, yOffset: -0.6 },
@@ -262,8 +262,13 @@ function ConnectionLines({ colors }) {
 }
 
 /* -- Decorative Orbit Rings --------------------- */
-function OrbitRings({ colors }) {
+function OrbitRings({ colors, lightMode = false }) {
   const ref = useRef();
+  const radialSegments = lightMode ? 48 : 100;
+  const tubeSegments = lightMode ? 16 : 32;
+  const baseOpacity = lightMode ? 0.28 : 0.15;
+  const accentOpacity = lightMode ? 0.34 : 0.2;
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x += delta * 0.05;
@@ -273,21 +278,27 @@ function OrbitRings({ colors }) {
   return (
     <group ref={ref}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[3.2, 0.02, 32, 100]} />
+        <torusGeometry args={[3.2, lightMode ? 0.016 : 0.02, tubeSegments, radialSegments]} />
         <meshBasicMaterial
           color={colors.wireframe}
           transparent
-          opacity={0.15}
+          opacity={baseOpacity}
         />
       </mesh>
       <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[3.6, 0.02, 32, 100]} />
-        <meshBasicMaterial color={colors.accent} transparent opacity={0.2} />
+        <torusGeometry args={[3.6, lightMode ? 0.014 : 0.02, tubeSegments, radialSegments]} />
+        <meshBasicMaterial color={colors.accent} transparent opacity={accentOpacity} />
       </mesh>
       <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
-        <torusGeometry args={[2.9, 0.02, 32, 100]} />
-        <meshBasicMaterial color={colors.accent2} transparent opacity={0.2} />
+        <torusGeometry args={[2.9, lightMode ? 0.014 : 0.02, tubeSegments, radialSegments]} />
+        <meshBasicMaterial color={colors.accent2} transparent opacity={accentOpacity} />
       </mesh>
+      {lightMode && (
+        <mesh rotation={[Math.PI / 2.6, -Math.PI / 5, 0]}>
+          <torusGeometry args={[2.35, 0.012, 12, 44]} />
+          <meshBasicMaterial color={colors.wireframe} transparent opacity={0.24} />
+        </mesh>
+      )}
     </group>
   );
 }
@@ -342,7 +353,7 @@ function DataParticles({ count = 30, colors }) {
 }
 
 /* -- Main Scene Composition -------------------- */
-function Scene({ theme }) {
+function Scene({ theme, lightMode = false }) {
   const colors = getColors(theme);
 
   return (
@@ -360,32 +371,32 @@ function Scene({ theme }) {
       />
 
       <CentralCore colors={colors} />
-      <OrbitingSkills colors={colors} />
-      <ConnectionLines colors={colors} />
-      <OrbitRings colors={colors} />
-      <DataParticles count={80} colors={colors} />
+      <OrbitingSkills colors={colors} lightMode={lightMode} />
+      <ConnectionLines colors={colors} lightMode={lightMode} />
+      <OrbitRings colors={colors} lightMode={lightMode} />
+      <DataParticles count={lightMode ? 24 : 80} colors={colors} />
     </>
   );
 }
 
 /* -- Exported Canvas Component ------------------ */
-export default function HeroCanvas({ theme }) {
+export default function HeroCanvas({ theme, lightMode = false }) {
   return (
     <div
-      className="w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] mx-auto relative cursor-grab active:cursor-grabbing"
+      className="h-full w-full mx-auto relative cursor-grab active:cursor-grabbing"
       style={{ touchAction: "none" }}
     >
       <Canvas
         camera={{ position: [0, 0, 11], fov: 45 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true }}
+        dpr={lightMode ? [1, 1] : [1, 1.25]}
+        gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
       >
-        <Scene theme={theme} />
+        <Scene theme={theme} lightMode={lightMode} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}
           autoRotate
-          autoRotateSpeed={1.0}
+          autoRotateSpeed={lightMode ? 0.55 : 1.0}
         />
       </Canvas>
     </div>
