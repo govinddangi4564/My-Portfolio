@@ -10,30 +10,33 @@ const stats = [
 export default function StatsBar() {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5 }}
-      className="border-y border-[var(--border)]"
+      transition={{ duration: 0.6 }}
+      className="max-w-[1100px] mx-auto px-4 sm:px-6 -mt-8 mb-8 relative z-10"
     >
-      <div className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {stats.map((stat, i) => (
-          <div
+          <motion.div
             key={stat.label}
-            className={`stat-hover-border flex flex-col items-center justify-center py-8 px-4 text-center transition-colors duration-300 hover:bg-accent/[0.03] ${
-              i < stats.length - 1 ? 'md:border-r border-[var(--border)]' : ''
-            } ${i < 2 ? 'border-b md:border-b-0 border-[var(--border)]' : ''}`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
+            whileHover={{ y: -4, scale: 1.02 }}
+            className="glass-panel flex flex-col items-center justify-center py-6 px-4 text-center group cursor-default"
           >
-            <span className="font-mono text-[1.8rem] font-extrabold text-accent2 leading-none">
+            <span className="font-syne text-[2rem] font-extrabold bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent leading-none">
               {stat.num}
             </span>
-            <span className="font-mono text-[0.85rem] uppercase tracking-[1.5px] text-text mt-2">
+            <span className="font-mono text-[0.78rem] uppercase tracking-[1.2px] text-text mt-2">
               {stat.label}
             </span>
-            <span className="font-mono text-[0.72rem] text-dimmed mt-0.5">
+            <span className="font-body text-[0.72rem] text-dimmed mt-0.5">
               {stat.sub}
             </span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </motion.section>

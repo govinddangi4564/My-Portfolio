@@ -20,6 +20,10 @@ export default {
       fontFamily: {
         syne: ['Syne', 'sans-serif'],
         mono: ['Space Mono', 'monospace'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      backgroundImage: {
+        'mesh-gradient': 'var(--mesh-gradient)',
       },
       animation: {
         'spin-slow': 'spin 20s linear infinite',

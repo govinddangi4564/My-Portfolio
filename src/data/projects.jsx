@@ -12,6 +12,8 @@ export const projects = [
   {
     id: 1,
     name: "PathLab Manager",
+    shortName: "PathLab",
+    color: "#f43f5e",
     icon: (
       <motion.div
         animate={{ y: [0, -6, 0] }}
@@ -44,6 +46,7 @@ export const projects = [
     id: 2,
     name: "HireDrift — Resume Screening with NLP",
     shortName: "HireDrift",
+    color: "#22d3ee",
     icon: (
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.8, 1, 0.8] }}
@@ -78,6 +81,7 @@ export const projects = [
     id: 3,
     name: "Logistics & Shipment Tracker AI",
     shortName: "ShipTrack AI",
+    color: "#8b5cf6",
     icon: (
       <motion.div
         animate={{ rotate: [-6, 6, -6], y: [0, -2, 0] }}
@@ -109,6 +113,8 @@ export const projects = [
   {
     id: 4,
     name: "E-Commerce System",
+    shortName: "E-Commerce",
+    color: "#10b981",
     icon: (
       <motion.div
         animate={{ x: [0, 4, -4, 0], y: [0, -3, 0] }}

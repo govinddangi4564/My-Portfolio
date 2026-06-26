@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import Timeline from './Timeline';
+import TiltCard from './TiltCard';
+import SectionParallax from './SectionParallax';
 
 import { Coffee, ShieldCheck, Layout, GraduationCap } from 'lucide-react';
 
@@ -12,7 +14,7 @@ const highlights = [
 
 export default function About() {
   return (
-    <section id="about" className="section-container">
+    <SectionParallax id="about" className="section-container">
       <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5 }}>
         <span className="section-tag">01. about me</span>
         <h2 className="section-title">Who I Am</h2>
@@ -74,13 +76,11 @@ export default function About() {
         {/* RIGHT — Highlight Cards */}
         <div className="flex flex-col gap-4 mt-10">
           {highlights.map((h, i) => (
-            <motion.div
+            <TiltCard
               key={h.title}
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="p-5 rounded-lg border border-[var(--border)] bg-card hover:translate-x-1 hover:border-accent/40 transition-all duration-300 cursor-default"
+              maxTilt={8}
+              scale={1.02}
+              className="group p-5 rounded-xl glass-panel hover:border-accent/40 transition-all duration-300 cursor-default"
             >
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 mt-1">{h.icon}</div>
@@ -89,11 +89,11 @@ export default function About() {
                   <p className="font-body text-[0.92rem] text-muted mt-1 leading-relaxed">{h.body}</p>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           ))}
         </div>
         
       </div>
-    </section>
+    </SectionParallax>
   );
 }

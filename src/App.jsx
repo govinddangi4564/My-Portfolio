@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Background3D from "./components/Background3D";
+import AuroraBackground from "./components/AuroraBackground";
+import ScrollProgress from "./components/ScrollProgress";
 import ParticleGridBackground from "./components/ParticleGridBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -78,8 +80,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-bg text-text relative overflow-hidden">
+      <ScrollProgress />
       <CustomCursor />
       <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+      <AuroraBackground theme={theme} />
       <Background3D theme={theme} disabled={useLightVisuals} />
       <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
       <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
@@ -98,7 +102,7 @@ export default function App() {
             <StatsBar />
             <About />
             <GithubStats theme={theme} />
-            <Projects />
+            <Projects theme={theme} lightVisuals={useLightVisuals} />
             <Skills />
             <Contact />
           </motion.main>

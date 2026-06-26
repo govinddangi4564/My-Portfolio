@@ -315,7 +315,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
 
   return (
     <div
-      className={`fixed inset-0 z-0 pointer-events-none overflow-hidden ${lightMode ? "opacity-45" : "opacity-80"}`}
+      className={`fixed inset-0 z-0 pointer-events-none overflow-hidden ${lightMode ? "opacity-25" : "opacity-50"}`}
       aria-hidden="true"
       style={{
         backgroundImage:

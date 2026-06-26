@@ -62,8 +62,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-surface">
+    <section id="contact" className="relative">
       <div className="section-container">
+        <div className="glass-panel p-8 sm:p-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -187,6 +188,7 @@ export default function Contact() {
               )}
             </button>
           </motion.form>
+        </div>
         </div>
       </div>
     </section>

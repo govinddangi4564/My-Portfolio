@@ -20,121 +20,107 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal }) {
   }, []);
 
   return (
-    <motion.nav
+    <motion.header
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 glass transition-all duration-300 ${
-        scrolled ? 'border-b border-[var(--border)]' : ''
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 px-4 pt-4"
     >
-      <div className="max-w-[1100px] mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <a href="#" className="font-mono text-[1.1rem] select-none">
-          <span className="text-accent/60">[</span>
-          <span className="text-accent2">GD</span>
-          <span className="text-accent2">.dev</span>
-          <span className="text-accent/60">]</span>
-          <span className="inline-block w-[2px] h-[16px] bg-accent2 ml-1 align-middle"
-                style={{ animation: 'blink-cursor 1s step-end infinite' }} />
+      <nav
+        className={`nav-pill max-w-[1100px] mx-auto flex items-center justify-between px-5 py-3 transition-all duration-500 ${
+          scrolled ? 'shadow-[0_8px_32px_rgba(0,0,0,0.25)]' : ''
+        }`}
+      >
+        <a href="#" className="font-syne text-[1.15rem] font-bold select-none tracking-tight">
+          <span className="text-accent">G</span>
+          <span className="text-text">D</span>
+          <span className="text-dimmed font-mono text-[0.7rem] ml-1">.dev</span>
         </a>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="nav-link font-mono text-[0.85rem] uppercase tracking-[1.5px] text-muted hover:text-accent2 transition-colors duration-200"
+              className="nav-link font-mono text-[0.78rem] uppercase tracking-[1.2px] text-muted hover:text-text px-4 py-2 rounded-full hover:bg-accent/10 transition-all duration-200"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* CTA + Mobile Toggle */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <button
             onClick={onToggleTheme}
-            className="inline-flex items-center gap-1 font-mono text-[0.78rem] uppercase tracking-[1px] px-3 py-2 border border-[var(--border)] text-muted rounded hover:border-accent2/40 hover:text-accent2 transition-all duration-300"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 transition-all duration-300"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
             {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-            <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
 
           <button
             onClick={onOpenTerminal}
-            className="hidden md:inline-flex items-center gap-2 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 bg-accent/10 border border-accent/40 text-accent rounded hover:bg-accent hover:text-[var(--on-accent)] shadow-[0_0_15px_var(--hero-glow-1)] hover:shadow-[0_0_25px_var(--hero-glow-1)] transition-all duration-300 relative group"
+            className="hidden md:inline-flex items-center gap-1.5 font-mono text-[0.75rem] uppercase tracking-wide px-4 py-2 rounded-full bg-accent/15 border border-accent/30 text-accent hover:bg-accent hover:text-[var(--on-accent)] transition-all duration-300"
           >
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent2 rounded-full animate-ping opacity-75"></span>
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent2 rounded-full"></span>
-            <TerminalIcon size={16} />
+            <TerminalIcon size={14} />
             Terminal
           </button>
 
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-1 font-mono text-[0.85rem] uppercase tracking-[1px] px-4 py-2 border border-accent2 text-accent2 rounded hover:bg-accent2 hover:text-[var(--on-accent)] transition-all duration-300"
+            className="hidden md:inline-flex items-center font-mono text-[0.75rem] uppercase tracking-wide px-4 py-2 rounded-full btn-glow text-[var(--on-accent)]"
           >
-            Hire Me <span className="text-sm">↗</span>
+            Hire Me
           </a>
 
-          {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-muted hover:text-accent2 transition-colors"
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-full text-muted hover:text-accent2 transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden border-t border-[var(--border)] bg-[var(--bg)]"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden nav-pill max-w-[1100px] mx-auto mt-2 overflow-hidden"
           >
-            <div className="flex flex-col items-center gap-4 py-6">
+            <div className="flex flex-col items-center gap-1 py-4">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="font-mono text-[0.78rem] uppercase tracking-[1.5px] text-muted hover:text-accent2 transition-colors"
+                  className="font-mono text-[0.8rem] uppercase tracking-[1.5px] text-muted hover:text-accent2 transition-colors py-2.5 px-6"
                 >
                   {link.label}
                 </a>
               ))}
               <button
-                onClick={() => {
-                  setMobileOpen(false);
-                  onOpenTerminal();
-                }}
-                className="font-mono text-[0.78rem] uppercase tracking-[1.5px] text-accent flex items-center gap-2 py-2"
+                onClick={() => { setMobileOpen(false); onOpenTerminal(); }}
+                className="font-mono text-[0.78rem] uppercase tracking-[1.5px] text-accent flex items-center gap-2 py-2.5"
               >
-                <TerminalIcon size={16} />
-                Open Terminal
+                <TerminalIcon size={15} />
+                Terminal
               </button>
-              
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="font-mono text-[0.72rem] uppercase tracking-[1px] px-5 py-2 border border-accent2 text-accent2 rounded hover:bg-accent2 hover:text-[var(--on-accent)] transition-all mt-2"
+                className="font-mono text-[0.72rem] uppercase tracking-wide px-6 py-2.5 rounded-full btn-glow text-[var(--on-accent)] mt-2"
               >
-                Hire Me ↗
+                Hire Me
               </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </motion.header>
   );
 }

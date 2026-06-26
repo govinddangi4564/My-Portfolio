@@ -1,72 +1,149 @@
-import { motion } from "framer-motion";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../data/projects";
 import ProjectCard from "./ProjectCard";
-import { ArrowRight, Sparkles } from "lucide-react";
-import MagneticWrapper from "./MagneticWrapper";
+import ProjectsShowcase3D from "./ProjectsShowcase3D";
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function Projects() {
+export default function Projects({ theme, lightVisuals = false }) {
   const displayProjects = projects.slice(0, 4);
+  const [selected, setSelected] = useState(0);
+
+  const goNext = useCallback(() => {
+    setSelected((prev) => (prev + 1) % displayProjects.length);
+  }, [displayProjects.length]);
+
+  const goPrev = useCallback(() => {
+    setSelected((prev) => (prev - 1 + displayProjects.length) % displayProjects.length);
+  }, [displayProjects.length]);
+
+  const activeProject = displayProjects[selected];
 
   return (
-    <section id="projects" className="section-container relative z-10 pt-10">
+    <section id="projects" className="section-container relative z-10">
       <motion.div
-        initial={{ opacity: 0, y: 50, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ type: "spring", stiffness: 80, damping: 20 }}
-        className="relative z-10 mb-12"
+        transition={{ duration: 0.6 }}
+        className="mb-10"
       >
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="text-accent w-4 h-4" />
-          <span className="section-tag m-0 text-accent bg-accent/10 border-accent/20">04. selected work</span>
+          <span className="section-tag m-0">04. selected work</span>
         </div>
         <h2 className="section-title">Featured Projects</h2>
-        <p className="font-mono text-[0.9rem] text-muted -mt-4 max-w-2xl leading-relaxed">
-          Real systems, real problems solved — not just tutorial clones. Every architecture decision here was made with scale in mind.
+        <p className="font-body text-[1rem] text-muted -mt-4 max-w-2xl leading-relaxed">
+          Explore my work in 3D — click panels, use arrows, or hover cards below.
+          Real systems built with scale in mind.
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 relative z-10">
+      {/* Interactive 3D Showcase */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.7 }}
+        className="mb-8 relative"
+      >
+        <ProjectsShowcase3D
+          projects={displayProjects}
+          selected={selected}
+          onSelect={setSelected}
+          theme={theme}
+          lightMode={lightVisuals}
+        />
+
+        <div className="absolute top-1/2 -translate-y-1/2 left-3 right-3 flex justify-between pointer-events-none z-30">
+          <button
+            type="button"
+            data-cursor="pointer"
+            onClick={goPrev}
+            className="pointer-events-auto w-10 h-10 rounded-full glass-panel flex items-center justify-center text-muted hover:text-accent hover:border-accent/50 transition-all"
+            aria-label="Previous project"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            type="button"
+            data-cursor="pointer"
+            onClick={goNext}
+            className="pointer-events-auto w-10 h-10 rounded-full glass-panel flex items-center justify-center text-muted hover:text-accent hover:border-accent/50 transition-all"
+            aria-label="Next project"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+      </motion.div>
+
+      {/* Active project quick view */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeProject.id}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -16 }}
+          transition={{ duration: 0.35 }}
+          className="glass-panel p-5 sm:p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-4 border-accent/20"
+        >
+          <div className="flex items-center gap-4 flex-1">
+            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
+              {activeProject.icon}
+            </div>
+            <div>
+              <p className="font-mono text-[0.65rem] uppercase tracking-widest text-accent mb-1">
+                Now viewing
+              </p>
+              <h3 className="font-syne text-[1.2rem] font-bold text-text">
+                {activeProject.name}
+              </h3>
+            </div>
+          </div>
+          <p className="font-body text-[0.85rem] text-muted sm:max-w-md sm:text-right">
+            {activeProject.description.slice(0, 120)}…
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* 3D tilt project cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
         {displayProjects.map((p, i) => (
           <motion.div
             key={p.id}
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: i * 0.1 }}
-            className={`w-full h-full ${p.featured ? "md:col-span-2" : ""}`}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            className={`h-full ${p.featured ? "md:col-span-2" : ""}`}
+            style={{ perspective: "1200px" }}
           >
-            <ProjectCard project={p} featured={p.featured} />
+            <ProjectCard
+              project={p}
+              featured={p.featured}
+              active={selected === i}
+              onFocus={() => setSelected(i)}
+            />
           </motion.div>
         ))}
       </div>
 
       {projects.length > 4 && (
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-          className="flex justify-center relative z-10"
+          transition={{ duration: 0.5 }}
+          className="flex justify-center"
         >
-          <MagneticWrapper magneticStrength={0.15}>
-            <a
-              href="#all-projects"
-              className="inline-flex items-center gap-3 font-mono text-[0.85rem] uppercase tracking-wider px-8 py-4 bg-[var(--surface)] text-text rounded-full border border-[var(--border)] hover:border-accent hover:text-accent hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.3)] transition-all duration-500 group overflow-hidden relative"
-            >
-              {/* Button Inner Sweep Effect */}
-              <div className="absolute inset-0 bg-accent/10 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-              
-              <span className="relative z-10 font-bold">Explore All Vaulted Projects</span>
-              <motion.span
-                animate={{ x: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="relative z-10"
-              >
-                <ArrowRight size={16} />
-              </motion.span>
-            </a>
-          </MagneticWrapper>
+          <a
+            href="#all-projects"
+            data-cursor="pointer"
+            className="inline-flex items-center gap-3 font-mono text-[0.82rem] uppercase tracking-wider px-8 py-4 rounded-full btn-glow text-[var(--on-accent)] group"
+          >
+            <span>Explore All Projects</span>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          </a>
         </motion.div>
       )}
     </section>

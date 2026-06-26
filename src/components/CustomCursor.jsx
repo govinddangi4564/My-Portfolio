@@ -1,123 +1,87 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const getCursorEnabled = () =>
-    window.matchMedia('(pointer: fine)').matches &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const [enabled, setEnabled] = useState(getCursorEnabled);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const mouse = useRef({ x: -100, y: -100 });
+  const ring = useRef({ x: -100, y: -100 });
+  const hovering = useRef(false);
+  const enabledRef = useRef(false);
 
   useEffect(() => {
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    const pointerFine = window.matchMedia("(pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      // Expand cursor on clickable elements or elements with data-cursor="pointer"
-      if (
-        target.tagName.toLowerCase() === 'button' ||
-        target.tagName.toLowerCase() === 'a' ||
-        target.closest('button') ||
-        target.closest('a') ||
-        target.closest('.magnetic') ||
-        target.getAttribute('data-cursor') === 'pointer'
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+    const isEnabled = () =>
+      pointerFine.matches && !reducedMotion.matches;
+
+    const applyHover = (target) => {
+      hovering.current = !!(
+        target.closest("a, button, [data-cursor='pointer'], .tilt-card, .project-3d-node")
+      );
+      if (ringRef.current) {
+        ringRef.current.classList.toggle("cursor-ring--hover", hovering.current);
       }
     };
 
-    const pointerMedia = window.matchMedia('(pointer: fine)');
-    const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateEnabled = () => setEnabled(getCursorEnabled());
+    let rafId = 0;
 
-    pointerMedia.addEventListener('change', updateEnabled);
-    motionMedia.addEventListener('change', updateEnabled);
+    const tick = () => {
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.55;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.55;
 
-    if (enabled) {
-      window.addEventListener('mousemove', updateMousePosition);
-      window.addEventListener('mouseover', handleMouseOver);
-    }
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0) translate(-50%, -50%)`;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const enable = () => {
+      if (!isEnabled() || enabledRef.current) return;
+      enabledRef.current = true;
+      document.body.classList.add("custom-cursor-active");
+      window.addEventListener("mousemove", onMove, { passive: true });
+      window.addEventListener("mouseover", onOver, { passive: true });
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const disable = () => {
+      if (!enabledRef.current) return;
+      enabledRef.current = false;
+      document.body.classList.remove("custom-cursor-active");
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseover", onOver);
+      cancelAnimationFrame(rafId);
+    };
+
+    const onMove = (e) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      }
+    };
+
+    const onOver = (e) => applyHover(e.target);
+
+    const onMediaChange = () => (isEnabled() ? enable() : disable());
+
+    if (isEnabled()) enable();
+
+    pointerFine.addEventListener("change", onMediaChange);
+    reducedMotion.addEventListener("change", onMediaChange);
 
     return () => {
-      pointerMedia.removeEventListener('change', updateEnabled);
-      motionMedia.removeEventListener('change', updateEnabled);
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
+      disable();
+      pointerFine.removeEventListener("change", onMediaChange);
+      reducedMotion.removeEventListener("change", onMediaChange);
+      document.body.classList.remove("custom-cursor-active");
     };
-  }, [enabled]);
-
-  const variants = {
-    default: {
-      x: mousePosition.x - 10,
-      y: mousePosition.y - 10,
-      width: 20,
-      height: 20,
-      backgroundColor: 'transparent',
-      border: '2px solid var(--accent)',
-      transition: {
-        type: 'spring',
-        mass: 0.1,
-        stiffness: 800,
-        damping: 30,
-      },
-    },
-    hover: {
-      x: mousePosition.x - 25,
-      y: mousePosition.y - 25,
-      width: 50,
-      height: 50,
-      backgroundColor: 'var(--accent-glow, rgba(124, 58, 237, 0.2))',
-      border: '1px solid var(--accent)',
-      transition: {
-        type: 'spring',
-        mass: 0.1,
-        stiffness: 800,
-        damping: 30,
-      },
-    },
-  };
-
-  // Hide the default cursor on desktop, but keep it on touch devices
-  useEffect(() => {
-    if (!enabled) return undefined;
-
-    document.body.style.cursor = 'none';
-    const clickableElements = document.querySelectorAll('a, button');
-    clickableElements.forEach((el) => {
-      el.style.cursor = 'none';
-    });
-    
-    return () => {
-      document.body.style.cursor = 'auto';
-      const clickableElements = document.querySelectorAll('a, button');
-      clickableElements.forEach((el) => {
-        el.style.cursor = 'pointer';
-      });
-    };
-  }, [enabled]);
-
-  if (!enabled) return null;
+  }, []);
 
   return (
-    <>
-      <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        variants={variants}
-        animate={isHovering ? 'hover' : 'default'}
-      />
-      {/* Small dot that follows instantly */}
-      <div 
-        className="fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-[10000] hidden md:block"
-        style={{
-          transform: `translate(${mousePosition.x - 4}px, ${mousePosition.y - 4}px)`,
-        }}
-      />
-    </>
+    <div className="custom-cursor hidden md:block" aria-hidden="true">
+      <div ref={ringRef} className="cursor-ring" />
+      <div ref={dotRef} className="cursor-dot" />
+    </div>
   );
 }
