@@ -152,7 +152,7 @@ export default function Background3D({ theme, disabled = false }) {
 
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none opacity-70">
-      <Canvas camera={{ position: [0, 0, 1], fov: 60 }}>
+      <Canvas camera={{ position: [0, 0, 1], fov: 60 }} dpr={[1, 1]} gl={{ antialias: false, powerPreference: "high-performance" }}>
         <Scene theme={theme} />
       </Canvas>
     </div>

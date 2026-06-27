@@ -1,5 +1,6 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useInView } from "framer-motion";
 import {
   Float,
   OrbitControls,
@@ -235,9 +236,12 @@ function Scene({ theme, lightMode, mouse }) {
 
 export default function HeroCanvas({ theme, lightMode = false }) {
   const mouse = useRef({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { margin: "200px" });
 
   return (
     <div
+      ref={containerRef}
       className="h-full w-full relative cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden glass-panel"
       style={{ touchAction: "none" }}
       onMouseMove={(e) => {
@@ -248,19 +252,21 @@ export default function HeroCanvas({ theme, lightMode = false }) {
         };
       }}
     >
-      <Canvas
-        camera={{ position: [0, 0, 11], fov: 42 }}
-        dpr={lightMode ? [1, 1] : [1, 1.5]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      >
-        <Scene theme={theme} lightMode={lightMode} mouse={mouse} />
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={lightMode ? 0.6 : 1.2}
-        />
-      </Canvas>
+      {isInView && (
+        <Canvas
+          camera={{ position: [0, 0, 11], fov: 42 }}
+          dpr={[1, 1]}
+          gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+        >
+          <Scene theme={theme} lightMode={lightMode} mouse={mouse} />
+          <OrbitControls
+            enableZoom={false}
+            enablePan={false}
+            autoRotate
+            autoRotateSpeed={lightMode ? 0.6 : 1.2}
+          />
+        </Canvas>
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, FileText, Code2, Briefcase, Phone } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Earth3D from "./Earth3D";
 
 const socials = [
   {
@@ -18,7 +19,7 @@ const socials = [
   { icon: FileText, label: "Resume", href: "/govind-resume.pdf" },
 ];
 
-export default function Contact() {
+export default function Contact({ lightVisuals }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
 
@@ -57,8 +58,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative">
-      <div className="section-container">
+    <section id="contact" className="relative overflow-hidden">
+      <Earth3D lightMode={lightVisuals} />
+      <div className="section-container relative z-10">
         <div className="glass-panel p-8 sm:p-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

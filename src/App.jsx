@@ -105,8 +105,8 @@ export default function App() {
               <About />
               <GithubStats theme={theme} />
               <Projects theme={theme} lightVisuals={useLightVisuals} />
-              <Skills />
-              <Contact />
+              <Skills lightVisuals={useLightVisuals} />
+              <Contact lightVisuals={useLightVisuals} />
             </motion.main>
           ) : (
             <motion.main
