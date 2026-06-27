@@ -103,8 +103,8 @@ function ScrollCamera() {
 
   useFrame(() => {
     const scrollY = window.scrollY;
-    camera.position.y = scrollY * 0.002;
-    camera.position.z = 1 + scrollY * 0.001;
+    camera.position.y = scrollY * 0.004;
+    camera.position.z = 1 + scrollY * 0.0025;
   });
 
   return null;

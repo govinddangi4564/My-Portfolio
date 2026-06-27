@@ -26,81 +26,89 @@ function ProjectPanel({
 
     if (selected) {
       meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.08;
+    } else {
+      // Smoothly return to 0 when deselected
+      meshRef.current.rotation.y += (0 - meshRef.current.rotation.y) * 0.1;
     }
   });
 
   return (
     <group
-      ref={meshRef}
       position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}
-      rotation={[0, angle + Math.PI, 0]}
+      rotation={[0, angle, 0]}
     >
-      <mesh
-        className="project-3d-node"
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect(index);
-        }}
-        onPointerOver={(e) => e.stopPropagation()}
-        onPointerOut={(e) => e.stopPropagation()}
-      >
-        <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={4}>
-          {selected ? (
-            <meshPhysicalMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={0.45}
-              metalness={0.85}
-              roughness={0.15}
-              transparent
-              opacity={0.95}
-            />
-          ) : (
-            <meshPhysicalMaterial
-              color={theme === "light" ? "#e2e8f0" : "#1e293b"}
-              metalness={0.7}
-              roughness={0.25}
-              transparent
-              opacity={0.88}
-            />
-          )}
-        </RoundedBox>
-      </mesh>
+      <group ref={meshRef}>
+        <mesh
+          className="project-3d-node"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(index);
+          }}
+          onPointerOver={(e) => e.stopPropagation()}
+          onPointerOut={(e) => e.stopPropagation()}
+        >
+          <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={4}>
+            {selected ? (
+              <meshPhysicalMaterial
+                color={color}
+                emissive={color}
+                emissiveIntensity={0.6}
+                metalness={0.9}
+                roughness={0.05}
+                clearcoat={1}
+                clearcoatRoughness={0.1}
+                transparent
+                opacity={0.95}
+              />
+            ) : (
+              <meshPhysicalMaterial
+                color={theme === "light" ? "#e2e8f0" : "#0f172a"}
+                metalness={0.8}
+                roughness={0.2}
+                clearcoat={0.5}
+                clearcoatRoughness={0.2}
+                transparent
+                opacity={0.7}
+              />
+            )}
+          </RoundedBox>
+        </mesh>
 
-      {/* Glowing edge frame */}
-      <mesh position={[0, 0, 0.07]}>
-        <planeGeometry args={[2.5, 1.6]} />
-        <meshBasicMaterial color={color} transparent opacity={selected ? 0.35 : 0.12} />
-      </mesh>
+        {/* Glowing edge frame */}
+        <mesh position={[0, 0, 0.07]}>
+          <planeGeometry args={[2.5, 1.6]} />
+          <meshBasicMaterial color={color} transparent opacity={selected ? 0.35 : 0.12} />
+        </mesh>
 
-      <Text
-        position={[0, 0.25, 0.1]}
-        fontSize={0.18}
-        color={selected ? "#ffffff" : theme === "light" ? "#0f172a" : "#f8fafc"}
-        fontWeight="bold"
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={2}
-        textAlign="center"
-      >
-        {name}
-      </Text>
+        <Text
+          position={[0, 0.25, 0.1]}
+          fontSize={0.18}
+          color={selected ? "#ffffff" : theme === "light" ? "#0f172a" : "#f8fafc"}
+          fontWeight="bold"
+          anchorX="center"
+          anchorY="middle"
+          maxWidth={2}
+          textAlign="center"
+        >
+          {name}
+        </Text>
 
-      <Text
-        position={[0, -0.2, 0.1]}
-        fontSize={0.1}
-        color={color}
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={2}
-        textAlign="center"
-      >
-        {project.status?.toUpperCase() || "PROJECT"}
-      </Text>
+        <Text
+          position={[0, -0.2, 0.1]}
+          fontSize={0.1}
+          color={color}
+          anchorX="center"
+          anchorY="middle"
+          maxWidth={2}
+          textAlign="center"
+        >
+          {project.status?.toUpperCase() || "PROJECT"}
+        </Text>
 
-      {selected && (
-        <pointLight position={[0, 0, 1]} intensity={2} color={color} distance={4} />
-      )}
+        {selected && (
+          <pointLight position={[0, 0, 1]} intensity={2} color={color} distance={4} />
+        )}
+      </group>
     </group>
   );
 }
@@ -151,15 +159,15 @@ function CentralOrb({ theme }) {
         <icosahedronGeometry args={[0.55, 1]} />
         <MeshTransmissionMaterial
           backside
-          samples={4}
-          thickness={0.4}
-          chromaticAberration={0.15}
+          samples={8}
+          thickness={0.8}
+          chromaticAberration={0.3}
           anisotropy={0.3}
-          distortion={0.2}
-          distortionScale={0.15}
-          temporalDistortion={0.1}
+          distortion={0.5}
+          distortionScale={0.3}
+          temporalDistortion={0.2}
           iridescence={1}
-          iridescenceIOR={1.2}
+          iridescenceIOR={1.3}
           color={theme === "light" ? "#6366f1" : "#8b5cf6"}
         />
       </mesh>
@@ -224,16 +232,16 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
 }
 
 export default function ProjectsShowcase3D({ projects, selected, onSelect, theme, lightMode = false }) {
-  const displayProjects = useMemo(() => projects.slice(0, 4), [projects]);
+  const displayProjects = useMemo(() => projects, [projects]);
 
   return (
     <div className="relative w-full h-[380px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d">
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent2/5 pointer-events-none z-10" />
       <Canvas
         camera={{ position: [0, 0.5, 9], fov: 45 }}
-        dpr={lightMode ? [1, 1] : [1, 1.5]}
+        dpr={lightMode ? [1, 1] : [1, 2]}
         gl={{ antialias: true, alpha: true }}
-        style={{ touchAction: "none" }}
+        style={{ touchAction: "pan-y" }}
       >
         <Scene
           projects={displayProjects}

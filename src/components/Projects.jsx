@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { projects } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectsShowcase3D from "./ProjectsShowcase3D";
@@ -10,17 +10,41 @@ export default function Projects({ theme, lightVisuals = false }) {
   const [selected, setSelected] = useState(0);
 
   const goNext = useCallback(() => {
-    setSelected((prev) => (prev + 1) % displayProjects.length);
-  }, [displayProjects.length]);
+    setSelected((prev) => (prev + 1) % projects.length);
+  }, [projects.length]);
 
   const goPrev = useCallback(() => {
-    setSelected((prev) => (prev - 1 + displayProjects.length) % displayProjects.length);
-  }, [displayProjects.length]);
+    setSelected((prev) => (prev - 1 + projects.length) % projects.length);
+  }, [projects.length]);
 
-  const activeProject = displayProjects[selected];
+  const activeProject = projects[selected];
+
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const bgRotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const bgY2 = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
 
   return (
-    <section id="projects" className="section-container relative z-10">
+    <section id="projects" ref={containerRef} className="section-container relative z-10 perspective-1200">
+      
+      {/* Parallax Ambient Background Elements */}
+      {!lightVisuals && (
+        <motion.div
+          style={{ y: bgY, rotate: bgRotate }}
+          className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] pointer-events-none -z-10"
+        />
+      )}
+      {!lightVisuals && (
+        <motion.div
+          style={{ y: bgY2 }}
+          className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] bg-accent2/10 rounded-full blur-[80px] pointer-events-none -z-10"
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +72,7 @@ export default function Projects({ theme, lightVisuals = false }) {
         className="mb-8 relative"
       >
         <ProjectsShowcase3D
-          projects={displayProjects}
+          projects={projects}
           selected={selected}
           onSelect={setSelected}
           theme={theme}

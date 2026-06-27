@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, FileText, Code2, Briefcase, Phone } from "lucide-react";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const socials = [
   {
@@ -13,11 +13,6 @@ const socials = [
     icon: FaLinkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/govinddangi4564/",
-  },
-  {
-    icon: FaInstagram,
-    label: "Instagram",
-    href: "https://www.instagram.com/govind_dangiii/",
   },
   { icon: Phone, label: "Call", href: "tel:+917067624564" },
   { icon: FileText, label: "Resume", href: "/govind-resume.pdf" },
@@ -93,10 +88,10 @@ export default function Contact() {
                 reach me at
               </span>
               <a
-                href="mailto:govinddangi580@gmail.com"
+                href="mailto:govinddangi585@gmail.com"
                 className="block font-mono text-[0.85rem] text-accent2 mt-1 hover:underline"
               >
-                govinddangi580@gmail.com
+                govinddangi585@gmail.com
               </a>
               <a
                 href="tel:+917067624564"

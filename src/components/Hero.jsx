@@ -7,7 +7,6 @@ import {
   FaPython,
   FaGithub,
   FaLinkedin,
-  FaInstagram,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
 import { SiSpringboot, SiMysql } from "react-icons/si";
@@ -36,7 +35,7 @@ export default function Hero({ theme, lightVisuals = false }) {
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center">
         {/* LEFT: Text content */}
-        <div className="flex flex-col gap-6 lg:gap-7 order-2 lg:order-1 relative z-10">
+        <div className="flex flex-col gap-6 lg:gap-7 relative z-10">
           <motion.div
             {...fadeUp(0.1)}
             className="inline-flex items-center gap-2.5 self-start px-4 py-2 rounded-full glass-panel"
@@ -49,8 +48,9 @@ export default function Hero({ theme, lightVisuals = false }) {
           </motion.div>
 
           <motion.div {...fadeUp(0.2)}>
-            <p className="font-mono text-[0.75rem] uppercase tracking-[0.2em] text-accent mb-3">
-              Software Engineer & Developer
+            <p className="font-mono text-[0.75rem] uppercase tracking-[0.2em] text-accent mb-3 flex items-center gap-3">
+              <span className="w-8 h-[1px] bg-accent"></span>
+              Java Full Stack Developer | Software Engineer
             </p>
             <h1 className="font-syne text-[clamp(2.4rem,9vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.04em]">
               <span className="hero-gradient-text">Govind</span>
@@ -59,15 +59,14 @@ export default function Hero({ theme, lightVisuals = false }) {
             </h1>
           </motion.div>
 
-          <motion.p
+          <motion.div
             {...fadeUp(0.35)}
-            className="font-body text-[1.05rem] text-muted leading-relaxed max-w-lg"
+            className="pl-5 border-l-2 border-accent/40 font-body text-[1.05rem] text-muted leading-relaxed max-w-lg"
           >
-            I craft scalable full-stack systems — from{" "}
-            <span className="text-text font-medium">Java & Spring Boot</span> backends to{" "}
-            <span className="text-text font-medium">React</span> frontends. Building real
-            products, not tutorial clones.
-          </motion.p>
+            I build scalable web applications and backend systems - from{" "}
+            <span className="text-text font-medium">Java Servlets & Spring Boot</span> to clean{" "}
+            <span className="text-text font-medium">React</span> frontend UIs. Seeking Software Engineer and Java Developer roles, while sharpening my skills in Data Structures and Algorithms.
+          </motion.div>
 
           <motion.div
             {...fadeUp(0.45)}
@@ -93,7 +92,6 @@ export default function Hero({ theme, lightVisuals = false }) {
             {[
               { href: "https://github.com/govinddangi4564", icon: FaGithub, label: "GitHub" },
               { href: "https://www.linkedin.com/in/govinddangi4564/", icon: FaLinkedin, label: "LinkedIn" },
-              { href: "https://www.instagram.com/govind_dangiii/", icon: FaInstagram, label: "Instagram" },
               { href: "https://www.threads.net/@govind_dangiii", icon: FaThreads, label: "Threads" },
             ].map((social) => (
               <a
@@ -130,7 +128,7 @@ export default function Hero({ theme, lightVisuals = false }) {
           initial={{ opacity: 0, scale: 0.8, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="order-1 lg:order-2 flex flex-col items-center relative z-10"
+          className="flex flex-col items-center relative z-10"
         >
           <div className="relative w-full max-w-[520px] aspect-square">
             <div className="absolute inset-[-20%] rounded-full bg-gradient-to-br from-accent/20 via-transparent to-accent2/15 blur-3xl pointer-events-none" />

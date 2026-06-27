@@ -27,14 +27,12 @@ export default function ProjectCard({ project, featured = false, active = false,
 
   return (
     <TiltCard
-      maxTilt={active ? 18 : 12}
-      scale={active ? 1.04 : 1.02}
-      className={`group rounded-2xl glass-panel shadow-lg transition-all duration-400 relative w-full h-full cursor-pointer project-card-3d ${
+      scale={active ? 1.02 : 1.01}
+      className={`group rounded-2xl glass-surface shadow-lg transition-all duration-400 relative w-full h-full cursor-pointer ${
         active
-          ? "border-accent/60 shadow-[0_24px_60px_var(--card-hover-glow)] ring-1 ring-accent/30"
-          : "hover:border-accent/40 hover:shadow-[0_16px_40px_var(--card-hover-glow)]"
+          ? "border-accent/60 shadow-[0_30px_80px_var(--card-hover-glow)] ring-1 ring-accent/30"
+          : "hover:border-accent/40 hover:shadow-[0_20px_50px_var(--card-hover-glow)]"
       } ${cls}`}
-      style={{ willChange: "transform" }}
     >
       <div
         role="button"
@@ -57,8 +55,7 @@ export default function ProjectCard({ project, featured = false, active = false,
 
         {featured && (
           <div
-            className="relative flex items-center justify-center p-10 bg-[var(--surface)]/50 border-b sm:border-b-0 sm:border-r border-[var(--border)] min-h-[200px] rounded-t-2xl sm:rounded-tr-none sm:rounded-l-2xl z-10 overflow-hidden"
-            style={{ transform: "translateZ(30px)" }}
+            className="relative flex items-center justify-center p-10 bg-[var(--surface)]/30 border-b sm:border-b-0 sm:border-r border-[var(--border)] min-h-[200px] rounded-t-2xl sm:rounded-tr-none sm:rounded-l-2xl z-10 overflow-hidden"
           >
             <div className="scale-[2.2] transition-transform duration-500 group-hover:scale-[2.5] group-hover:-rotate-6 drop-shadow-2xl">
               {project.icon}
@@ -69,10 +66,7 @@ export default function ProjectCard({ project, featured = false, active = false,
           </div>
         )}
 
-        <div
-          className="p-6 sm:p-8 flex flex-col flex-1 relative z-10"
-          style={{ transform: "translateZ(40px)" }}
-        >
+        <div className="p-6 sm:p-8 flex flex-col flex-1 relative z-10">
           <div className="flex items-center justify-between mb-4">
             {!featured && (
               <div className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
@@ -95,7 +89,7 @@ export default function ProjectCard({ project, featured = false, active = false,
           </p>
 
           {project.metrics && (
-            <div className="flex gap-5 mb-5" style={{ transform: "translateZ(20px)" }}>
+            <div className="flex gap-5 mb-5">
               {project.metrics.map((m, i) => (
                 <div key={i} className="text-center">
                   <span className="block font-syne text-[1.15rem] font-bold text-accent2">
@@ -109,8 +103,8 @@ export default function ProjectCard({ project, featured = false, active = false,
             </div>
           )}
 
-          <div className="flex flex-wrap gap-2 mb-5" style={{ transform: "translateZ(20px)" }}>
-            {project.tags.slice(0, 5).map((tag) => (
+          <div className="flex flex-wrap gap-2 mb-5">
+            {project.tags.map((tag) => (
               <span
                 key={tag}
                 className="font-mono text-[0.68rem] px-2.5 py-1 rounded-md border border-[var(--border)] text-muted bg-[var(--surface)]/50"
@@ -118,17 +112,9 @@ export default function ProjectCard({ project, featured = false, active = false,
                 {tag}
               </span>
             ))}
-            {project.tags.length > 5 && (
-              <span className="font-mono text-[0.68rem] px-2.5 py-1 text-dimmed">
-                +{project.tags.length - 5}
-              </span>
-            )}
           </div>
 
-          <div
-            className="flex gap-3 mt-auto pt-4 border-t border-[var(--border)]"
-            style={{ transform: "translateZ(30px)" }}
-          >
+          <div className="flex gap-3 mt-auto pt-4 border-t border-[var(--border)]">
             {project.github && (
               <a
                 href={project.github}

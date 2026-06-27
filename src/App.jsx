@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ReactLenis } from "lenis/react";
 import Background3D from "./components/Background3D";
 import AuroraBackground from "./components/AuroraBackground";
 import ScrollProgress from "./components/ScrollProgress";
@@ -79,50 +80,52 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-text relative overflow-hidden">
-      <ScrollProgress />
-      <CustomCursor />
-      <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
-      <AuroraBackground theme={theme} />
-      <Background3D theme={theme} disabled={useLightVisuals} />
-      <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
-      <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
+    <ReactLenis root>
+      <div className="min-h-screen bg-bg text-text relative overflow-hidden">
+        <ScrollProgress />
+        <CustomCursor />
+        <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+        <AuroraBackground theme={theme} />
+        <Background3D theme={theme} disabled={useLightVisuals} />
+        <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
+        <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
 
-      <AnimatePresence mode="wait">
-        {currentPage === "home" ? (
-          <motion.main
-            key="home"
-            className="relative z-10"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Hero theme={theme} lightVisuals={useLightVisuals} />
-            <StatsBar />
-            <About />
-            <GithubStats theme={theme} />
-            <Projects theme={theme} lightVisuals={useLightVisuals} />
-            <Skills />
-            <Contact />
-          </motion.main>
-        ) : (
-          <motion.main
-            key="all-projects"
-            className="relative z-10"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <AllProjectsPage />
-          </motion.main>
-        )}
-      </AnimatePresence>
+        <AnimatePresence mode="wait">
+          {currentPage === "home" ? (
+            <motion.main
+              key="home"
+              className="relative z-10"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Hero theme={theme} lightVisuals={useLightVisuals} />
+              <StatsBar />
+              <About />
+              <GithubStats theme={theme} />
+              <Projects theme={theme} lightVisuals={useLightVisuals} />
+              <Skills />
+              <Contact />
+            </motion.main>
+          ) : (
+            <motion.main
+              key="all-projects"
+              className="relative z-10"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AllProjectsPage />
+            </motion.main>
+          )}
+        </AnimatePresence>
 
-      <div className="relative z-10">
-        <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
+        <div className="relative z-10">
+          <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
+        </div>
       </div>
-    </div>
+    </ReactLenis>
   );
 }

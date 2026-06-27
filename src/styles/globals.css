@@ -498,3 +498,42 @@ textarea {
     font-size: 1.5rem;
   }
 }
+
+/* ============================================
+   PREMIUM 3D & SCROLL UTILITIES
+   ============================================ */
+.glass-surface {
+  background: var(--card);
+  backdrop-filter: blur(25px) saturate(2);
+  -webkit-backdrop-filter: blur(25px) saturate(2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Lenis Scroll Styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
