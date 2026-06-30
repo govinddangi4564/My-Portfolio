@@ -32,6 +32,8 @@ function ProjectPanel({
     }
   });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <group
       position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}
@@ -47,7 +49,7 @@ function ProjectPanel({
           onPointerOver={(e) => e.stopPropagation()}
           onPointerOut={(e) => e.stopPropagation()}
         >
-          <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={4}>
+          <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={isMobile ? 2 : 4}>
             {selected ? (
               <meshPhysicalMaterial
                 color={color}
@@ -153,13 +155,15 @@ function CentralOrb({ theme }) {
     }
   });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <Float speed={2} floatIntensity={0.6}>
       <mesh ref={ref}>
         <icosahedronGeometry args={[0.55, 1]} />
         <MeshTransmissionMaterial
-          backside
-          samples={8}
+          backside={!isMobile}
+          samples={isMobile ? 3 : 8}
           thickness={0.8}
           chromaticAberration={0.3}
           anisotropy={0.3}
@@ -214,7 +218,7 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
       />
 
       {!lightMode && (
-        <Sparkles count={60} scale={10} size={2} speed={0.4} color="#22d3ee" opacity={0.5} />
+        <Sparkles count={typeof window !== 'undefined' && window.innerWidth < 768 ? 30 : 60} scale={10} size={2} speed={0.4} color="#22d3ee" opacity={0.5} />
       )}
 
       {/* Floor reflection grid */}
@@ -234,12 +238,14 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
 export default function ProjectsShowcase3D({ projects, selected, onSelect, theme, lightMode = false }) {
   const displayProjects = useMemo(() => projects, [projects]);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div className="relative w-full h-[380px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d">
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent2/5 pointer-events-none z-10" />
       <Canvas
         camera={{ position: [0, 0.5, 9], fov: 45 }}
-        dpr={lightMode ? [1, 1] : [1, 1.5]}
+        dpr={lightMode || isMobile ? [1, 1] : [1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ touchAction: "pan-y" }}
       >

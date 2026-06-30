@@ -34,15 +34,17 @@ function CentralCore({ colors, mouse }) {
     }
   });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <Float speed={2.5} rotationIntensity={0.6} floatIntensity={1.2}>
       <group ref={coreRef}>
         <mesh ref={glowRef} scale={1.3}>
-          <sphereGeometry args={[0.7, 32, 32]} />
+          <sphereGeometry args={[0.7, isMobile ? 16 : 32, isMobile ? 16 : 32]} />
           <meshBasicMaterial color={colors.accent} transparent opacity={0.08} />
         </mesh>
         <mesh>
-          <icosahedronGeometry args={[0.65, 2]} />
+          <icosahedronGeometry args={[0.65, isMobile ? 1 : 2]} />
           <MeshDistortMaterial
             color={colors.accent}
             emissive={colors.accent}
@@ -149,7 +151,8 @@ function OrbitRings({ colors, lightMode = false }) {
     }
   });
 
-  const radialSegments = lightMode ? 48 : 100;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const radialSegments = lightMode || isMobile ? 48 : 100;
 
   return (
     <group ref={ref}>
@@ -216,6 +219,8 @@ function DataParticles({ count = 60, colors }) {
 function Scene({ theme, lightMode, mouse }) {
   const colors = getColors(theme);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <>
       <ambientLight intensity={theme === "light" ? 0.5 : 0.35} />
@@ -226,9 +231,9 @@ function Scene({ theme, lightMode, mouse }) {
       <CentralCore colors={colors} mouse={mouse} />
       <OrbitingSkills colors={colors} />
       <OrbitRings colors={colors} lightMode={lightMode} />
-      <DataParticles count={lightMode ? 24 : 60} colors={colors} />
+      <DataParticles count={lightMode || isMobile ? 24 : 60} colors={colors} />
       {!lightMode && (
-        <DreiSparkles count={80} scale={8} size={1.5} speed={0.3} color={colors.accent2} opacity={0.6} />
+        <DreiSparkles count={isMobile ? 30 : 80} scale={8} size={1.5} speed={0.3} color={colors.accent2} opacity={0.6} />
       )}
     </>
   );

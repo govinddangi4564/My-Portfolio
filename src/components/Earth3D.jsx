@@ -7,6 +7,8 @@ import * as THREE from 'three';
 function Globe() {
   const meshRef = useRef();
   const outerRef = useRef();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const segments = isMobile ? 16 : 32;
 
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -22,7 +24,7 @@ function Globe() {
     <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
       <group>
         {/* Core Wireframe */}
-        <Sphere ref={meshRef} args={[2.2, 32, 32]}>
+        <Sphere ref={meshRef} args={[2.2, segments, segments]}>
           <meshBasicMaterial 
             color="#00e6ff" 
             wireframe 
@@ -33,12 +35,12 @@ function Globe() {
         </Sphere>
         
         {/* Inner solid sphere to block back lines */}
-        <Sphere args={[2.15, 32, 32]}>
+        <Sphere args={[2.15, segments, segments]}>
           <meshBasicMaterial color="#020617" />
         </Sphere>
         
         {/* Outer glowing shell */}
-        <Sphere ref={outerRef} args={[2.4, 16, 16]}>
+        <Sphere ref={outerRef} args={[2.4, isMobile ? 12 : 16, isMobile ? 12 : 16]}>
           <meshBasicMaterial 
             color="#a5b4fc" 
             wireframe 
@@ -59,7 +61,7 @@ export default function Earth3D({ lightMode = false }) {
   if (lightMode) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto cursor-grab active:cursor-grabbing hidden lg:block">
+    <div ref={containerRef} className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto cursor-grab active:cursor-grabbing">
       {isInView && (
         <Canvas camera={{ position: [0, 0, 7], fov: 45 }} dpr={[1, 1]} gl={{ antialias: false, powerPreference: "high-performance" }}>
           <ambientLight intensity={0.5} />

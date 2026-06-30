@@ -42,10 +42,12 @@ function GlowingBlob({ color, position, scale, speed = 1.5, distort = 0.35 }) {
     }
   });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <Float speed={2} rotationIntensity={0.4} floatIntensity={1.2}>
       <mesh ref={mesh} position={position} scale={scale}>
-        <icosahedronGeometry args={[1, 4]} />
+        <icosahedronGeometry args={[1, isMobile ? 2 : 4]} />
         <MeshDistortMaterial
           color={color}
           emissive={color}
@@ -119,9 +121,11 @@ function MovingStars({ theme }) {
     }
   });
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <group ref={ref} visible={theme === "dark"}>
-      <Stars radius={80} depth={40} count={3000} factor={3} saturation={0} fade speed={0.5} />
+      <Stars radius={80} depth={40} count={isMobile ? 800 : 3000} factor={3} saturation={0} fade speed={0.5} />
     </group>
   );
 }

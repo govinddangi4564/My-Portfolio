@@ -46,12 +46,13 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     let lastTime = 0;
 
     const buildParticles = () => {
-      const count = lightMode
+      const isMobile = window.innerWidth < 768;
+      const count = lightMode || isMobile
         ? window.innerWidth < 640
-          ? 55
-          : 120
+          ? 40
+          : 60
         : window.innerWidth < 640
-          ? 145
+          ? 60
           : PARTICLE_COUNT;
       particlesRef.current = Array.from({ length: count }, (_, index) => {
         const isLarge = index % 28 === 0;
@@ -75,8 +76,9 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       const bounds = canvas.getBoundingClientRect();
       width = bounds.width;
       height = bounds.height;
-      // Cap pixelRatio at 1.5 instead of 2 to ensure it doesn't lag on mobile devices
-      pixelRatio = Math.min(window.devicePixelRatio || 1, lightMode ? 1.25 : 1.5);
+      const isMobile = window.innerWidth < 768;
+      // Cap pixelRatio at 1 on mobile to ensure smooth performance
+      pixelRatio = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : (lightMode ? 1.25 : 1.5));
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
@@ -135,6 +137,9 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     };
 
     const createBurst = (event) => {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) return;
+      
       const burstCount = 50;
       const boltCount = 7;
       const now = performance.now();
