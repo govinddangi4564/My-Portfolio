@@ -75,7 +75,8 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       const bounds = canvas.getBoundingClientRect();
       width = bounds.width;
       height = bounds.height;
-      pixelRatio = Math.min(window.devicePixelRatio || 1, lightMode ? 1.25 : 2);
+      // Cap pixelRatio at 1.5 instead of 2 to ensure it doesn't lag on mobile devices
+      pixelRatio = Math.min(window.devicePixelRatio || 1, lightMode ? 1.25 : 1.5);
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);

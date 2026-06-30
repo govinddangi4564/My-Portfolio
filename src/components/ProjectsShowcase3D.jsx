@@ -239,8 +239,8 @@ export default function ProjectsShowcase3D({ projects, selected, onSelect, theme
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent2/5 pointer-events-none z-10" />
       <Canvas
         camera={{ position: [0, 0.5, 9], fov: 45 }}
-        dpr={lightMode ? [1, 1] : [1, 2]}
-        gl={{ antialias: true, alpha: true }}
+        dpr={lightMode ? [1, 1] : [1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ touchAction: "pan-y" }}
       >
         <Scene

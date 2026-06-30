@@ -28,7 +28,8 @@ export default function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const isTouchDevice = useMediaQuery("(pointer: coarse)");
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const useLightVisuals = isTouchDevice || prefersReducedMotion;
+  // Removed isTouchDevice to enable full features on mobile
+  const useLightVisuals = prefersReducedMotion;
 
   useEffect(() => {
     // Simple hash-based router
