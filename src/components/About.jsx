@@ -75,7 +75,7 @@ export default function About() {
 
         {/* RIGHT — Highlight Cards */}
         <div className="flex flex-col gap-4 mt-10">
-          {highlights.map((h, i) => (
+          {highlights.map((h) => (
             <TiltCard
               key={h.title}
               maxTilt={8}

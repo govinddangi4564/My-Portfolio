@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Stars } from "@react-three/drei";
-import * as THREE from "three";
+
 
 const getColors = (theme) => ({
   accent: theme === "light" ? "#6366f1" : "#8b5cf6",
@@ -20,13 +20,26 @@ function MouseParallaxGroup({ children }) {
   });
 
   useEffect(() => {
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const onResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+    };
+
     const onMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 0.4;
-      const y = (e.clientY / window.innerHeight - 0.5) * 0.25;
+      const x = (e.clientX / width - 0.5) * 0.35;
+      const y = (e.clientY / height - 0.5) * 0.2;
       target.current = { x, y: -y };
     };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return <group ref={group}>{children}</group>;
@@ -37,27 +50,25 @@ function GlowingBlob({ color, position, scale, speed = 1.5, distort = 0.35 }) {
 
   useFrame((state) => {
     if (mesh.current) {
-      mesh.current.rotation.x = state.clock.elapsedTime * 0.15 * speed;
-      mesh.current.rotation.z = state.clock.elapsedTime * 0.1 * speed;
+      mesh.current.rotation.x = state.clock.elapsedTime * 0.12 * speed;
+      mesh.current.rotation.z = state.clock.elapsedTime * 0.08 * speed;
     }
   });
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
   return (
-    <Float speed={2} rotationIntensity={0.4} floatIntensity={1.2}>
+    <Float speed={1.8} rotationIntensity={0.3} floatIntensity={1.0}>
       <mesh ref={mesh} position={position} scale={scale}>
-        <icosahedronGeometry args={[1, isMobile ? 2 : 4]} />
+        <icosahedronGeometry args={[1, 2]} />
         <MeshDistortMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={0.35}
-          roughness={0.15}
-          metalness={0.85}
+          emissiveIntensity={0.3}
+          roughness={0.2}
+          metalness={0.8}
           distort={distort}
-          speed={2}
+          speed={1.5}
           transparent
-          opacity={0.55}
+          opacity={0.5}
         />
       </mesh>
     </Float>
@@ -69,15 +80,15 @@ function TorusAccent({ color, position, rotation }) {
 
   useFrame((_, delta) => {
     if (ref.current) {
-      ref.current.rotation.x += delta * 0.2;
-      ref.current.rotation.z += delta * 0.15;
+      ref.current.rotation.x += delta * 0.15;
+      ref.current.rotation.z += delta * 0.1;
     }
   });
 
   return (
     <mesh ref={ref} position={position} rotation={rotation}>
-      <torusGeometry args={[2.5, 0.04, 16, 100]} />
-      <meshBasicMaterial color={color} transparent opacity={0.2} />
+      <torusGeometry args={[2.5, 0.04, 8, 48]} />
+      <meshBasicMaterial color={color} transparent opacity={0.18} />
     </mesh>
   );
 }
@@ -87,7 +98,7 @@ function FloatingRings({ colors }) {
 
   useFrame((_, delta) => {
     if (ref.current) {
-      ref.current.rotation.y += delta * 0.05;
+      ref.current.rotation.y += delta * 0.04;
     }
   });
 
@@ -101,12 +112,10 @@ function FloatingRings({ colors }) {
 }
 
 function ScrollCamera() {
-  const { camera } = useThree();
-
-  useFrame(() => {
+  useFrame((state) => {
     const scrollY = window.scrollY;
-    camera.position.y = scrollY * 0.004;
-    camera.position.z = 1 + scrollY * 0.0025;
+    state.camera.position.y = scrollY * 0.0035;
+    state.camera.position.z = 1 + scrollY * 0.002;
   });
 
   return null;
@@ -117,7 +126,7 @@ function MovingStars({ theme }) {
 
   useFrame((_, delta) => {
     if (ref.current) {
-      ref.current.rotation.y -= delta * 0.02;
+      ref.current.rotation.y -= delta * 0.015;
     }
   });
 
@@ -125,7 +134,7 @@ function MovingStars({ theme }) {
 
   return (
     <group ref={ref} visible={theme === "dark"}>
-      <Stars radius={80} depth={40} count={isMobile ? 800 : 3000} factor={3} saturation={0} fade speed={0.5} />
+      <Stars radius={70} depth={35} count={isMobile ? 350 : 1000} factor={2.5} saturation={0} fade speed={0.4} />
     </group>
   );
 }
@@ -136,14 +145,14 @@ function Scene({ theme }) {
   return (
     <>
       <ambientLight intensity={theme === "light" ? 0.4 : 0.25} />
-      <pointLight position={[10, 10, 10]} intensity={1.2} color={colors.accent} />
-      <pointLight position={[-10, -5, -5]} intensity={0.8} color={colors.accent2} />
+      <pointLight position={[10, 10, 10]} intensity={1.0} color={colors.accent} />
+      <pointLight position={[-10, -5, -5]} intensity={0.7} color={colors.accent2} />
       <ScrollCamera />
       <MovingStars theme={theme} />
       <MouseParallaxGroup>
         <GlowingBlob color={colors.accent} position={[-6, 2, -6]} scale={1.8} speed={1.2} />
-        <GlowingBlob color={colors.accent2} position={[7, -3, -8]} scale={1.4} speed={1.8} distort={0.45} />
-        <GlowingBlob color={colors.accent3} position={[2, 5, -10]} scale={1.0} speed={2.2} distort={0.5} />
+        <GlowingBlob color={colors.accent2} position={[7, -3, -8]} scale={1.4} speed={1.6} distort={0.4} />
+        <GlowingBlob color={colors.accent3} position={[2, 5, -10]} scale={1.0} speed={2.0} distort={0.45} />
         <FloatingRings colors={colors} />
       </MouseParallaxGroup>
       <fog attach="fog" args={[theme === "light" ? "#e8edf5" : "#030712", 8, 35]} />
@@ -162,3 +171,4 @@ export default function Background3D({ theme, disabled = false }) {
     </div>
   );
 }
+

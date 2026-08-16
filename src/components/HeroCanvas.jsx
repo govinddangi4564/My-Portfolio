@@ -170,27 +170,38 @@ function OrbitRings({ colors, lightMode = false }) {
   );
 }
 
+function createInitialParticles(count) {
+  const temp = [];
+  for (let i = 0; i < count; i++) {
+    const seed1 = Math.sin(i * 12.9898) * 43758.5453;
+    const rand1 = seed1 - Math.floor(seed1);
+    const seed2 = Math.sin((i + 1) * 78.233) * 43758.5453;
+    const rand2 = seed2 - Math.floor(seed2);
+    const seed3 = Math.sin((i + 2) * 45.164) * 43758.5453;
+    const rand3 = seed3 - Math.floor(seed3);
+    const seed4 = Math.sin((i + 3) * 93.387) * 43758.5453;
+    const rand4 = seed4 - Math.floor(seed4);
+
+    const t = rand1 * Math.PI * 2;
+    const r = 1.0 + rand2 * 3.5;
+    temp.push({
+      position: [Math.cos(t) * r, (rand3 - 0.5) * 5, Math.sin(t) * r],
+      factor: rand4,
+      speed: 0.005 + rand1 * 0.01,
+      xFactor: rand2 * 2 - 1,
+      yFactor: rand3 * 2 - 1,
+      zFactor: rand4 * 2 - 1,
+      scale: 0.01 + rand1 * 0.04,
+    });
+  }
+  return temp;
+}
+
 function DataParticles({ count = 60, colors }) {
   const mesh = useRef();
   const dummy = useMemo(() => new THREE.Object3D(), []);
+  const particles = useMemo(() => createInitialParticles(count), [count]);
 
-  const particles = useMemo(() => {
-    const temp = [];
-    for (let i = 0; i < count; i++) {
-      const t = Math.random() * Math.PI * 2;
-      const r = 1.0 + Math.random() * 3.5;
-      temp.push({
-        position: [Math.cos(t) * r, (Math.random() - 0.5) * 5, Math.sin(t) * r],
-        factor: Math.random(),
-        speed: 0.005 + Math.random() * 0.01,
-        xFactor: Math.random() * 2 - 1,
-        yFactor: Math.random() * 2 - 1,
-        zFactor: Math.random() * 2 - 1,
-        scale: 0.01 + Math.random() * 0.04,
-      });
-    }
-    return temp;
-  }, [count]);
 
   useFrame(() => {
     particles.forEach((particle, i) => {
@@ -242,15 +253,23 @@ function Scene({ theme, lightMode, mouse }) {
 export default function HeroCanvas({ theme, lightMode = false }) {
   const mouse = useRef({ x: 0, y: 0 });
   const containerRef = useRef(null);
+  const rectRef = useRef(null);
   const isInView = useInView(containerRef, { margin: "200px" });
+
+  const updateRect = () => {
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+  };
 
   return (
     <div
       ref={containerRef}
       className="h-full w-full relative cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden glass-panel"
       style={{ touchAction: "none" }}
+      onPointerEnter={updateRect}
       onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
+        const rect = rectRef.current || e.currentTarget.getBoundingClientRect();
         mouse.current = {
           x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
           y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
@@ -275,3 +294,4 @@ export default function HeroCanvas({ theme, lightMode = false }) {
     </div>
   );
 }
+

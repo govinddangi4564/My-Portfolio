@@ -12,9 +12,18 @@ export default function MagneticWrapper({ children, className = "", magneticStre
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e) => {
     if (!ref.current) return;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const { left, top, width, height } = rectRef.current || ref.current.getBoundingClientRect();
     const centerX = left + width / 2;
     const centerY = top + height / 2;
     
@@ -25,6 +34,7 @@ export default function MagneticWrapper({ children, className = "", magneticStre
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+    rectRef.current = null;
     x.set(0);
     y.set(0);
   };
@@ -33,7 +43,7 @@ export default function MagneticWrapper({ children, className = "", magneticStre
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       animate={{ scale: isHovered ? 1.05 : 1 }}
       style={{ x: springX, y: springY }}

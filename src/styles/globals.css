@@ -148,6 +148,8 @@ body {
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.5;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
   animation: aurora-float 20s ease-in-out infinite;
 }
 
@@ -187,13 +189,13 @@ body {
 
 .aurora-orb-light {
   opacity: 0.35;
-  filter: blur(100px);
+  filter: blur(80px);
 }
 
 @keyframes aurora-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -40px) scale(1.05); }
-  66% { transform: translate(-20px, 20px) scale(0.95); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(30px, -40px, 0) scale(1.05); }
+  66% { transform: translate3d(-20px, 20px, 0) scale(0.95); }
 }
 
 /* Subtle film grain */
@@ -211,8 +213,8 @@ body {
 /* Modern glass panel */
 .glass-panel {
   background: var(--card);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   box-shadow:
@@ -377,20 +379,18 @@ body {
   transform: scaleX(1);
 }
 
-/* Global transitions for theme-aware elements */
+/* Global transitions for theme-aware elements (avoiding transform conflicts with Framer Motion) */
 button,
 a,
 .bg-card,
 .bg-surface,
-.border,
 input,
 textarea {
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease,
-    shadow 0.3s ease,
-    transform 0.3s ease;
+    box-shadow 0.3s ease;
 }
 
 /* Stat gradient bottom border */
@@ -487,8 +487,22 @@ textarea {
 }
 
 /* ============================================
-   RESPONSIVE HELPERS
+   RESPONSIVE HELPERS & MOBILE GPU TUNING
    ============================================ */
+@media (max-width: 768px) {
+  .aurora-orb {
+    filter: blur(45px);
+    opacity: 0.35;
+  }
+
+  .glass-panel,
+  .glass-surface,
+  .glass {
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  }
+}
+
 @media (max-width: 640px) {
   .section-container {
     padding: 3rem 1rem;
@@ -504,10 +518,10 @@ textarea {
    ============================================ */
 .glass-surface {
   background: var(--card);
-  backdrop-filter: blur(25px) saturate(2);
-  -webkit-backdrop-filter: blur(25px) saturate(2);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .perspective-1200 {
@@ -517,6 +531,7 @@ textarea {
 .preserve-3d {
   transform-style: preserve-3d;
 }
+
 
 /* Lenis Scroll Styles */
 html.lenis, html.lenis body {

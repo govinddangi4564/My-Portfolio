@@ -3,27 +3,75 @@ import { motion } from 'framer-motion';
 import { Star, GitFork, Users, BookOpen } from 'lucide-react';
 import { GitHubCalendar } from 'react-github-calendar';
 
+const LANGUAGE_COLORS = {
+  JavaScript: '#f1e05a',
+  Java: '#b07219',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  TypeScript: '#3178c6',
+  Python: '#3572A5',
+};
+
+function getLanguageColor(lang) {
+  return LANGUAGE_COLORS[lang] || '#8b949e';
+}
+
 export default function GithubStats({ theme = 'dark' }) {
   const username = "govinddangi4564";
 
-  const [stats, setStats] = useState({
-    stars: 0,
-    repos: 0,
-    followers: 0,
-    following: 0,
-    languages: [],
-    loading: true
+
+  const [stats, setStats] = useState(() => {
+    try {
+      const cached = localStorage.getItem(`github_stats_${username}`);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Date.now() - parsed.timestamp < 2 * 60 * 60 * 1000) {
+          return { ...parsed.data, loading: false };
+        }
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+    return {
+      stars: 6,
+      repos: 18,
+      followers: 12,
+      following: 15,
+      languages: [
+        { name: "Java", percentage: 48, color: "#b07219" },
+        { name: "JavaScript", percentage: 32, color: "#f1e05a" },
+        { name: "Python", percentage: 12, color: "#3572A5" },
+        { name: "HTML", percentage: 8, color: "#e34c26" },
+      ],
+      loading: true,
+    };
   });
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchGitHubData = async () => {
       try {
+        // Check fresh cache
+        const cached = localStorage.getItem(`github_stats_${username}`);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Date.now() - parsed.timestamp < 2 * 60 * 60 * 1000) {
+            if (isMounted) {
+              setStats({ ...parsed.data, loading: false });
+            }
+            return;
+          }
+        }
+
         // Fetch user data
         const userRes = await fetch(`https://api.github.com/users/${username}`);
+        if (!userRes.ok) throw new Error("User fetch failed");
         const userData = await userRes.json();
 
         // Fetch repos data
         const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        if (!reposRes.ok) throw new Error("Repos fetch failed");
         const reposData = await reposRes.json();
 
         // Calculate total stars and language distribution
@@ -31,7 +79,7 @@ export default function GithubStats({ theme = 'dark' }) {
         const langCounts = {};
         let totalLangs = 0;
 
-        reposData.forEach(repo => {
+        reposData.forEach((repo) => {
           totalStars += repo.stargazers_count || 0;
 
           if (repo.language) {
@@ -44,42 +92,45 @@ export default function GithubStats({ theme = 'dark' }) {
         const topLanguages = Object.entries(langCounts)
           .map(([name, count]) => ({
             name,
-            percentage: Math.round((count / totalLangs) * 100),
-            color: getLanguageColor(name)
+            percentage: totalLangs > 0 ? Math.round((count / totalLangs) * 100) : 0,
+            color: getLanguageColor(name),
           }))
           .sort((a, b) => b.percentage - a.percentage)
-          .slice(0, 4); // Top 4 languages
+          .slice(0, 4);
 
-        setStats({
+        const newStats = {
           stars: totalStars,
           repos: userData.public_repos || 0,
           followers: userData.followers || 0,
           following: userData.following || 0,
           languages: topLanguages,
-          loading: false
-        });
+        };
 
+        try {
+          localStorage.setItem(
+            `github_stats_${username}`,
+            JSON.stringify({ data: newStats, timestamp: Date.now() })
+          );
+        } catch {
+          // localStorage full or restricted
+        }
+
+        if (isMounted) {
+          setStats({ ...newStats, loading: false });
+        }
       } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-        setStats(prev => ({ ...prev, loading: false }));
+        console.warn("GitHub API note (using fallback/cached data):", error.message);
+        if (isMounted) {
+          setStats((prev) => ({ ...prev, loading: false }));
+        }
       }
     };
 
     fetchGitHubData();
-  }, []);
-
-  // Helper function for language colors
-  const getLanguageColor = (lang) => {
-    const colors = {
-      JavaScript: '#f1e05a',
-      Java: '#b07219',
-      HTML: '#e34c26',
-      CSS: '#563d7c',
-      TypeScript: '#3178c6',
-      Python: '#3572A5'
+    return () => {
+      isMounted = false;
     };
-    return colors[lang] || '#8b949e';
-  };
+  }, []);
 
   return (
     <section id="github" className="section-container">

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { RoundedBox, Text, Float, Sparkles, MeshTransmissionMaterial } from "@react-three/drei";
+import { RoundedBox, Text, Float, Sparkles } from "@react-three/drei";
+import { useInView } from "framer-motion";
 import * as THREE from "three";
 
 const PROJECT_COLORS = ["#8b5cf6", "#22d3ee", "#f43f5e", "#10b981", "#f59e0b", "#6366f1"];
@@ -27,7 +28,6 @@ function ProjectPanel({
     if (selected) {
       meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.08;
     } else {
-      // Smoothly return to 0 when deselected
       meshRef.current.rotation.y += (0 - meshRef.current.rotation.y) * 0.1;
     }
   });
@@ -49,14 +49,14 @@ function ProjectPanel({
           onPointerOver={(e) => e.stopPropagation()}
           onPointerOut={(e) => e.stopPropagation()}
         >
-          <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={isMobile ? 2 : 4}>
+          <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={isMobile ? 1 : 2}>
             {selected ? (
               <meshPhysicalMaterial
                 color={color}
                 emissive={color}
                 emissiveIntensity={0.6}
-                metalness={0.9}
-                roughness={0.05}
+                metalness={0.8}
+                roughness={0.1}
                 clearcoat={1}
                 clearcoatRoughness={0.1}
                 transparent
@@ -65,12 +65,12 @@ function ProjectPanel({
             ) : (
               <meshPhysicalMaterial
                 color={theme === "light" ? "#e2e8f0" : "#0f172a"}
-                metalness={0.8}
-                roughness={0.2}
-                clearcoat={0.5}
-                clearcoatRoughness={0.2}
+                metalness={0.7}
+                roughness={0.3}
+                clearcoat={0.4}
+                clearcoatRoughness={0.3}
                 transparent
-                opacity={0.7}
+                opacity={0.75}
               />
             )}
           </RoundedBox>
@@ -155,24 +155,22 @@ function CentralOrb({ theme }) {
     }
   });
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const orbColor = theme === "light" ? "#6366f1" : "#8b5cf6";
 
   return (
     <Float speed={2} floatIntensity={0.6}>
       <mesh ref={ref}>
-        <icosahedronGeometry args={[0.55, 1]} />
-        <MeshTransmissionMaterial
-          backside={!isMobile}
-          samples={isMobile ? 3 : 8}
-          thickness={0.8}
-          chromaticAberration={0.3}
-          anisotropy={0.3}
-          distortion={0.5}
-          distortionScale={0.3}
-          temporalDistortion={0.2}
-          iridescence={1}
-          iridescenceIOR={1.3}
-          color={theme === "light" ? "#6366f1" : "#8b5cf6"}
+        <icosahedronGeometry args={[0.55, 2]} />
+        <meshPhysicalMaterial
+          color={orbColor}
+          emissive={orbColor}
+          emissiveIntensity={0.4}
+          roughness={0.1}
+          metalness={0.9}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          transparent
+          opacity={0.85}
         />
       </mesh>
     </Float>
@@ -180,27 +178,39 @@ function CentralOrb({ theme }) {
 }
 
 function Scene({ projects, selected, onSelect, theme, lightMode }) {
-  const { camera, gl } = useThree();
+  const { gl } = useThree();
   const mouse = useRef({ x: 0, y: 0 });
+  const rectRef = useRef(null);
 
   useEffect(() => {
     const canvas = gl.domElement;
+    const updateRect = () => {
+      rectRef.current = canvas.getBoundingClientRect();
+    };
+    updateRect();
+
     const onMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = rectRef.current || canvas.getBoundingClientRect();
       mouse.current = {
         x: ((e.clientX - rect.left) / rect.width - 0.5) * 0.6,
         y: ((e.clientY - rect.top) / rect.height - 0.5) * 0.3,
       };
     };
+
     canvas.addEventListener("mousemove", onMove, { passive: true });
-    return () => canvas.removeEventListener("mousemove", onMove);
+    window.addEventListener("resize", updateRect, { passive: true });
+    return () => {
+      canvas.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", updateRect);
+    };
   }, [gl]);
 
-  useFrame(() => {
-    camera.position.x += (mouse.current.x * 2 - camera.position.x) * 0.05;
-    camera.position.y += (-mouse.current.y * 1.5 + 0.5 - camera.position.y) * 0.05;
-    camera.lookAt(0, 0, 0);
+  useFrame((state) => {
+    state.camera.position.x += (mouse.current.x * 2 - state.camera.position.x) * 0.05;
+    state.camera.position.y += (-mouse.current.y * 1.5 + 0.5 - state.camera.position.y) * 0.05;
+    state.camera.lookAt(0, 0, 0);
   });
+
 
   return (
     <>
@@ -218,7 +228,7 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
       />
 
       {!lightMode && (
-        <Sparkles count={typeof window !== 'undefined' && window.innerWidth < 768 ? 30 : 60} scale={10} size={2} speed={0.4} color="#22d3ee" opacity={0.5} />
+        <Sparkles count={typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 40} scale={10} size={2} speed={0.4} color="#22d3ee" opacity={0.5} />
       )}
 
       {/* Floor reflection grid */}
@@ -237,26 +247,33 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
 
 export default function ProjectsShowcase3D({ projects, selected, onSelect, theme, lightMode = false }) {
   const displayProjects = useMemo(() => projects, [projects]);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { margin: "200px" });
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
-    <div className="relative w-full h-[380px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d">
+    <div
+      ref={containerRef}
+      className="relative w-full h-[380px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent2/5 pointer-events-none z-10" />
-      <Canvas
-        camera={{ position: [0, 0.5, 9], fov: 45 }}
-        dpr={lightMode || isMobile ? [1, 1] : [1, 1.5]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        style={{ touchAction: "pan-y" }}
-      >
-        <Scene
-          projects={displayProjects}
-          selected={selected}
-          onSelect={onSelect}
-          theme={theme}
-          lightMode={lightMode}
-        />
-      </Canvas>
+      {isInView && (
+        <Canvas
+          camera={{ position: [0, 0.5, 9], fov: 45 }}
+          dpr={lightMode || isMobile ? [1, 1] : [1, 1.25]}
+          gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+          style={{ touchAction: "pan-y" }}
+        >
+          <Scene
+            projects={displayProjects}
+            selected={selected}
+            onSelect={onSelect}
+            theme={theme}
+            lightMode={lightMode}
+          />
+        </Canvas>
+      )}
 
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20 pointer-events-none">
         {displayProjects.map((p, i) => (
@@ -281,3 +298,4 @@ export default function ProjectsShowcase3D({ projects, selected, onSelect, theme
     </div>
   );
 }
+

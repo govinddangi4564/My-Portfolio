@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactLenis } from "lenis/react";
 import Background3D from "./components/Background3D";
@@ -13,11 +13,13 @@ import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import AllProjectsPage from "./components/AllProjectsPage";
 import CustomCursor from "./components/CustomCursor";
-import Terminal from "./components/Terminal";
-import GithubStats from "./components/GithubStats";
 import useMediaQuery from "./hooks/useMediaQuery";
+
+// Lazy-load secondary components to keep initial bundle ultra lightweight
+const Terminal = lazy(() => import("./components/Terminal"));
+const GithubStats = lazy(() => import("./components/GithubStats"));
+const AllProjectsPage = lazy(() => import("./components/AllProjectsPage"));
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -28,8 +30,10 @@ export default function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const isTouchDevice = useMediaQuery("(pointer: coarse)");
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  // Removed isTouchDevice to enable full features on mobile
+
+  // On low-power/touch devices, disable background 3D WebGL to give full GPU budget to Hero 3D & Projects 3D
   const useLightVisuals = prefersReducedMotion;
+  const disableBackground3D = isTouchDevice || prefersReducedMotion;
 
   useEffect(() => {
     // Simple hash-based router
@@ -85,9 +89,13 @@ export default function App() {
       <div className="min-h-screen bg-bg text-text relative overflow-hidden">
         <ScrollProgress />
         <CustomCursor />
-        <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+        {isTerminalOpen && (
+          <Suspense fallback={null}>
+            <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+          </Suspense>
+        )}
         <AuroraBackground theme={theme} />
-        <Background3D theme={theme} disabled={useLightVisuals} />
+        <Background3D theme={theme} disabled={disableBackground3D} />
         <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
         <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
 
@@ -104,7 +112,9 @@ export default function App() {
               <Hero theme={theme} lightVisuals={useLightVisuals} />
               <StatsBar />
               <About />
-              <GithubStats theme={theme} />
+              <Suspense fallback={<div className="min-h-[200px]" />}>
+                <GithubStats theme={theme} />
+              </Suspense>
               <Projects theme={theme} lightVisuals={useLightVisuals} />
               <Skills lightVisuals={useLightVisuals} />
               <Contact lightVisuals={useLightVisuals} />
@@ -118,7 +128,9 @@ export default function App() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <AllProjectsPage />
+              <Suspense fallback={<div className="min-h-screen" />}>
+                <AllProjectsPage />
+              </Suspense>
             </motion.main>
           )}
         </AnimatePresence>
@@ -130,3 +142,4 @@ export default function App() {
     </ReactLenis>
   );
 }
+

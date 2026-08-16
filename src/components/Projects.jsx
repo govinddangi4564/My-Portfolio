@@ -11,11 +11,12 @@ export default function Projects({ theme, lightVisuals = false }) {
 
   const goNext = useCallback(() => {
     setSelected((prev) => (prev + 1) % projects.length);
-  }, [projects.length]);
+  }, []);
 
   const goPrev = useCallback(() => {
     setSelected((prev) => (prev - 1 + projects.length) % projects.length);
-  }, [projects.length]);
+  }, []);
+
 
   const activeProject = projects[selected];
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, FileText, Code2, Briefcase, Phone } from "lucide-react";
+import { Send, FileText, Phone } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Earth3D from "./Earth3D";
 

@@ -15,9 +15,10 @@ import {
   SiApachetomcat,
   SiHibernate,
 } from "react-icons/si";
-import { FaJava, FaDatabase, FaCode } from "react-icons/fa";
+import { FaJava } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
 import { VscVscode } from "react-icons/vsc";
+
 
 export const skillTabs = {
   frontend: [

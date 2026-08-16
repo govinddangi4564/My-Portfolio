@@ -12,14 +12,21 @@ const statusLabels = { wip: "WIP", complete: "Complete", live: "Live" };
 
 export default function ProjectCard({ project, featured = false, active = false, onFocus }) {
   const glowRef = useRef(null);
+  const cardRectRef = useRef(null);
+
+  const handleMouseEnter = (e) => {
+    cardRectRef.current = e.currentTarget.getBoundingClientRect();
+    onFocus?.();
+  };
 
   const handleMouseMove = (e) => {
     if (!glowRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
+    const rect = cardRectRef.current || e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     glowRef.current.style.background = `radial-gradient(circle at ${x}% ${y}%, var(--card-inner-glow) 0%, transparent 65%)`;
   };
+
 
   const cls = featured
     ? "grid grid-cols-1 sm:grid-cols-[1fr_1.3fr] gap-0"
@@ -38,7 +45,7 @@ export default function ProjectCard({ project, featured = false, active = false,
         role="button"
         tabIndex={0}
         data-cursor="pointer"
-        onMouseEnter={() => onFocus?.()}
+        onMouseEnter={handleMouseEnter}
         onFocus={() => onFocus?.()}
         onMouseMove={handleMouseMove}
         onKeyDown={(e) => e.key === "Enter" && onFocus?.()}

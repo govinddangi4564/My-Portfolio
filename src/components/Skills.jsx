@@ -45,7 +45,7 @@ export default function Skills() {
         transition={{ duration: 0.35 }}
         className="grid grid-cols-2 sm:grid-cols-3 gap-4"
       >
-        {skillTabs[active].map((skill, i) => (
+        {skillTabs[active].map((skill) => (
           <TiltCard
             key={skill.name}
             maxTilt={10}

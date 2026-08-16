@@ -7,21 +7,43 @@ export default function SectionParallax({ children, className = "", id }) {
     const el = ref.current;
     if (!el) return undefined;
 
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const isMobile = window.innerWidth < 768;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!finePointer || reducedMotion) return undefined;
+    if (isMobile || reducedMotion) return undefined;
 
-    const onScroll = () => {
-      const rect = el.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      const viewCenter = window.innerHeight / 2;
-      const offset = (center - viewCenter) / window.innerHeight;
-      el.style.transform = `perspective(1200px) rotateX(${offset * 2}deg) translateZ(0)`;
+    let ticking = false;
+    let windowHeight = window.innerHeight;
+
+    const onResize = () => {
+      windowHeight = window.innerHeight;
     };
 
-    onScroll();
+    const updateTransform = () => {
+      if (!el) {
+        ticking = false;
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const viewCenter = windowHeight / 2;
+      const offset = (center - viewCenter) / windowHeight;
+      el.style.transform = `perspective(1200px) rotateX(${offset * 1.5}deg) translateZ(0)`;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTransform);
+        ticking = true;
+      }
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return (
@@ -29,9 +51,10 @@ export default function SectionParallax({ children, className = "", id }) {
       ref={ref}
       id={id}
       className={`section-parallax ${className}`}
-      style={{ transformStyle: "preserve-3d", transition: "transform 0.1s linear", willChange: "transform" }}
+      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
       {children}
     </div>
   );
 }
+
