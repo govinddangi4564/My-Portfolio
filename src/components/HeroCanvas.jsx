@@ -36,7 +36,7 @@ const getColors = (theme) => ({
   wireframe: theme === "light" ? "#94a3b8" : "#ffffff",
 });
 
-function CentralCore({ colors, mouse }) {
+function CentralCore({ colors, mouse, lightMode = false }) {
   const coreRef = useRef();
   const glowRef = useRef();
 
@@ -61,15 +61,25 @@ function CentralCore({ colors, mouse }) {
         </mesh>
         <mesh>
           <icosahedronGeometry args={[0.68, isMobile ? 1 : 2]} />
-          <MeshDistortMaterial
-            color={colors.accent}
-            emissive={colors.accent}
-            emissiveIntensity={0.65}
-            roughness={0.1}
-            metalness={0.9}
-            distort={0.25}
-            speed={3}
-          />
+          {lightMode || isMobile ? (
+            <meshStandardMaterial
+              color={colors.accent}
+              emissive={colors.accent}
+              emissiveIntensity={0.5}
+              roughness={0.2}
+              metalness={0.8}
+            />
+          ) : (
+            <MeshDistortMaterial
+              color={colors.accent}
+              emissive={colors.accent}
+              emissiveIntensity={0.65}
+              roughness={0.1}
+              metalness={0.9}
+              distort={0.25}
+              speed={3}
+            />
+          )}
         </mesh>
         <mesh scale={0.88}>
           <icosahedronGeometry args={[0.68, 1]} />
@@ -93,7 +103,6 @@ function CentralCore({ colors, mouse }) {
             Systems Core
           </Text>
         </Billboard>
-
       </group>
     </Float>
   );
@@ -138,9 +147,9 @@ function SkillNode({ text, color, radius, speed, angle, yOffset, colors, IconCom
             <meshStandardMaterial color={color} wireframe transparent opacity={0.4} />
           </mesh>
 
-          {/* Render Vector Icon via Html Center */}
+          {/* Render Vector Icon via Html Center without heavy backdrop blur */}
           <Html center distanceFactor={10} style={{ pointerEvents: "none", userSelect: "none" }}>
-            <div className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-[#090d16]/80 border border-slate-700/60 shadow-[0_0_15px_rgba(0,0,0,0.6)] backdrop-blur-md">
+            <div className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-[#090d16]/95 border border-slate-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]">
               <IconComponent size={20} color={iconColor || color} />
             </div>
           </Html>
@@ -402,12 +411,12 @@ function Scene({ theme, lightMode, mouse }) {
       <pointLight position={[-8, -4, -6]} intensity={1.0} color={colors.accent} />
       <spotLight position={[0, 10, 5]} intensity={0.6} color={colors.accent} angle={0.5} penumbra={1} />
 
-      <CentralCore colors={colors} mouse={mouse} />
+      <CentralCore colors={colors} mouse={mouse} lightMode={lightMode || isMobile} />
       <OrbitingSkills colors={colors} />
       <OrbitRings colors={colors} lightMode={lightMode} />
-      <DataParticles count={lightMode || isMobile ? 24 : 60} colors={colors} />
-      {!lightMode && (
-        <DreiSparkles count={isMobile ? 30 : 80} scale={8} size={1.5} speed={0.3} color={colors.accent2} opacity={0.6} />
+      <DataParticles count={lightMode || isMobile ? 18 : 60} colors={colors} />
+      {!lightMode && !isMobile && (
+        <DreiSparkles count={40} scale={8} size={1.5} speed={0.3} color={colors.accent2} opacity={0.6} />
       )}
     </>
   );
@@ -418,6 +427,7 @@ export default function HeroCanvas({ theme, lightMode = false }) {
   const containerRef = useRef(null);
   const rectRef = useRef(null);
   const isInView = useInView(containerRef, { margin: "200px" });
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   const updateRect = () => {
     if (containerRef.current) {
@@ -428,8 +438,8 @@ export default function HeroCanvas({ theme, lightMode = false }) {
   return (
     <div
       ref={containerRef}
-      className="h-full w-full relative cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden glass-panel"
-      style={{ touchAction: "none" }}
+      className="h-full w-full relative cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden glass-panel touch-pan-y"
+      style={{ touchAction: "pan-y" }}
       onPointerEnter={updateRect}
       onMouseMove={(e) => {
         const rect = rectRef.current || e.currentTarget.getBoundingClientRect();
@@ -444,14 +454,16 @@ export default function HeroCanvas({ theme, lightMode = false }) {
           camera={{ position: [0, 0, 11], fov: 42 }}
           dpr={[1, 1]}
           gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+          style={{ touchAction: "pan-y", pointerEvents: isMobile ? "none" : "auto" }}
         >
           <Suspense fallback={null}>
             <Scene theme={theme} lightMode={lightMode} mouse={mouse} />
             <OrbitControls
               enableZoom={false}
               enablePan={false}
+              enableTouch={false}
               autoRotate
-              autoRotateSpeed={lightMode ? 0.6 : 1.2}
+              autoRotateSpeed={lightMode || isMobile ? 0.6 : 1.2}
             />
           </Suspense>
         </Canvas>

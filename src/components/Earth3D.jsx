@@ -57,23 +57,34 @@ function Globe() {
 export default function Earth3D({ lightMode = false }) {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { margin: "200px" });
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  if (lightMode) return null;
+  if (lightMode || isMobile) return null;
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto cursor-grab active:cursor-grabbing">
+    <div
+      ref={containerRef}
+      className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto cursor-grab active:cursor-grabbing"
+      style={{ touchAction: "pan-y" }}
+    >
       {isInView && (
-        <Canvas camera={{ position: [0, 0, 7], fov: 45 }} dpr={[1, 1]} gl={{ antialias: false, powerPreference: "high-performance" }}>
+        <Canvas
+          camera={{ position: [0, 0, 7], fov: 45 }}
+          dpr={[1, 1]}
+          gl={{ antialias: false, powerPreference: "high-performance" }}
+          style={{ touchAction: "pan-y" }}
+        >
           <ambientLight intensity={0.5} />
-        <Globe />
-        <OrbitControls 
-          enableZoom={false} 
-          enablePan={false} 
-          enableDamping 
-          dampingFactor={0.05} 
-          autoRotate 
-          autoRotateSpeed={0.3}
-        />
+          <Globe />
+          <OrbitControls 
+            enableZoom={false} 
+            enablePan={false} 
+            enableTouch={false}
+            enableDamping 
+            dampingFactor={0.05} 
+            autoRotate 
+            autoRotateSpeed={0.3}
+          />
         </Canvas>
       )}
     </div>

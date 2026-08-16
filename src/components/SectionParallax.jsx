@@ -7,8 +7,8 @@ export default function SectionParallax({ children, className = "", id }) {
     const el = ref.current;
     if (!el) return undefined;
 
-    const isMobile = window.innerWidth < 768;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = typeof window !== "undefined" && (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches);
+    const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isMobile || reducedMotion) return undefined;
 
     let ticking = false;
@@ -51,7 +51,6 @@ export default function SectionParallax({ children, className = "", id }) {
       ref={ref}
       id={id}
       className={`section-parallax ${className}`}
-      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
     >
       {children}
     </div>

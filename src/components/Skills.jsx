@@ -35,7 +35,7 @@ export default function Skills() {
       </motion.div>
 
       {/* Tab Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-3 mb-5 sm:mb-8">
         {tabKeys.map((tab) => {
           const isSelected = active === tab.key;
           return (
@@ -43,72 +43,72 @@ export default function Skills() {
               key={tab.key}
               onClick={() => setActive(tab.key)}
               type="button"
-              className={`p-4 rounded-xl font-mono text-left transition-all duration-300 flex items-center justify-between group ${
+              className={`p-2.5 sm:p-4 rounded-xl font-mono text-left transition-all duration-300 flex items-center justify-between group ${
                 isSelected
-                  ? 'bg-accent/15 border-2 border-accent text-text shadow-[0_0_25px_var(--card-hover-glow)]'
+                  ? 'bg-accent/15 border-2 border-accent text-text shadow-[0_0_20px_var(--card-hover-glow)]'
                   : 'bg-surface/60 border border-[var(--border)] text-muted hover:border-accent/40 hover:text-text'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg ${isSelected ? 'bg-accent text-white' : 'bg-surface text-muted group-hover:text-accent'}`}>
-                  <tab.icon size={18} />
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div className={`p-1.5 sm:p-2 rounded-lg shrink-0 ${isSelected ? 'bg-accent text-white' : 'bg-surface text-muted group-hover:text-accent'}`}>
+                  <tab.icon size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </div>
-                <div>
-                  <span className="font-syne text-[0.85rem] font-bold block text-text">
+                <div className="min-w-0">
+                  <span className="font-syne text-[0.72rem] sm:text-[0.85rem] font-bold block text-text truncate">
                     {tab.label.split(' ')[0]}
                   </span>
-                  <span className="text-[0.68rem] text-dimmed block">
+                  <span className="text-[0.58rem] sm:text-[0.68rem] text-dimmed hidden sm:block truncate">
                     {tab.label}
                   </span>
                 </div>
               </div>
-              <span className="text-[0.62rem] px-2 py-0.5 rounded-full bg-surface border border-[var(--border)] text-accent2">
-                {tab.count}
+              <span className="text-[0.55rem] sm:text-[0.62rem] px-1.5 sm:px-2 py-0.5 rounded-full bg-surface border border-[var(--border)] text-accent2 shrink-0 hidden xs:inline-block">
+                {tab.count.split(' ')[0]}
               </span>
             </button>
           );
         })}
       </div>
 
-      {/* Skill Grid */}
+      {/* Skill Grid - Compact 2-column on mobile */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25 }}
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4"
         >
           {skillTabs[active].map((skill) => (
             <TiltCard
               key={skill.name}
               maxTilt={8}
-              className="bento-card p-5 flex flex-col justify-between group cursor-default hover:border-accent2/50"
+              className="bento-card p-3 sm:p-5 flex flex-col justify-between group cursor-default hover:border-accent2/50"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[1.8rem] transition-transform duration-300 group-hover:scale-110">
+                <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <span className="text-[1.3rem] sm:text-[1.8rem] transition-transform duration-300 group-hover:scale-110 shrink-0">
                       {skill.icon}
                     </span>
-                    <div>
-                      <h4 className="font-syne text-[1rem] font-bold text-text group-hover:text-accent2 transition-colors">
+                    <div className="min-w-0">
+                      <h4 className="font-syne text-[0.82rem] sm:text-[1rem] font-bold text-text group-hover:text-accent2 transition-colors truncate">
                         {skill.name}
                       </h4>
-                      <span className="font-mono text-[0.62rem] text-dimmed uppercase tracking-wider block">
+                      <span className="font-mono text-[0.55rem] sm:text-[0.62rem] text-dimmed uppercase tracking-wider block truncate">
                         {skill.tier}
                       </span>
                     </div>
                   </div>
                   
-                  <span className="font-mono text-[0.72rem] font-bold text-accent2">
+                  <span className="font-mono text-[0.65rem] sm:text-[0.72rem] font-bold text-accent2 shrink-0">
                     {skill.level}%
                   </span>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden mb-3 border border-[var(--border)]">
+                <div className="w-full h-1 sm:h-1.5 bg-surface rounded-full overflow-hidden mb-2 sm:mb-3 border border-[var(--border)]">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${skill.level}%` }}
@@ -119,9 +119,9 @@ export default function Skills() {
               </div>
 
               {/* Real Project Association Pill */}
-              <div className="pt-2.5 border-t border-[var(--border)] flex items-center gap-1.5">
-                <CheckCircle2 size={11} className="text-emerald-400 shrink-0" />
-                <span className="font-mono text-[0.65rem] text-dimmed truncate" title={skill.usedIn}>
+              <div className="pt-2 border-t border-[var(--border)] flex items-center gap-1">
+                <CheckCircle2 size={10} className="text-emerald-400 shrink-0" />
+                <span className="font-mono text-[0.58rem] sm:text-[0.65rem] text-dimmed truncate" title={skill.usedIn}>
                   {skill.usedIn}
                 </span>
               </div>

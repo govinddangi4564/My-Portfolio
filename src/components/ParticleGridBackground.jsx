@@ -57,12 +57,14 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     const accent2Alpha = (a) => `rgba(${accent2RGB.r},${accent2RGB.g},${accent2RGB.b},${a})`;
     const dotColorAlpha = (a) => `rgba(${dotColorRGB.r},${dotColorRGB.g},${dotColorRGB.b},${a})`;
 
+    const isMobileDevice = window.innerWidth < 768 || lightMode;
+
     const buildParticles = () => {
       const isMobile = window.innerWidth < 768;
       const isSmallMobile = window.innerWidth < 640;
       const count = lightMode || reduceMotion.matches
-        ? (isSmallMobile ? 20 : 35)
-        : (isSmallMobile ? MOBILE_PARTICLE_COUNT : (isMobile ? TABLET_PARTICLE_COUNT : DESKTOP_PARTICLE_COUNT));
+        ? (isSmallMobile ? 12 : 18)
+        : (isSmallMobile ? 15 : (isMobile ? 25 : DESKTOP_PARTICLE_COUNT));
 
       particlesRef.current = Array.from({ length: count }, (_, index) => {
         const isLarge = index % 20 === 0;
@@ -85,7 +87,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      pixelRatio = isMobileDevice ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
       canvas.style.width = `${width}px`;
@@ -95,6 +97,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     };
 
     const drawOrbitalCurves = () => {
+      if (isMobileDevice) return; // Skip expensive curve strokes on mobile to maximize scroll FPS
       context.lineWidth = theme === "light" ? 0.8 : 1.0;
 
       context.beginPath();
@@ -133,8 +136,26 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.stroke();
     };
 
+    let isScrolling = false;
+    let scrollTimeout = null;
+
+    const handleScroll = () => {
+      if (!isMobileDevice) return;
+      isScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    };
+
     const draw = (time = 0) => {
       if (!isVisibleRef.current) {
+        rafRef.current = window.requestAnimationFrame(draw);
+        return;
+      }
+
+      // During active touch scroll on mobile, yield CPU/GPU completely to the browser compositor
+      if (isScrolling) {
         rafRef.current = window.requestAnimationFrame(draw);
         return;
       }
@@ -185,11 +206,14 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
     resize();
     rafRef.current = window.requestAnimationFrame(draw);
     window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
     };
   }, [theme, lightMode]);

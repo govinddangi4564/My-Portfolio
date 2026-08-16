@@ -51,27 +51,45 @@ function ProjectPanel({
         >
           <RoundedBox args={[2.4, 1.5, 0.12]} radius={0.06} smoothness={isMobile ? 1 : 2}>
             {selected ? (
-              <meshPhysicalMaterial
-                color={color}
-                emissive={color}
-                emissiveIntensity={0.6}
-                metalness={0.8}
-                roughness={0.1}
-                clearcoat={1}
-                clearcoatRoughness={0.1}
-                transparent
-                opacity={0.95}
-              />
+              isMobile ? (
+                <meshStandardMaterial
+                  color={color}
+                  emissive={color}
+                  emissiveIntensity={0.6}
+                  metalness={0.8}
+                  roughness={0.1}
+                />
+              ) : (
+                <meshPhysicalMaterial
+                  color={color}
+                  emissive={color}
+                  emissiveIntensity={0.6}
+                  metalness={0.8}
+                  roughness={0.1}
+                  clearcoat={1}
+                  clearcoatRoughness={0.1}
+                  transparent
+                  opacity={0.95}
+                />
+              )
             ) : (
-              <meshPhysicalMaterial
-                color={theme === "light" ? "#e2e8f0" : "#0f172a"}
-                metalness={0.7}
-                roughness={0.3}
-                clearcoat={0.4}
-                clearcoatRoughness={0.3}
-                transparent
-                opacity={0.75}
-              />
+              isMobile ? (
+                <meshStandardMaterial
+                  color={theme === "light" ? "#e2e8f0" : "#0f172a"}
+                  metalness={0.6}
+                  roughness={0.4}
+                />
+              ) : (
+                <meshPhysicalMaterial
+                  color={theme === "light" ? "#e2e8f0" : "#0f172a"}
+                  metalness={0.7}
+                  roughness={0.3}
+                  clearcoat={0.4}
+                  clearcoatRoughness={0.3}
+                  transparent
+                  opacity={0.75}
+                />
+              )
             )}
           </RoundedBox>
         </mesh>
@@ -255,7 +273,8 @@ export default function ProjectsShowcase3D({ projects, selected, onSelect, theme
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[380px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d"
+      className="relative w-full h-[260px] sm:h-[440px] rounded-3xl overflow-hidden glass-panel project-showcase-3d touch-pan-y"
+      style={{ touchAction: "pan-y" }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent2/5 pointer-events-none z-10" />
       {isInView && (

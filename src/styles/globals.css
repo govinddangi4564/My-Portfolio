@@ -491,25 +491,58 @@ textarea {
    ============================================ */
 @media (max-width: 768px) {
   .aurora-orb {
-    filter: blur(45px);
-    opacity: 0.35;
+    filter: blur(25px);
+    opacity: 0.25;
+    will-change: auto;
+    animation: none; /* Disable infinite heavy floating CSS filter on mobile */
   }
 
   .glass-panel,
   .glass-surface,
-  .glass {
+  .glass,
+  .bento-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(10, 15, 30, 0.92);
+  }
+
+  [data-theme="light"] .glass-panel,
+  [data-theme="light"] .glass-surface,
+  [data-theme="light"] .glass,
+  [data-theme="light"] .bento-card {
+    background-color: rgba(255, 255, 255, 0.96);
+  }
+
+  .nav-pill {
     backdrop-filter: blur(10px) saturate(1.2);
     -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    background-color: rgba(10, 15, 30, 0.9);
+  }
+
+  [data-theme="light"] .nav-pill {
+    background-color: rgba(255, 255, 255, 0.92);
+  }
+
+  /* Drastically reduce render and composite workload on mobile scroll */
+  .section-container {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 700px;
   }
 }
 
 @media (max-width: 640px) {
   .section-container {
-    padding: 3rem 1rem;
+    padding: 2.25rem 1rem;
   }
 
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-tag {
+    font-size: 0.72rem;
+    margin-bottom: 0.25rem;
   }
 }
 

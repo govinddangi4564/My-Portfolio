@@ -71,7 +71,7 @@ export default function ProjectCard({ project, featured = false, active = false,
         )}
 
         {/* Visual Project Preview Banner */}
-        <div className="relative w-full h-44 sm:h-48 overflow-hidden rounded-t-2xl bg-surface/50 border-b border-[var(--border)] shrink-0">
+        <div className="relative w-full h-32 sm:h-48 overflow-hidden rounded-t-2xl bg-surface/50 border-b border-[var(--border)] shrink-0">
           {/* Fallback Cybernetic Geometric SVG Background */}
           <div
             className="absolute inset-0 w-full h-full"
@@ -105,61 +105,61 @@ export default function ProjectCard({ project, featured = false, active = false,
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
 
           {/* Top Badges over Banner */}
-          <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 z-10">
-            <div className="inline-flex items-center gap-1.5 font-mono text-[0.62rem] px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white shadow-md">
-              <arch.icon size={11} className="text-accent2" />
-              <span>{arch.label.split('·')[0]}</span>
+          <div className="absolute top-2.5 sm:top-3.5 left-2.5 sm:left-3.5 right-2.5 sm:right-3.5 flex items-center justify-between gap-1.5 z-10">
+            <div className="inline-flex items-center gap-1 font-mono text-[0.58rem] sm:text-[0.62rem] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-black/60 border border-white/15 text-white shadow-md">
+              <arch.icon size={10} className="text-accent2" />
+              <span className="truncate max-w-[130px] sm:max-w-none">{arch.label.split('·')[0]}</span>
             </div>
 
             <span
-              className={`font-mono text-[0.62rem] uppercase tracking-wider px-2.5 py-1 rounded-full border backdrop-blur-md font-bold shadow-md ${statusColors[project.status]}`}
+              className={`font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border font-bold shadow-md ${statusColors[project.status]}`}
             >
               {statusLabels[project.status]}
             </span>
           </div>
 
           {/* Floating Project Icon on banner corner */}
-          <div className="absolute bottom-3 left-4 z-10 w-11 h-11 rounded-xl bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+          <div className="absolute bottom-2 sm:bottom-3 left-3 sm:left-4 z-10 w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-black/70 border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
             {project.icon}
           </div>
         </div>
 
 
         {/* Project Card Content */}
-        <div className="p-5 sm:p-6 flex flex-col flex-1 relative z-10">
+        <div className="p-3.5 sm:p-6 flex flex-col flex-1 relative z-10">
           {!project.bgImage && (
-            <div className="flex items-center justify-between gap-2 mb-3">
+            <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-2 sm:mb-3">
               <div className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
                 {project.icon}
               </div>
-              <div className="inline-flex items-center gap-1.5 font-mono text-[0.62rem] px-2.5 py-0.5 rounded-full bg-surface border border-[var(--border)] text-dimmed ml-auto">
-                <arch.icon size={11} className="text-accent2" />
+              <div className="inline-flex items-center gap-1 font-mono text-[0.58rem] sm:text-[0.62rem] px-2 py-0.5 rounded-full bg-surface border border-[var(--border)] text-dimmed ml-auto">
+                <arch.icon size={10} className="text-accent2" />
                 <span>{arch.label.split('·')[0]}</span>
               </div>
               <span
-                className={`font-mono text-[0.62rem] uppercase tracking-wider px-2.5 py-0.5 rounded-full border font-bold ${statusColors[project.status]}`}
+                className={`font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider px-2 py-0.5 rounded-full border font-bold ${statusColors[project.status]}`}
               >
                 {statusLabels[project.status]}
               </span>
             </div>
           )}
 
-          <h3 className="font-syne text-[1.25rem] sm:text-[1.4rem] font-bold text-text mb-2 group-hover:text-accent transition-colors duration-300">
+          <h3 className="font-syne text-[1.1rem] sm:text-[1.4rem] font-bold text-text mb-1.5 sm:mb-2 group-hover:text-accent transition-colors duration-300">
             {project.name}
           </h3>
 
-          <p className="font-body text-[0.85rem] text-muted leading-relaxed mb-4 flex-1">
+          <p className="font-body text-[0.8rem] sm:text-[0.85rem] text-muted leading-relaxed mb-3 sm:mb-4 flex-1 line-clamp-3 sm:line-clamp-none">
             {project.description}
           </p>
 
           {project.metrics && (
-            <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-surface/70 border border-[var(--border)] mb-4">
+            <div className="grid grid-cols-3 gap-1 sm:gap-2 p-2 sm:p-2.5 rounded-xl bg-surface/70 border border-[var(--border)] mb-3 sm:mb-4">
               {project.metrics.map((m, i) => (
                 <div key={i} className="text-center">
-                  <span className="block font-syne text-[1.05rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">
+                  <span className="block font-syne text-[0.92rem] sm:text-[1.05rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">
                     {m.num}
                   </span>
-                  <span className="font-mono text-[0.6rem] text-dimmed uppercase tracking-wider block">
+                  <span className="font-mono text-[0.55rem] sm:text-[0.6rem] text-dimmed uppercase tracking-wider block truncate">
                     {m.label}
                   </span>
                 </div>
@@ -167,33 +167,33 @@ export default function ProjectCard({ project, featured = false, active = false,
             </div>
           )}
 
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.tags.slice(0, 5).map((tag) => (
+          <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4">
+            {project.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag}
-                className="font-mono text-[0.65rem] px-2.5 py-0.8 rounded-md border border-[var(--border)] text-muted bg-surface/50"
+                className="font-mono text-[0.58rem] sm:text-[0.65rem] px-2 py-0.5 sm:px-2.5 sm:py-0.8 rounded-md border border-[var(--border)] text-muted bg-surface/50"
               >
                 {tag}
               </span>
             ))}
-            {project.tags.length > 5 && (
-              <span className="font-mono text-[0.65rem] px-2 py-0.8 rounded-md text-dimmed">
-                +{project.tags.length - 5}
+            {project.tags.length > 4 && (
+              <span className="font-mono text-[0.58rem] sm:text-[0.65rem] px-1.5 py-0.5 rounded-md text-dimmed">
+                +{project.tags.length - 4}
               </span>
             )}
           </div>
 
-          <div className="flex gap-2.5 mt-auto pt-3 border-t border-[var(--border)]">
+          <div className="flex gap-2 sm:gap-2.5 mt-auto pt-2.5 sm:pt-3 border-t border-[var(--border)]">
             {project.github && (
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="pointer"
-                className="flex items-center gap-1.5 px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-wider rounded-full border border-[var(--border)] text-text bg-surface/70 hover:text-accent hover:border-accent hover:bg-accent/10 transition-all duration-300 font-semibold"
+                className="flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-wider rounded-full border border-[var(--border)] text-text bg-surface/70 hover:text-accent hover:border-accent hover:bg-accent/10 transition-all duration-300 font-semibold"
                 onClick={(e) => e.stopPropagation()}
               >
-                <FaGithub size={13} /> Code
+                <FaGithub size={12} /> Code
               </a>
             )}
             {project.live && project.live !== "#" && (
@@ -202,10 +202,10 @@ export default function ProjectCard({ project, featured = false, active = false,
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="pointer"
-                className="flex items-center gap-1.5 px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-wider rounded-full border border-accent2/30 text-accent2 bg-accent2/10 hover:bg-accent2 hover:text-black transition-all duration-300 font-semibold"
+                className="flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-wider rounded-full border border-accent2/30 text-accent2 bg-accent2/10 hover:bg-accent2 hover:text-black transition-all duration-300 font-semibold"
                 onClick={(e) => e.stopPropagation()}
               >
-                <ExternalLink size={13} /> Live System
+                <ExternalLink size={12} /> Live
               </a>
             )}
           </div>

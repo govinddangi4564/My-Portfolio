@@ -62,19 +62,19 @@ export default function Projects({ theme, lightVisuals = false }) {
   const bgY2 = useTransform(scrollYProgress, [0, 1], ["20%", "-20%"]);
 
   return (
-    <section id="projects" ref={containerRef} className="section-container relative z-10 perspective-1200">
+    <section id="projects" ref={containerRef} className="section-container relative z-10">
       
-      {/* Parallax Ambient Background Elements */}
+      {/* Parallax Ambient Background Elements (desktop only) */}
       {!lightVisuals && (
         <motion.div
           style={{ y: bgY, rotate: bgRotate }}
-          className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] pointer-events-none -z-10"
+          className="hidden md:block absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] pointer-events-none -z-10"
         />
       )}
       {!lightVisuals && (
         <motion.div
           style={{ y: bgY2 }}
-          className="absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] bg-accent2/10 rounded-full blur-[80px] pointer-events-none -z-10"
+          className="hidden md:block absolute bottom-1/4 -left-1/4 w-[400px] h-[400px] bg-accent2/10 rounded-full blur-[80px] pointer-events-none -z-10"
         />
       )}
 
@@ -204,13 +204,11 @@ export default function Projects({ theme, lightVisuals = false }) {
         {displayProjects.map((p, i) => (
           <motion.div
             key={p.id}
-            layout
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.45, delay: i * 0.08 }}
+            transition={{ duration: 0.4, delay: i * 0.06 }}
             className={`h-full ${p.featured ? "md:col-span-2" : ""}`}
-            style={{ perspective: "1200px" }}
           >
             <ProjectCard
               project={p}

@@ -29,11 +29,13 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const isTouchDevice = useMediaQuery("(pointer: coarse)");
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
-  // On low-power/touch devices, disable background 3D WebGL to give full GPU budget to Hero 3D & Projects 3D
-  const useLightVisuals = prefersReducedMotion;
-  const disableBackground3D = isTouchDevice || prefersReducedMotion;
+  // On low-power / mobile / touch devices, disable heavy background 3D WebGL and use optimized visuals
+  const isMobile = isTouchDevice || isSmallScreen;
+  const useLightVisuals = isMobile || prefersReducedMotion;
+  const disableBackground3D = isMobile || prefersReducedMotion;
 
   useEffect(() => {
     // Simple hash-based router
@@ -85,7 +87,17 @@ export default function App() {
   };
 
   return (
-    <ReactLenis root>
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.1,
+        duration: 1.2,
+        smoothWheel: true,
+        syncTouch: false,
+        touchMultiplier: 1,
+        autoRaf: true,
+      }}
+    >
       <div className="min-h-screen bg-bg text-text relative overflow-hidden">
         <ScrollProgress />
         <CustomCursor />
