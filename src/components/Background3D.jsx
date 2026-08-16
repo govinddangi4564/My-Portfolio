@@ -155,10 +155,11 @@ function Scene({ theme }) {
         <GlowingBlob color={colors.accent3} position={[2, 5, -10]} scale={1.0} speed={2.0} distort={0.45} />
         <FloatingRings colors={colors} />
       </MouseParallaxGroup>
-      <fog attach="fog" args={[theme === "light" ? "#e8edf5" : "#030712", 8, 35]} />
+      <fog attach="fog" args={[theme === "light" ? "#f8fafc" : "#030712", 8, 35]} />
     </>
   );
 }
+
 
 export default function Background3D({ theme, disabled = false }) {
   if (disabled) return null;

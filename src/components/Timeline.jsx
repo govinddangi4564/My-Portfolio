@@ -1,55 +1,94 @@
 import { motion } from "framer-motion";
+import { GraduationCap, Award, Cloud, CheckCircle2, Calendar } from "lucide-react";
 
-const timelineItems = [
+const milestones = [
   {
-    date: "2020",
-    title: "Secondary (10th Grade)",
-    desc: "Saraswati Shishu Mandir School · Percentage: 90.75%",
-    dotColor: "bg-accent",
+    date: "2023 — 2027",
+    status: "In Progress",
+    title: "B.Tech in Computer Science & Engineering",
+    institution: "Prestige Institute of Engineering Management & Research (PIEMR), Indore",
+    highlights: ["Data Structures & Algorithms", "Object-Oriented Programming (Java)", "Database Management Systems", "Computer Networks & OS"],
+    icon: GraduationCap,
+    accent: "text-accent border-accent/30 bg-accent/10",
+  },
+  {
+    date: "2024",
+    status: "Completed",
+    title: "Google Cloud Platform (GCP) Codelabs & Workshop",
+    institution: "Hands-on Technical Cloud Training",
+    highlights: ["Cloud Architecture Foundations", "Compute Engine & Storage", "API Deployment & Scaling"],
+    icon: Cloud,
+    accent: "text-accent2 border-accent2/30 bg-accent2/10",
   },
   {
     date: "2022",
-    title: "Higher Secondary (12th Grade) PCM",
-    desc: "Saraswati Shishu Mandir School · Percentage: 82.4%",
-    dotColor: "bg-accent2",
+    status: "82.40% Score",
+    title: "Higher Secondary Certificate (12th Grade · PCM)",
+    institution: "Saraswati Shishu Mandir Higher Secondary School",
+    highlights: ["Physics, Chemistry, Mathematics Focus", "Analytical Problem Solving Foundations"],
+    icon: Award,
+    accent: "text-amber-400 border-amber-400/30 bg-amber-400/10",
   },
   {
-    date: "2023 · present",
-    title: "B.Tech CSE @PIEMR, Indore",
-    desc: "Started engineering at PIEMR · CGPA 6.96 · Indore, MP",
-    dotColor: "bg-accent3",
+    date: "2020",
+    status: "90.75% Distinction",
+    title: "Secondary School Certificate (10th Grade)",
+    institution: "Saraswati Shishu Mandir High School",
+    highlights: ["Academic Merit Distinction", "Top Tier Mathematics & Science Performance"],
+    icon: Award,
+    accent: "text-emerald-400 border-emerald-400/30 bg-emerald-400/10",
   },
 ];
 
 export default function Timeline() {
   return (
-    <div className="mt-10">
-      <span className="section-tag">02. journey</span>
-      <div className="relative mt-4 pl-6 border-l border-[var(--border)]">
-        {timelineItems.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
-            className="relative mb-8 last:mb-0"
-          >
-            <div
-              className={`absolute -left-[31px] top-1 w-3 h-3 rounded-full ${item.dotColor} ring-4 ring-bg`}
-            />
-            <span className="font-mono text-[0.65rem] text-accent2 tracking-wide">
-              {item.date}
-            </span>
-            <h4 className="font-syne text-[0.95rem] font-bold text-text mt-0.5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {milestones.map((item, i) => (
+        <motion.div
+          key={item.title}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: i * 0.08 }}
+          className="bento-card p-5 flex flex-col justify-between group hover:border-accent2/40 cursor-default"
+        >
+          <div>
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <div className="flex items-center gap-2">
+                <div className={`p-2 rounded-lg ${item.accent}`}>
+                  <item.icon size={16} />
+                </div>
+                <span className="font-mono text-[0.68rem] text-dimmed flex items-center gap-1">
+                  <Calendar size={11} /> {item.date}
+                </span>
+              </div>
+              <span className={`font-mono text-[0.62rem] uppercase tracking-wider px-2.5 py-0.5 rounded-full border font-bold ${item.accent}`}>
+                {item.status}
+              </span>
+            </div>
+
+            <h4 className="font-syne text-[1.02rem] font-bold text-text mb-1 group-hover:text-accent2 transition-colors">
               {item.title}
             </h4>
-            <p className="font-mono text-[0.72rem] text-muted mt-0.5">
-              {item.desc}
+            <p className="font-body text-[0.82rem] text-muted mb-3">
+              {item.institution}
             </p>
-          </motion.div>
-        ))}
-      </div>
+          </div>
+
+          <div className="pt-3 border-t border-[var(--border)] flex flex-wrap gap-1.5">
+            {item.highlights.map((hl) => (
+              <span
+                key={hl}
+                className="inline-flex items-center gap-1 font-mono text-[0.62rem] px-2 py-0.5 rounded-md bg-surface border border-[var(--border)] text-muted"
+              >
+                <CheckCircle2 size={10} className="text-accent" />
+                {hl}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }
+

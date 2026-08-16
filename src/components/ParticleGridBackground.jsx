@@ -51,7 +51,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
 
     const accentRGB = parseHex(accentHex);
     const accent2RGB = parseHex(accent2Hex);
-    const dotColorRGB = theme === "light" ? { r: 6, g: 20, b: 33 } : parseHex(textHex);
+    const dotColorRGB = theme === "light" ? accentRGB : parseHex(textHex);
 
     const accentAlpha = (a) => `rgba(${accentRGB.r},${accentRGB.g},${accentRGB.b},${a})`;
     const accent2Alpha = (a) => `rgba(${accent2RGB.r},${accent2RGB.g},${accent2RGB.b},${a})`;
@@ -61,7 +61,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       const isMobile = window.innerWidth < 768;
       const isSmallMobile = window.innerWidth < 640;
       const count = lightMode || reduceMotion.matches
-        ? (isSmallMobile ? 25 : 40)
+        ? (isSmallMobile ? 20 : 35)
         : (isSmallMobile ? MOBILE_PARTICLE_COUNT : (isMobile ? TABLET_PARTICLE_COUNT : DESKTOP_PARTICLE_COUNT));
 
       particlesRef.current = Array.from({ length: count }, (_, index) => {
@@ -71,35 +71,34 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
           x: Math.random() * width,
           y: Math.random() * height,
           radius: isLarge
-            ? Math.random() * 1.2 + 1.8
-            : Math.random() * 0.6 + 0.35,
+            ? (theme === "light" ? 1.5 : Math.random() * 1.2 + 1.8)
+            : (theme === "light" ? 0.6 : Math.random() * 0.6 + 0.35),
           vx: (Math.random() - 0.5) * 0.08,
           vy: (Math.random() - 0.5) * 0.08,
           pulse: Math.random() * Math.PI * 2,
-          depth: index % 3,
           isLarge,
+          depth: Math.random(),
         };
       });
     };
 
     const resize = () => {
-      const bounds = canvas.getBoundingClientRect();
-      width = bounds.width;
-      height = bounds.height;
-      const isMobile = window.innerWidth < 768;
-      // Cap pixelRatio at 1 on mobile to ensure top performance
-      pixelRatio = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.25);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(width * pixelRatio);
       canvas.height = Math.floor(height * pixelRatio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       buildParticles();
     };
 
     const drawOrbitalCurves = () => {
-      context.lineWidth = theme === "light" ? 1.5 : 1.0;
+      context.lineWidth = theme === "light" ? 0.8 : 1.0;
 
       context.beginPath();
-      context.strokeStyle = accentAlpha(theme === "light" ? 0.2 : 0.15);
+      context.strokeStyle = accentAlpha(theme === "light" ? 0.08 : 0.15);
       context.arc(
         width * 0.86,
         height * 0.45,
@@ -110,7 +109,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.stroke();
 
       context.beginPath();
-      context.strokeStyle = accent2Alpha(theme === "light" ? 0.12 : 0.1);
+      context.strokeStyle = accent2Alpha(theme === "light" ? 0.06 : 0.1);
       context.arc(
         width * 0.56,
         height * 0.66,
@@ -121,7 +120,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.stroke();
 
       context.beginPath();
-      context.strokeStyle = accentAlpha(theme === "light" ? 0.1 : 0.08);
+      context.strokeStyle = accentAlpha(theme === "light" ? 0.05 : 0.08);
       context.ellipse(
         width * 0.54,
         height * 0.56,
@@ -164,10 +163,10 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
 
         const opacity = particle.isLarge
           ? theme === "light"
-            ? 0.85
+            ? 0.25
             : 0.7
           : theme === "light"
-            ? 0.55 + particle.depth * 0.1
+            ? 0.15 + particle.depth * 0.08
             : 0.35 + particle.depth * 0.08;
 
         context.beginPath();

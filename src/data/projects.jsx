@@ -5,6 +5,9 @@ import {
   Ship,
   Globe,
   HeartPulse,
+  Database,
+  Layers,
+  Lock,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -14,6 +17,7 @@ export const projects = [
     name: "PathLab Manager",
     shortName: "PathLab",
     color: "#f43f5e",
+    bgImage: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80",
     icon: (
       <motion.div
         animate={{ y: [0, -6, 0] }}
@@ -47,6 +51,7 @@ export const projects = [
     name: "HireDrift — Resume Screening with NLP",
     shortName: "HireDrift",
     color: "#22d3ee",
+    bgImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80",
     icon: (
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.8, 1, 0.8] }}
@@ -75,13 +80,14 @@ export const projects = [
       "End to End Web Developer",
     ],
     github: "https://github.com/govinddangi4564/HireDrift",
-    live: "#",
+    live: "https://www.hiredrift.in",
   },
   {
     id: 3,
     name: "Logistics & Shipment Tracker AI",
     shortName: "ShipTrack AI",
     color: "#8b5cf6",
+    bgImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
     icon: (
       <motion.div
         animate={{ rotate: [-6, 6, -6], y: [0, -2, 0] }}
@@ -115,6 +121,7 @@ export const projects = [
     name: "E-Commerce System",
     shortName: "E-Commerce",
     color: "#10b981",
+    bgImage: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80",
     icon: (
       <motion.div
         animate={{ x: [0, 4, -4, 0], y: [0, -3, 0] }}
@@ -144,8 +151,115 @@ export const projects = [
   },
   {
     id: 5,
+    name: "E-Commerce DAL — Spring Boot",
+    shortName: "Spring DAL",
+    color: "#6DB33F",
+    bgImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
+    icon: (
+      <motion.div
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Layers size={32} className="text-emerald-400" />
+      </motion.div>
+    ),
+    status: "complete",
+    featured: false,
+    description:
+      "Enterprise-grade Data Access Layer (DAL) designed with Spring Boot, Spring Data JPA, and Hibernate. Features repository abstractions, custom transactional boundaries, entity relationship mappings, and high-performance querying.",
+    metrics: [
+      { num: "Spring", label: "Boot JPA" },
+      { num: "DAL", label: "Architecture" },
+      { num: "ACID", label: "Transactions" },
+    ],
+    tags: [
+      "Java",
+      "Spring Boot",
+      "Spring Data JPA",
+      "Hibernate",
+      "MySQL",
+      "REST API",
+      "Backend Architecture",
+    ],
+    github: "https://github.com/govinddangi4564/Ecommerce-DAL-SpringBoot",
+    live: "#",
+  },
+  {
+    id: 6,
+    name: "E-Commerce DAL — Hibernate ORM",
+    shortName: "Hibernate DAL",
+    color: "#59666C",
+    bgImage: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=800&auto=format&fit=crop",
+    icon: (
+      <motion.div
+        animate={{ rotate: [0, 5, -5, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Database size={32} className="text-accent2" />
+      </motion.div>
+    ),
+    status: "complete",
+    featured: false,
+    description:
+      "Robust Data Access Layer implemented with native Hibernate ORM & SessionFactory architecture. Implements HQL queries, caching layers, Criteria API queries, and ACID-compliant transaction lifecycle management.",
+    metrics: [
+      { num: "ORM", label: "Hibernate" },
+      { num: "HQL", label: "Queries" },
+      { num: "ACID", label: "Transactions" },
+    ],
+    tags: [
+      "Java",
+      "Hibernate ORM",
+      "HQL",
+      "MySQL",
+      "JDBC",
+      "Data Persistence",
+      "Backend Architecture",
+    ],
+    github: "https://github.com/govinddangi4564/Ecommerce-DAL-Hibernate",
+    live: "#",
+  },
+  {
+    id: 7,
+    name: "JWT Security & Stateless Auth Engine",
+    shortName: "JWT Auth",
+    color: "#8b5cf6",
+    bgImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop",
+    icon: (
+      <motion.div
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Lock size={32} className="text-accent" />
+      </motion.div>
+    ),
+    status: "complete",
+    featured: false,
+    description:
+      "Stateless token-based authentication and authorization engine built with JSON Web Tokens (JWT) and Spring Security / Java. Implements cryptographic token signing, expiration handling, claims parsing, and role-based route guard filters.",
+    metrics: [
+      { num: "JWT", label: "Tokens" },
+      { num: "RBAC", label: "Security" },
+      { num: "Stateless", label: "Auth" },
+    ],
+    tags: [
+      "Java",
+      "JWT",
+      "Spring Security",
+      "Authentication",
+      "Cryptography",
+      "REST API Security",
+      "Token Auth",
+    ],
+    github: "https://github.com/govinddangi4564/JWT-Work",
+    live: "#",
+  },
+  {
+    id: 8,
     name: "ClimateAct - Gamified Eco Platform",
     shortName: "ClimateAct",
+    color: "#22d3ee",
+    bgImage: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop",
     icon: (
       <motion.div
         animate={{ rotate: 360 }}
@@ -174,9 +288,11 @@ export const projects = [
     live: "https://climate-change-prediction.vercel.app",
   },
   {
-    id: 6,
+    id: 9,
     name: "LifeLine AI - Patient Side Module",
     shortName: "LifeLine AI",
+    color: "#f43f5e",
+    bgImage: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=800&auto=format&fit=crop",
     icon: (
       <motion.div
         animate={{ scale: [1, 1.25, 1, 1.15, 1] }}
@@ -209,3 +325,5 @@ export const projects = [
     live: "https://medi-route-ai-frontend.vercel.app/",
   },
 ];
+
+

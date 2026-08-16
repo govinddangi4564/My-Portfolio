@@ -112,12 +112,13 @@ export default function App() {
               <Hero theme={theme} lightVisuals={useLightVisuals} />
               <StatsBar />
               <About />
+              <Projects theme={theme} lightVisuals={useLightVisuals} />
+              <Skills lightVisuals={useLightVisuals} />
               <Suspense fallback={<div className="min-h-[200px]" />}>
                 <GithubStats theme={theme} />
               </Suspense>
-              <Projects theme={theme} lightVisuals={useLightVisuals} />
-              <Skills lightVisuals={useLightVisuals} />
               <Contact lightVisuals={useLightVisuals} />
+
             </motion.main>
           ) : (
             <motion.main

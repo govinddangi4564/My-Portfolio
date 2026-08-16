@@ -1,10 +1,39 @@
 import { motion } from 'framer-motion';
+import { ShieldCheck, Cpu, Database, Award } from 'lucide-react';
 
-const stats = [
-  { num: '6+', label: 'Projects', sub: 'built & delivered' },
-  { num: '4', label: 'Core Stacks', sub: 'Java · React · Node · Python' },
-  { num: 'B.Tech', label: 'CSE Student', sub: '2023 – 2027' },
-  { num: '∞', label: 'Curiosity', sub: 'always learning' },
+const telemetryStats = [
+  {
+    num: '6+',
+    label: 'Systems Built',
+    sub: 'Full-Stack, Distributed, AI',
+    icon: Cpu,
+    tag: 'Production Ready',
+    tagColor: 'text-accent border-accent/30 bg-accent/10',
+  },
+  {
+    num: '90.75%',
+    label: 'Academic Merit',
+    sub: 'Class 10th Distinction',
+    icon: Award,
+    tag: 'Excellence',
+    tagColor: 'text-amber-400 border-amber-400/30 bg-amber-400/10',
+  },
+  {
+    num: '100%',
+    label: 'ACID & 2FA Auth',
+    sub: 'Security-First Architectures',
+    icon: ShieldCheck,
+    tag: 'Zero-Trust',
+    tagColor: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
+  },
+  {
+    num: '~85%',
+    label: 'NLP Accuracy',
+    sub: 'Sentence-BERT Semantic Matching',
+    icon: Database,
+    tag: 'AI Integrated',
+    tagColor: 'text-accent2 border-accent2/30 bg-accent2/10',
+  },
 ];
 
 export default function StatsBar() {
@@ -12,33 +41,46 @@ export default function StatsBar() {
     <motion.section
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6 }}
-      className="max-w-[1100px] mx-auto px-4 sm:px-6 -mt-8 mb-8 relative z-10"
+      className="max-w-[1200px] mx-auto px-4 sm:px-6 -mt-6 mb-12 relative z-10"
     >
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {stats.map((stat, i) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        {telemetryStats.map((stat, i) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-            className="glass-panel flex flex-col items-center justify-center py-6 px-4 text-center group cursor-default"
+            whileHover={{ y: -4 }}
+            className="bento-card p-5 flex flex-col justify-between group cursor-default"
           >
-            <span className="font-syne text-[2rem] font-extrabold bg-gradient-to-r from-accent to-accent2 bg-clip-text text-transparent leading-none">
-              {stat.num}
-            </span>
-            <span className="font-mono text-[0.78rem] uppercase tracking-[1.2px] text-text mt-2">
-              {stat.label}
-            </span>
-            <span className="font-body text-[0.72rem] text-dimmed mt-0.5">
-              {stat.sub}
-            </span>
+            <div className="flex items-center justify-between mb-3">
+              <span className={`font-mono text-[0.62rem] uppercase tracking-wider px-2 py-0.5 rounded-full border ${stat.tagColor}`}>
+                {stat.tag}
+              </span>
+              <stat.icon size={16} className="text-dimmed group-hover:text-accent2 transition-colors" />
+            </div>
+
+            <div className="my-1">
+              <span className="font-syne text-[2.1rem] font-black telemetry-val leading-none tracking-tight">
+                {stat.num}
+              </span>
+            </div>
+
+            <div className="mt-2">
+              <span className="font-mono text-[0.76rem] font-bold uppercase tracking-wider text-text block">
+                {stat.label}
+              </span>
+              <span className="font-body text-[0.72rem] text-dimmed block mt-0.5">
+                {stat.sub}
+              </span>
+            </div>
           </motion.div>
         ))}
       </div>
     </motion.section>
   );
 }
+
