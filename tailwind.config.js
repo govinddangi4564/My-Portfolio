@@ -16,11 +16,16 @@ export default {
         text: 'var(--text)',
         muted: 'var(--muted)',
         dimmed: 'var(--dimmed)',
+        'brand-pink': '#ec4899',
+        'brand-purple': '#8b5cf6',
+        'brand-cyan': '#06b6d4',
       },
       fontFamily: {
+        serif: ['"Playfair Display"', '"Instrument Serif"', 'Georgia', 'serif'],
         syne: ['Syne', 'sans-serif'],
-        mono: ['Space Mono', 'monospace'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Space Mono', 'JetBrains Mono', 'monospace'],
+        body: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'mesh-gradient': 'var(--mesh-gradient)',

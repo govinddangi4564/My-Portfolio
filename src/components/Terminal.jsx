@@ -71,19 +71,19 @@ export default function Terminal({ isOpen, onClose }) {
           onClick={onClose}
         >
           <div 
-            className="w-full max-w-2xl bg-[#090d16] rounded-2xl overflow-hidden border border-[var(--border)] shadow-[0_0_50px_rgba(139,92,246,0.2)] flex flex-col font-mono"
+            className="w-full max-w-2xl bg-[#080c14] rounded-2xl overflow-hidden border border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.25)] flex flex-col font-mono"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Terminal Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-[#0d1424] border-b border-[var(--border)]">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#0c1322] border-b border-[var(--border)]">
               <div className="flex items-center gap-2 text-slate-400">
-                <TerminalIcon size={16} className="text-accent2" />
+                <TerminalIcon size={16} className="text-emerald-400" />
                 <span className="text-xs font-bold text-text">govind@systems-terminal ~ zsh</span>
               </div>
               <div className="flex items-center gap-2">
                 <button className="p-1 text-slate-400 hover:text-white transition-colors" onClick={onClose}><Minus size={14} /></button>
                 <button className="p-1 text-slate-400 hover:text-white transition-colors"><Square size={12} /></button>
-                <button className="p-1 text-slate-400 hover:text-accent3 transition-colors" onClick={onClose}><X size={14} /></button>
+                <button className="p-1 text-slate-400 hover:text-rose-400 transition-colors" onClick={onClose}><X size={14} /></button>
               </div>
             </div>
 
@@ -95,7 +95,7 @@ export default function Terminal({ isOpen, onClose }) {
                   key={btnCmd}
                   type="button"
                   onClick={() => runCommand(btnCmd)}
-                  className="px-2.5 py-0.5 rounded-full bg-surface border border-[var(--border)] text-accent2 hover:bg-accent/20 hover:border-accent transition-colors shrink-0"
+                  className="px-2.5 py-0.5 rounded-full bg-surface border border-[var(--border)] text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/40 transition-colors shrink-0 font-medium"
                 >
                   {btnCmd}
                 </button>
@@ -111,8 +111,8 @@ export default function Terminal({ isOpen, onClose }) {
                 <div 
                   key={i} 
                   className={`mb-2 whitespace-pre-wrap ${
-                    line.type === 'error' ? 'text-accent3' : 
-                    line.type === 'input' ? 'text-accent2 font-bold' : 'text-slate-300'
+                    line.type === 'error' ? 'text-rose-400' : 
+                    line.type === 'input' ? 'text-cyan-400 font-bold' : 'text-slate-300'
                   }`}
                 >
                   {line.text}

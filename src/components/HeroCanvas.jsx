@@ -29,11 +29,12 @@ import { TbApi } from "react-icons/tb";
 import { FlaskConical } from "lucide-react";
 
 const getColors = (theme) => ({
-  accent: theme === "light" ? "#6366f1" : "#8b5cf6",
-  accent2: theme === "light" ? "#0891b2" : "#22d3ee",
+  accent: theme === "light" ? "#059669" : "#10b981",
+  accent2: theme === "light" ? "#0284c7" : "#06b6d4",
+  accent3: theme === "light" ? "#d97706" : "#f59e0b",
   text: theme === "light" ? "#0f172a" : "#f8fafc",
-  outline: theme === "light" ? "#ffffff" : "#030712",
-  wireframe: theme === "light" ? "#94a3b8" : "#ffffff",
+  outline: theme === "light" ? "#ffffff" : "#07090e",
+  wireframe: theme === "light" ? "#059669" : "#34d399",
 });
 
 function CentralCore({ colors, mouse, lightMode = false }) {

@@ -94,23 +94,27 @@ export default function Contact({ lightVisuals }) {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden pt-6 pb-10 sm:pt-12 sm:pb-16">
+    <section id="contact" className="relative overflow-hidden pt-6 pb-12 sm:pt-12 sm:pb-20">
       <Earth3D lightMode={lightVisuals} />
       <div className="section-container relative z-10">
-        <div className="bento-card p-4 sm:p-10 lg:p-12">
+        <div className="p-5 sm:p-10 lg:p-12 rounded-3xl bg-zinc-900/60 border border-zinc-800/90 shadow-xl backdrop-blur-xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.4 }}
-            className="mb-5 sm:mb-8"
+            className="mb-6 sm:mb-10"
           >
-            <div className="flex items-center gap-2 mb-2 sm:mb-3">
-              <Sparkles className="text-accent2 w-4 h-4" />
-              <span className="section-tag m-0">05. recruiter hub & contact</span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-brand-pink" />
+              <span className="font-mono text-[0.74rem] uppercase tracking-widest text-brand-pink font-semibold">
+                05. recruiter hub &amp; contact
+              </span>
             </div>
-            <h2 className="section-title">Let&apos;s Build Next-Gen Systems</h2>
-            <p className="font-body text-[0.88rem] sm:text-[1rem] text-muted -mt-2 sm:-mt-4 max-w-2xl leading-relaxed">
+            <h2 className="font-syne text-3xl sm:text-5xl font-bold text-white tracking-tight">
+              Let&apos;s Build Next-Gen Systems
+            </h2>
+            <p className="font-body text-[0.95rem] sm:text-[1.05rem] text-zinc-400 mt-2 max-w-2xl leading-relaxed">
               Have an open software engineering role, contract project, or technical question? Send a message below or connect directly.
             </p>
           </motion.div>
@@ -126,33 +130,33 @@ export default function Contact({ lightVisuals }) {
             >
               <div>
                 {/* Live IST Telemetry Box */}
-                <div className="p-3 sm:p-4 rounded-xl bg-surface/70 border border-[var(--border)] mb-3.5 sm:mb-6 flex items-center justify-between">
-                  <div className="flex items-center gap-2 sm:gap-2.5">
-                    <Clock size={15} className="text-accent2" />
+                <div className="p-3.5 sm:p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 mb-4 sm:mb-6 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <Clock size={16} className="text-brand-pink" />
                     <div>
-                      <span className="font-mono text-[0.62rem] sm:text-[0.68rem] text-dimmed uppercase tracking-wider block">
-                        Location & Time Zone
+                      <span className="font-mono text-[0.62rem] sm:text-[0.68rem] text-zinc-500 uppercase tracking-wider block">
+                        Location &amp; Time Zone
                       </span>
-                      <span className="font-syne text-[0.8rem] sm:text-[0.88rem] font-bold text-text">
+                      <span className="font-syne text-[0.82rem] sm:text-[0.9rem] font-bold text-white">
                         Indore, India (IST · UTC+5:30)
                       </span>
                     </div>
                   </div>
-                  <div className="font-mono text-[0.72rem] sm:text-[0.78rem] text-emerald-400 font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                  <div className="font-mono text-[0.72rem] sm:text-[0.78rem] text-emerald-400 font-bold px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                     {currentTime || "12:00 PM"}
                   </div>
                 </div>
 
                 {/* Direct Contact Cards with 1-Click Copy */}
-                <div className="flex flex-col gap-2 sm:gap-3 mb-4 sm:mb-6">
-                  <div className="p-3 sm:p-4 rounded-xl bg-surface/50 border border-[var(--border)] flex items-center justify-between">
+                <div className="flex flex-col gap-2.5 sm:gap-3 mb-4 sm:mb-6">
+                  <div className="p-3.5 sm:p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 flex items-center justify-between">
                     <div>
-                      <span className="font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider text-dimmed block">
+                      <span className="font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider text-zinc-500 block">
                         Direct Email Address
                       </span>
                       <a
                         href="mailto:govinddangi585@gmail.com"
-                        className="font-mono text-[0.78rem] sm:text-[0.85rem] text-accent2 font-semibold hover:underline block mt-0.5 truncate max-w-[210px] sm:max-w-none"
+                        className="font-mono text-[0.8rem] sm:text-[0.88rem] text-zinc-200 font-semibold hover:text-brand-pink transition-colors block mt-0.5 truncate max-w-[210px] sm:max-w-none"
                       >
                         govinddangi585@gmail.com
                       </a>
@@ -160,7 +164,7 @@ export default function Contact({ lightVisuals }) {
                     <button
                       type="button"
                       onClick={() => copyToClipboard("govinddangi585@gmail.com", "email")}
-                      className="p-1.5 sm:p-2 rounded-lg bg-surface border border-[var(--border)] text-muted hover:text-accent2 transition-colors shrink-0"
+                      className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors shrink-0"
                       title="Copy Email"
                     >
                       {copiedType === "email" ? (
@@ -171,14 +175,14 @@ export default function Contact({ lightVisuals }) {
                     </button>
                   </div>
 
-                  <div className="p-3 sm:p-4 rounded-xl bg-surface/50 border border-[var(--border)] flex items-center justify-between">
+                  <div className="p-3.5 sm:p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 flex items-center justify-between">
                     <div>
-                      <span className="font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider text-dimmed block">
-                        Phone & WhatsApp
+                      <span className="font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider text-zinc-500 block">
+                        Phone &amp; WhatsApp
                       </span>
                       <a
                         href="tel:+917067624564"
-                        className="font-mono text-[0.78rem] sm:text-[0.85rem] text-text font-semibold hover:text-accent2 transition-colors block mt-0.5"
+                        className="font-mono text-[0.8rem] sm:text-[0.88rem] text-zinc-200 font-semibold hover:text-brand-pink transition-colors block mt-0.5"
                       >
                         +91-7067624564
                       </a>
@@ -186,7 +190,7 @@ export default function Contact({ lightVisuals }) {
                     <button
                       type="button"
                       onClick={() => copyToClipboard("+917067624564", "phone")}
-                      className="p-1.5 sm:p-2 rounded-lg bg-surface border border-[var(--border)] text-muted hover:text-accent2 transition-colors shrink-0"
+                      className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors shrink-0"
                       title="Copy Phone"
                     >
                       {copiedType === "phone" ? (
@@ -200,21 +204,21 @@ export default function Contact({ lightVisuals }) {
               </div>
 
               {/* Social Channels */}
-              <div className="pt-3 sm:pt-4 border-t border-[var(--border)]">
-                <span className="font-mono text-[0.62rem] sm:text-[0.68rem] uppercase tracking-wider text-dimmed block mb-2 sm:mb-3">
+              <div className="pt-4 border-t border-zinc-800">
+                <span className="font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-wider text-zinc-400 block mb-2.5 font-semibold">
                   Verified Engineering Channels:
                 </span>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                <div className="flex flex-wrap gap-2">
                   {socials.map((s) => (
                     <a
                       key={s.label}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer me"
-                      className="inline-flex items-center gap-1.5 font-mono text-[0.65rem] sm:text-[0.7rem] uppercase tracking-wide px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-[var(--border)] text-muted hover:text-accent2 hover:border-accent2/40 hover:bg-accent2/10 transition-all duration-300 font-medium"
+                      className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] sm:text-[0.74rem] uppercase tracking-wide px-3.5 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-semibold hover:text-white hover:border-zinc-600 hover:bg-zinc-800 transition-all"
                     >
                       <s.icon size={13} />
-                      {s.label}
+                      <span>{s.label}</span>
                     </a>
                   ))}
                 </div>
@@ -228,47 +232,37 @@ export default function Contact({ lightVisuals }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="flex flex-col gap-3 sm:gap-4"
+              className="flex flex-col gap-3.5 sm:gap-4"
             >
               {/* Preset Inquiry Chips */}
               <div>
-                <span className="font-mono text-[0.62rem] sm:text-[0.65rem] uppercase tracking-wider text-dimmed flex items-center gap-1.5 mb-1.5">
-                  <MessageSquare size={11} className="text-accent" /> Quick Inquiry Topics:
+                <span className="font-mono text-[0.62rem] sm:text-[0.68rem] uppercase tracking-wider text-zinc-400 block mb-2 font-semibold">
+                  Quick Inquiry Presets:
                 </span>
-                <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                <div className="flex flex-wrap gap-1.5">
                   {PRESETS.map((p) => (
                     <button
                       key={p.label}
                       type="button"
                       onClick={() => applyPreset(p.msg)}
-                      className="font-mono text-[0.62rem] sm:text-[0.68rem] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-[var(--border)] bg-surface/60 text-muted hover:text-text hover:border-accent/40 hover:bg-accent/10 transition-all text-left"
+                      className="px-3 py-1 rounded-lg font-mono text-[0.65rem] sm:text-[0.7rem] transition-all duration-200 flex items-center gap-1.5 bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600"
                     >
-                      {p.label}
+                      <span>{p.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
+              {/* Form Input Fields */}
               {[
-                {
-                  id: "name",
-                  label: "Your Name / Organization",
-                  type: "text",
-                  placeholder: "e.g. Govind Dangi / Tech Corp",
-                  value: form.name,
-                },
-                {
-                  id: "email",
-                  label: "Work / Personal Email",
-                  type: "email",
-                  placeholder: "name@company.com",
-                  value: form.email,
-                },
+                { id: "name", label: "Your Name", type: "text", placeholder: "Alex Mercer / Recruiter", value: form.name },
+                { id: "email", label: "Email Address", type: "email", placeholder: "alex@company.com", value: form.email },
+                { id: "subject", label: "Subject / Role", type: "text", placeholder: "Full Stack Engineer Role", value: form.subject },
               ].map((f) => (
                 <div key={f.id}>
                   <label
                     htmlFor={f.id}
-                    className="font-mono text-[0.62rem] sm:text-[0.65rem] uppercase tracking-wider text-accent mb-1 block font-semibold"
+                    className="font-mono text-[0.62rem] sm:text-[0.68rem] uppercase tracking-wider text-zinc-300 mb-1 block font-semibold"
                   >
                     {f.label}
                   </label>
@@ -279,7 +273,7 @@ export default function Contact({ lightVisuals }) {
                     placeholder={f.placeholder}
                     value={f.value}
                     onChange={(e) => setForm({ ...form, [f.id]: e.target.value })}
-                    className="w-full bg-surface/70 border border-[var(--border)] rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 font-mono text-[0.76rem] sm:text-[0.8rem] text-text outline-none focus:border-accent focus:ring-[3px] focus:ring-accent/15 transition-all"
+                    className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 sm:px-4 py-2.5 font-mono text-[0.78rem] sm:text-[0.82rem] text-white outline-none focus:border-white/50 focus:ring-[1px] focus:ring-white/20 transition-all"
                   />
                 </div>
               ))}
@@ -287,7 +281,7 @@ export default function Contact({ lightVisuals }) {
               <div>
                 <label
                   htmlFor="message"
-                  className="font-mono text-[0.62rem] sm:text-[0.65rem] uppercase tracking-wider text-accent mb-1 block font-semibold"
+                  className="font-mono text-[0.62rem] sm:text-[0.68rem] uppercase tracking-wider text-zinc-300 mb-1 block font-semibold"
                 >
                   Message
                 </label>
@@ -298,14 +292,15 @@ export default function Contact({ lightVisuals }) {
                   placeholder="Share details about the role, project, or requirements..."
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-surface/70 border border-[var(--border)] rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 font-mono text-[0.76rem] sm:text-[0.8rem] text-text outline-none focus:border-accent focus:ring-[3px] focus:ring-accent/15 transition-all resize-y min-h-[75px]"
+                  className="w-full bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 sm:px-4 py-2.5 font-mono text-[0.78rem] sm:text-[0.82rem] text-white outline-none focus:border-white/50 focus:ring-[1px] focus:ring-white/20 transition-all resize-y min-h-[85px]"
                 />
               </div>
 
+              {/* Submit CTA Button (Clean White) */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center gap-2 font-mono text-[0.74rem] sm:text-[0.78rem] uppercase tracking-wider px-6 sm:px-8 py-2.5 sm:py-3.5 btn-glow text-[var(--on-accent)] rounded-full hover:-translate-y-0.5 transition-all duration-300 self-start disabled:opacity-70 disabled:cursor-not-allowed font-semibold shadow-lg mt-0.5"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 sm:px-8 py-2.5 sm:py-3 text-black font-mono text-[0.74rem] sm:text-[0.8rem] uppercase font-bold tracking-wider hover:bg-zinc-200 transition-all self-start shadow-md disabled:opacity-60 disabled:cursor-not-allowed mt-1 cursor-pointer"
               >
                 {isSubmitting ? (
                   "Transmitting..."
@@ -324,4 +319,3 @@ export default function Contact({ lightVisuals }) {
     </section>
   );
 }
-

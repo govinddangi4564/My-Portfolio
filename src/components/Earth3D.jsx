@@ -26,7 +26,7 @@ function Globe() {
         {/* Core Wireframe */}
         <Sphere ref={meshRef} args={[2.2, segments, segments]}>
           <meshBasicMaterial 
-            color="#00e6ff" 
+            color="#10b981" 
             wireframe 
             transparent 
             opacity={0.25} 
@@ -36,16 +36,16 @@ function Globe() {
         
         {/* Inner solid sphere to block back lines */}
         <Sphere args={[2.15, segments, segments]}>
-          <meshBasicMaterial color="#020617" />
+          <meshBasicMaterial color="#07090e" />
         </Sphere>
         
         {/* Outer glowing shell */}
         <Sphere ref={outerRef} args={[2.4, isMobile ? 12 : 16, isMobile ? 12 : 16]}>
           <meshBasicMaterial 
-            color="#a5b4fc" 
+            color="#06b6d4" 
             wireframe 
             transparent 
-            opacity={0.08} 
+            opacity={0.12} 
             blending={THREE.AdditiveBlending}
           />
         </Sphere>

@@ -86,7 +86,7 @@ export const projects = [
     id: 3,
     name: "Logistics & Shipment Tracker AI",
     shortName: "ShipTrack AI",
-    color: "#8b5cf6",
+    color: "#38bdf8",
     bgImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
     icon: (
       <motion.div
@@ -223,7 +223,7 @@ export const projects = [
     id: 7,
     name: "JWT Security & Stateless Auth Engine",
     shortName: "JWT Auth",
-    color: "#8b5cf6",
+    color: "#e4e4e7",
     bgImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop",
     icon: (
       <motion.div
