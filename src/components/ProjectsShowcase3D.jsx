@@ -4,7 +4,7 @@ import { RoundedBox, Text, Float, Sparkles } from "@react-three/drei";
 import { useInView } from "framer-motion";
 import * as THREE from "three";
 
-const PROJECT_COLORS = ["#8b5cf6", "#22d3ee", "#f43f5e", "#10b981", "#f59e0b", "#6366f1"];
+const PROJECT_COLORS = ["#10b981", "#06b6d4", "#f59e0b", "#38bdf8", "#34d399", "#60a5fa"];
 
 function ProjectPanel({
   project,
@@ -173,7 +173,7 @@ function CentralOrb({ theme }) {
     }
   });
 
-  const orbColor = theme === "light" ? "#6366f1" : "#8b5cf6";
+  const orbColor = theme === "light" ? "#18181b" : "#ffffff";
 
   return (
     <Float speed={2} floatIntensity={0.6}>
@@ -182,9 +182,9 @@ function CentralOrb({ theme }) {
         <meshPhysicalMaterial
           color={orbColor}
           emissive={orbColor}
-          emissiveIntensity={0.4}
+          emissiveIntensity={0.25}
           roughness={0.1}
-          metalness={0.9}
+          metalness={0.95}
           clearcoat={1}
           clearcoatRoughness={0.1}
           transparent
@@ -233,9 +233,9 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
   return (
     <>
       <ambientLight intensity={theme === "light" ? 0.6 : 0.35} />
-      <pointLight position={[5, 5, 5]} intensity={1.5} color="#8b5cf6" />
-      <pointLight position={[-5, -3, 3]} intensity={1} color="#22d3ee" />
-      <spotLight position={[0, 8, 0]} intensity={0.8} angle={0.5} penumbra={1} color="#f8fafc" />
+      <pointLight position={[5, 5, 5]} intensity={1.5} color="#10b981" />
+      <pointLight position={[-5, -3, 3]} intensity={1} color="#06b6d4" />
+      <spotLight position={[0, 8, 0]} intensity={0.8} angle={0.5} penumbra={1} color="#f59e0b" />
 
       <CentralOrb theme={theme} />
       <Carousel
@@ -246,16 +246,16 @@ function Scene({ projects, selected, onSelect, theme, lightMode }) {
       />
 
       {!lightMode && (
-        <Sparkles count={typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 40} scale={10} size={2} speed={0.4} color="#22d3ee" opacity={0.5} />
+        <Sparkles count={typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 40} scale={10} size={2} speed={0.4} color="#06b6d4" opacity={0.4} />
       )}
 
       {/* Floor reflection grid */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]}>
         <planeGeometry args={[20, 20]} />
         <meshBasicMaterial
-          color={theme === "light" ? "#6366f1" : "#8b5cf6"}
+          color={theme === "light" ? "#059669" : "#10b981"}
           transparent
-          opacity={0.04}
+          opacity={0.05}
           wireframe
         />
       </mesh>

@@ -17,7 +17,7 @@ export default function AllProjectsPage() {
           <MagneticWrapper magneticStrength={0.2} className="inline-block">
             <a
               href="#"
-              className="inline-flex items-center gap-3 font-mono text-[0.85rem] uppercase tracking-wider text-muted hover:text-accent group transition-colors bg-[var(--surface)] px-6 py-3 rounded-full border border-[var(--border)] shadow-sm hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)]"
+              className="inline-flex items-center gap-3 font-mono text-[0.85rem] uppercase tracking-wider text-muted hover:text-white group transition-colors bg-[var(--surface)] px-6 py-3 rounded-full border border-[var(--border)] shadow-sm hover:border-white/40"
             >
               <span className="group-hover:-translate-x-1.5 transition-transform duration-300">
                 <ArrowLeft size={16} />
@@ -34,14 +34,14 @@ export default function AllProjectsPage() {
           className="mb-16"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="text-accent2 w-4 h-4" />
-            <span className="section-tag m-0 text-accent2 border-accent2/30 bg-accent2/10">archive</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-brand-pink" />
+            <span className="font-mono text-[0.72rem] uppercase tracking-widest text-brand-pink font-semibold">archive · all systems</span>
           </div>
-          <h1 className="font-syne text-[3rem] md:text-[4rem] font-bold text-text mb-4 leading-tight tracking-tight">
-            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent2">Vault.</span>
+          <h1 className="font-syne text-[3rem] md:text-[4rem] font-bold text-white mb-4 leading-tight tracking-tight">
+            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink via-purple-300 to-cyan-300">Vault.</span>
           </h1>
-          <p className="font-mono text-[0.95rem] text-muted max-w-2xl leading-relaxed">
-            A complete historical record of the systems, microservices, frontends, and side-quests I've built. Everything from AI models to gamified platforms.
+          <p className="font-mono text-[0.95rem] text-zinc-400 max-w-2xl leading-relaxed">
+            A complete historical record of the systems, microservices, frontends, and side-quests I&apos;ve built. Everything from AI models to gamified platforms.
           </p>
         </motion.div>
 

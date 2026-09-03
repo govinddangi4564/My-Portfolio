@@ -9,7 +9,7 @@ const milestones = [
     institution: "Prestige Institute of Engineering Management & Research (PIEMR), Indore",
     highlights: ["Data Structures & Algorithms", "Object-Oriented Programming (Java)", "Database Management Systems", "Computer Networks & OS"],
     icon: GraduationCap,
-    accent: "text-accent border-accent/30 bg-accent/10",
+    accent: "text-zinc-200 border-zinc-700/80 bg-zinc-900/60",
   },
   {
     date: "2024",
@@ -18,7 +18,7 @@ const milestones = [
     institution: "Hands-on Technical Cloud Training",
     highlights: ["Cloud Architecture Foundations", "Compute Engine & Storage", "API Deployment & Scaling"],
     icon: Cloud,
-    accent: "text-accent2 border-accent2/30 bg-accent2/10",
+    accent: "text-zinc-300 border-zinc-700/80 bg-zinc-900/60",
   },
   {
     date: "2022",
@@ -42,7 +42,7 @@ const milestones = [
 
 export default function Timeline() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
       {milestones.map((item, i) => (
         <motion.div
           key={item.title}
@@ -50,38 +50,38 @@ export default function Timeline() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35, delay: i * 0.06 }}
-          className="bento-card p-3.5 sm:p-5 flex flex-col justify-between group hover:border-accent2/40 cursor-default"
+          className="p-4 sm:p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/90 flex flex-col justify-between group hover:border-zinc-700 transition-all cursor-default shadow-sm"
         >
           <div>
-            <div className="flex items-center justify-between gap-1.5 mb-2 sm:mb-3">
+            <div className="flex items-center justify-between gap-1.5 mb-2.5 sm:mb-3">
               <div className="flex items-center gap-2">
-                <div className={`p-1.5 sm:p-2 rounded-lg ${item.accent}`}>
-                  <item.icon size={15} className="sm:w-4 sm:h-4" />
+                <div className={`p-2 rounded-xl ${item.accent}`}>
+                  <item.icon size={15} />
                 </div>
-                <span className="font-mono text-[0.62rem] sm:text-[0.68rem] text-dimmed flex items-center gap-1">
-                  <Calendar size={10} /> {item.date}
+                <span className="font-mono text-[0.62rem] sm:text-[0.68rem] text-zinc-500 flex items-center gap-1">
+                  <Calendar size={11} /> {item.date}
                 </span>
               </div>
-              <span className={`font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full border font-bold ${item.accent}`}>
+              <span className={`font-mono text-[0.58rem] sm:text-[0.62rem] uppercase tracking-wider px-2.5 py-0.5 rounded-full border font-bold ${item.accent}`}>
                 {item.status}
               </span>
             </div>
 
-            <h4 className="font-syne text-[0.92rem] sm:text-[1.02rem] font-bold text-text mb-1 group-hover:text-accent2 transition-colors">
+            <h4 className="font-syne text-[0.95rem] sm:text-[1.05rem] font-bold text-white mb-1 group-hover:text-brand-pink transition-colors">
               {item.title}
             </h4>
-            <p className="font-body text-[0.76rem] sm:text-[0.82rem] text-muted mb-2.5 sm:mb-3">
+            <p className="font-body text-[0.78rem] sm:text-[0.84rem] text-zinc-400 mb-3">
               {item.institution}
             </p>
           </div>
 
-          <div className="pt-2 sm:pt-3 border-t border-[var(--border)] flex flex-wrap gap-1 sm:gap-1.5">
+          <div className="pt-3 border-t border-zinc-800/80 flex flex-wrap gap-1.5">
             {item.highlights.map((hl) => (
               <span
                 key={hl}
-                className="inline-flex items-center gap-1 font-mono text-[0.58rem] sm:text-[0.62rem] px-2 py-0.5 rounded-md bg-surface border border-[var(--border)] text-muted"
+                className="inline-flex items-center gap-1 font-mono text-[0.58rem] sm:text-[0.62rem] px-2.5 py-0.8 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-400"
               >
-                <CheckCircle2 size={9} className="text-accent" />
+                <CheckCircle2 size={10} className="text-zinc-500" />
                 {hl}
               </span>
             ))}

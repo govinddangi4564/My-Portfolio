@@ -8,7 +8,7 @@ const telemetryStats = [
     sub: 'Full-Stack, Distributed, AI',
     icon: Cpu,
     tag: 'Production Ready',
-    tagColor: 'text-accent border-accent/30 bg-accent/10',
+    tagColor: 'text-brand-pink border-brand-pink/30 bg-brand-pink/10',
   },
   {
     num: '90.75%',
@@ -32,7 +32,7 @@ const telemetryStats = [
     sub: 'Sentence-BERT Semantic Matching',
     icon: Database,
     tag: 'AI Integrated',
-    tagColor: 'text-accent2 border-accent2/30 bg-accent2/10',
+    tagColor: 'text-purple-400 border-purple-400/30 bg-purple-400/10',
   },
 ];
 
@@ -45,7 +45,7 @@ export default function StatsBar() {
       transition={{ duration: 0.5 }}
       className="max-w-[1200px] mx-auto px-4 sm:px-6 -mt-2 sm:-mt-6 mb-8 sm:mb-12 relative z-10"
     >
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {telemetryStats.map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -53,27 +53,27 @@ export default function StatsBar() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.35, delay: i * 0.05 }}
-            whileHover={{ y: -4 }}
-            className="bento-card p-3 sm:p-5 flex flex-col justify-between group cursor-default"
+            whileHover={{ y: -3 }}
+            className="p-3.5 sm:p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/90 flex flex-col justify-between group cursor-default hover:border-zinc-700 transition-all shadow-sm"
           >
-            <div className="flex items-center justify-between mb-1.5 sm:mb-3">
-              <span className={`font-mono text-[0.55rem] sm:text-[0.62rem] uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full border ${stat.tagColor}`}>
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
+              <span className={`font-mono text-[0.55rem] sm:text-[0.62rem] uppercase tracking-wider px-2 py-0.5 rounded-md border font-semibold ${stat.tagColor}`}>
                 {stat.tag}
               </span>
-              <stat.icon size={14} className="sm:w-4 sm:h-4 text-dimmed group-hover:text-accent2 transition-colors" />
+              <stat.icon size={15} className="text-zinc-500 group-hover:text-white transition-colors" />
             </div>
 
             <div className="my-0.5 sm:my-1">
-              <span className="font-syne text-[1.45rem] sm:text-[2.1rem] font-black telemetry-val leading-none tracking-tight">
+              <span className="font-syne text-[1.5rem] sm:text-[2.2rem] font-black text-white leading-none tracking-tight">
                 {stat.num}
               </span>
             </div>
 
-            <div className="mt-1 sm:mt-2">
-              <span className="font-mono text-[0.68rem] sm:text-[0.76rem] font-bold uppercase tracking-wider text-text block truncate">
+            <div className="mt-1.5 sm:mt-2">
+              <span className="font-mono text-[0.68rem] sm:text-[0.76rem] font-bold uppercase tracking-wider text-zinc-200 block truncate">
                 {stat.label}
               </span>
-              <span className="font-body text-[0.62rem] sm:text-[0.72rem] text-dimmed block mt-0.5 truncate">
+              <span className="font-body text-[0.62rem] sm:text-[0.72rem] text-zinc-400 block mt-0.5 truncate">
                 {stat.sub}
               </span>
             </div>

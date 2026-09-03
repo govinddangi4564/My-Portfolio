@@ -4,9 +4,9 @@ import { Float, MeshDistortMaterial, Stars } from "@react-three/drei";
 
 
 const getColors = (theme) => ({
-  accent: theme === "light" ? "#6366f1" : "#8b5cf6",
-  accent2: theme === "light" ? "#0891b2" : "#22d3ee",
-  accent3: theme === "light" ? "#e11d48" : "#f43f5e",
+  accent: theme === "light" ? "#059669" : "#10b981",
+  accent2: theme === "light" ? "#0284c7" : "#06b6d4",
+  accent3: theme === "light" ? "#d97706" : "#f59e0b",
 });
 
 function MouseParallaxGroup({ children }) {
@@ -140,22 +140,12 @@ function MovingStars({ theme }) {
 }
 
 function Scene({ theme }) {
-  const colors = getColors(theme);
-
   return (
     <>
-      <ambientLight intensity={theme === "light" ? 0.4 : 0.25} />
-      <pointLight position={[10, 10, 10]} intensity={1.0} color={colors.accent} />
-      <pointLight position={[-10, -5, -5]} intensity={0.7} color={colors.accent2} />
+      <ambientLight intensity={theme === "light" ? 0.3 : 0.15} />
       <ScrollCamera />
       <MovingStars theme={theme} />
-      <MouseParallaxGroup>
-        <GlowingBlob color={colors.accent} position={[-6, 2, -6]} scale={1.8} speed={1.2} />
-        <GlowingBlob color={colors.accent2} position={[7, -3, -8]} scale={1.4} speed={1.6} distort={0.4} />
-        <GlowingBlob color={colors.accent3} position={[2, 5, -10]} scale={1.0} speed={2.0} distort={0.45} />
-        <FloatingRings colors={colors} />
-      </MouseParallaxGroup>
-      <fog attach="fog" args={[theme === "light" ? "#f8fafc" : "#030712", 8, 35]} />
+      <fog attach="fog" args={[theme === "light" ? "#f8fafc" : "#060709", 10, 40]} />
     </>
   );
 }

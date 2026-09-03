@@ -45,8 +45,8 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
 
     // Cache theme colors to avoid calling getComputedStyle in the 60fps draw loop
     const computedStyles = getComputedStyle(document.documentElement);
-    const accentHex = computedStyles.getPropertyValue("--accent").trim() || (theme === "light" ? "#6366f1" : "#8b5cf6");
-    const accent2Hex = computedStyles.getPropertyValue("--accent2").trim() || (theme === "light" ? "#0891b2" : "#22d3ee");
+    const accentHex = computedStyles.getPropertyValue("--accent").trim() || (theme === "light" ? "#059669" : "#10b981");
+    const accent2Hex = computedStyles.getPropertyValue("--accent2").trim() || (theme === "light" ? "#0284c7" : "#06b6d4");
     const textHex = computedStyles.getPropertyValue("--text").trim() || (theme === "light" ? "#0f172a" : "#f8fafc");
 
     const accentRGB = parseHex(accentHex);
@@ -101,7 +101,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.lineWidth = theme === "light" ? 0.8 : 1.0;
 
       context.beginPath();
-      context.strokeStyle = accentAlpha(theme === "light" ? 0.08 : 0.15);
+      context.strokeStyle = theme === "light" ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.03)";
       context.arc(
         width * 0.86,
         height * 0.45,
@@ -112,7 +112,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.stroke();
 
       context.beginPath();
-      context.strokeStyle = accent2Alpha(theme === "light" ? 0.06 : 0.1);
+      context.strokeStyle = theme === "light" ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)";
       context.arc(
         width * 0.56,
         height * 0.66,
@@ -123,7 +123,7 @@ export default function ParticleGridBackground({ theme, lightMode = false }) {
       context.stroke();
 
       context.beginPath();
-      context.strokeStyle = accentAlpha(theme === "light" ? 0.05 : 0.08);
+      context.strokeStyle = theme === "light" ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)";
       context.ellipse(
         width * 0.54,
         height * 0.56,

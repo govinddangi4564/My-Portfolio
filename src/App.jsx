@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ReactLenis } from "lenis/react";
 import Background3D from "./components/Background3D";
 import AuroraBackground from "./components/AuroraBackground";
-import ScrollProgress from "./components/ScrollProgress";
 import ParticleGridBackground from "./components/ParticleGridBackground";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -15,11 +14,14 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 import useMediaQuery from "./hooks/useMediaQuery";
+import { sound } from "./utils/sound";
 
 // Lazy-load secondary components to keep initial bundle ultra lightweight
 const Terminal = lazy(() => import("./components/Terminal"));
 const GithubStats = lazy(() => import("./components/GithubStats"));
 const AllProjectsPage = lazy(() => import("./components/AllProjectsPage"));
+const CommandPalette = lazy(() => import("./components/CommandPalette"));
+const RecruiterFastTrack = lazy(() => import("./components/RecruiterFastTrack"));
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -28,6 +30,10 @@ export default function App() {
   });
   const [currentPage, setCurrentPage] = useState("home");
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isRecruiterModalOpen, setIsRecruiterModalOpen] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(() => sound.enabled);
+
   const isTouchDevice = useMediaQuery("(pointer: coarse)");
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
@@ -68,14 +74,27 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.classList.toggle("light", theme === "light");
+    document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // Terminal: ` or ~
       if (e.key === '`' || e.key === '~') {
+        const activeTag = document.activeElement?.tagName;
+        if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+          e.preventDefault();
+          setIsTerminalOpen((prev) => !prev);
+          sound.playClick();
+        }
+      }
+      // Command Palette: Ctrl+K or Cmd+K
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        setIsTerminalOpen((prev) => !prev);
+        setIsCommandPaletteOpen((prev) => !prev);
+        sound.playClick();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -84,6 +103,11 @@ export default function App() {
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  const toggleSound = () => {
+    const newState = sound.toggle();
+    setSoundEnabled(newState);
   };
 
   return (
@@ -99,17 +123,45 @@ export default function App() {
       }}
     >
       <div className="min-h-screen bg-bg text-text relative overflow-hidden">
-        <ScrollProgress />
         <CustomCursor />
         {isTerminalOpen && (
           <Suspense fallback={null}>
             <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
           </Suspense>
         )}
+        {isCommandPaletteOpen && (
+          <Suspense fallback={null}>
+            <CommandPalette
+              isOpen={isCommandPaletteOpen}
+              onClose={() => setIsCommandPaletteOpen(false)}
+              onToggleTheme={toggleTheme}
+              theme={theme}
+              onOpenTerminal={() => setIsTerminalOpen(true)}
+              soundEnabled={soundEnabled}
+              onToggleSound={toggleSound}
+            />
+          </Suspense>
+        )}
+        {isRecruiterModalOpen && (
+          <Suspense fallback={null}>
+            <RecruiterFastTrack
+              isOpen={isRecruiterModalOpen}
+              onClose={() => setIsRecruiterModalOpen(false)}
+            />
+          </Suspense>
+        )}
         <AuroraBackground theme={theme} />
         <Background3D theme={theme} disabled={disableBackground3D} />
         <ParticleGridBackground theme={theme} lightMode={useLightVisuals} />
-        <Navbar theme={theme} onToggleTheme={toggleTheme} onOpenTerminal={() => setIsTerminalOpen(true)} />
+        <Navbar
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenRecruiterModal={() => setIsRecruiterModalOpen(true)}
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
+        />
 
         <AnimatePresence mode="wait">
           {currentPage === "home" ? (
