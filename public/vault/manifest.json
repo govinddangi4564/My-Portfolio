@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "kdf": {
+    "algorithm": "PBKDF2",
+    "hash": "SHA-256",
+    "iterations": 600000,
+    "salt": "Nee/fxn99w6OyY5jMSFnfA=="
+  },
+  "documents": [
+    {
+      "id": "8d983bf4c74f25e3",
+      "name": "10th.jpg",
+      "file": "8d983bf4c74f25e3.enc",
+      "iv": "14L3aKyLrxGCRKo4",
+      "type": "image/jpeg"
+    },
+    {
+      "id": "c82aa44b8f18b17f",
+      "name": "12th.jpg",
+      "file": "c82aa44b8f18b17f.enc",
+      "iv": "TGz6NuQnZnwlkXDL",
+      "type": "image/jpeg"
+    },
+    {
+      "id": "ea1eb8b0b230fbc7",
+      "name": "1st Sem.pdf",
+      "file": "ea1eb8b0b230fbc7.enc",
+      "iv": "8G/OainVm0LmN+j7",
+      "type": "application/pdf"
+    },
+    {
+      "id": "be03859cbb813639",
+      "name": "2nd Sem.pdf",
+      "file": "be03859cbb813639.enc",
+      "iv": "VdErzerjrRR0uElX",
+      "type": "application/pdf"
+    },
+    {
+      "id": "1b0d56f031e3d73d",
+      "name": "3rd Sem.pdf",
+      "file": "1b0d56f031e3d73d.enc",
+      "iv": "jSnnrYv8/deTMuil",
+      "type": "application/pdf"
+    },
+    {
+      "id": "fe5257a97449d04c",
+      "name": "4th Sem.pdf",
+      "file": "fe5257a97449d04c.enc",
+      "iv": "C6VwIQN8ljhWOJFW",
+      "type": "application/pdf"
+    },
+    {
+      "id": "111a530a7bfac4cb",
+      "name": "5th Sem.pdf",
+      "file": "111a530a7bfac4cb.enc",
+      "iv": "+W9ff5tz049syzC8",
+      "type": "application/pdf"
+    }
+  ]
+}

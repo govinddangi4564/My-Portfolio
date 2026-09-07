@@ -22,6 +22,7 @@ const GithubStats = lazy(() => import("./components/GithubStats"));
 const AllProjectsPage = lazy(() => import("./components/AllProjectsPage"));
 const CommandPalette = lazy(() => import("./components/CommandPalette"));
 const RecruiterFastTrack = lazy(() => import("./components/RecruiterFastTrack"));
+const DocumentVault = lazy(() => import("./components/DocumentVault"));
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -32,6 +33,7 @@ export default function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isRecruiterModalOpen, setIsRecruiterModalOpen] = useState(false);
+  const [isDocumentVaultOpen, setIsDocumentVaultOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => sound.enabled);
 
   const isTouchDevice = useMediaQuery("(pointer: coarse)");
@@ -147,6 +149,15 @@ export default function App() {
             <RecruiterFastTrack
               isOpen={isRecruiterModalOpen}
               onClose={() => setIsRecruiterModalOpen(false)}
+              onOpenDocumentVault={() => setIsDocumentVaultOpen(true)}
+            />
+          </Suspense>
+        )}
+        {isDocumentVaultOpen && (
+          <Suspense fallback={null}>
+            <DocumentVault
+              isOpen={isDocumentVaultOpen}
+              onClose={() => setIsDocumentVaultOpen(false)}
             />
           </Suspense>
         )}

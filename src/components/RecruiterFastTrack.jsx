@@ -12,12 +12,13 @@ import {
   Award,
   Zap,
   Copy,
-  Check
+  Check,
+  LockKeyhole
 } from 'lucide-react';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { sound } from '../utils/sound';
 
-export default function RecruiterFastTrack({ isOpen, onClose }) {
+export default function RecruiterFastTrack({ isOpen, onClose, onOpenDocumentVault }) {
   const [copiedType, setCopiedType] = useState(null);
 
   const copy = (text, type) => {
@@ -135,6 +136,10 @@ export default function RecruiterFastTrack({ isOpen, onClose }) {
                 >
                   <Download size={13} /> Resume PDF
                 </a>
+
+                <button onClick={onOpenDocumentVault} type="button" className="px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:text-white hover:bg-emerald-500/20 font-mono text-[0.72rem] transition-all flex items-center gap-1.5 shrink-0">
+                    <LockKeyhole size={13} /> Documents
+                  </button>
 
                 <button
                   onClick={() => copy('govinddangi585@gmail.com', 'email')}
