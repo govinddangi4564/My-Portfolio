@@ -1,60 +1,50 @@
 {
-  "version": 1,
+  "version": 2,
   "kdf": {
     "algorithm": "PBKDF2",
     "hash": "SHA-256",
     "iterations": 600000,
-    "salt": "Nee/fxn99w6OyY5jMSFnfA=="
+    "salt": "d5btk13894HR193SfT/Njw=="
+  },
+  "metadata": {
+    "iv": "lBKmUrqbEl/+BFyA",
+    "data": "xYkHj7ZSq0b7RslXnNOr3+i9/SQ1YibNPTF8GNFEFQIahef+1fyeT2gLtHmV7ngvUCCif/ouXoCFJaGVWbWIXBkpPpAyJbzo+S5IXHNs1E/WnOFvbbSQ8MKXdcItPFbajkC0IaO5R/TM/NawzUENz70Q3EHWlp3TGQWyb9pCC6rS/VQaHRvjvMq6fuFvSMCC8cVx3mzrgy8W9gF9uu4BP7hILW/WwQ3JqWjCRFFRwtDlL4z3xw8PgFo0H0uc+gOvThyFTZIuw/j+cO/miBl5gWRNKi4y3m4yQ8pnsYxYyFO5Mpt1uqUSpSlUJF70llzTcK5bLqS4Wi9wl+aJWAshPY0U6sveqJi9AbPT+IhXCEsrxD62zLMSEkcooz4s6KUJExL6tsDAbniS7yUjj0gPmiSXP73oYWoscdHtW3boO8R6tZqNNnbfCnnEZQHPaF1MQUdIHXoXi95KH2N/o1IiMDlOkf438MHL9/pCB1xuBn913Rs9JmjOcbgtKeI/uwPFeqUQhFMvkW8m3EDu/QUZXs7h8ANRKqLdXJwR0TciUaj9ZxNP7nIDuBvUXrfDa3wydGMYds5ac5jIhamfvH2yUR02CqK8f9MENUosjos9pnhI8+eVi3a3EQZ4x1Jc6yRRPxWrVzi8geBtK9yuPqn6aiAYHiN8nTFwqtIo9nmx2GJXOVWAZ01k"
   },
   "documents": [
     {
       "id": "8d983bf4c74f25e3",
-      "name": "10th.jpg",
       "file": "8d983bf4c74f25e3.enc",
-      "iv": "14L3aKyLrxGCRKo4",
-      "type": "image/jpeg"
+      "iv": "KmgUJFvkTQelIOp0"
     },
     {
       "id": "c82aa44b8f18b17f",
-      "name": "12th.jpg",
       "file": "c82aa44b8f18b17f.enc",
-      "iv": "TGz6NuQnZnwlkXDL",
-      "type": "image/jpeg"
+      "iv": "yQZGa4m12RYK+gbW"
     },
     {
       "id": "ea1eb8b0b230fbc7",
-      "name": "1st Sem.pdf",
       "file": "ea1eb8b0b230fbc7.enc",
-      "iv": "8G/OainVm0LmN+j7",
-      "type": "application/pdf"
+      "iv": "aRo1jk3RDFBlS0/D"
     },
     {
       "id": "be03859cbb813639",
-      "name": "2nd Sem.pdf",
       "file": "be03859cbb813639.enc",
-      "iv": "VdErzerjrRR0uElX",
-      "type": "application/pdf"
+      "iv": "idFuHCoKRZ0+69Hc"
     },
     {
       "id": "1b0d56f031e3d73d",
-      "name": "3rd Sem.pdf",
       "file": "1b0d56f031e3d73d.enc",
-      "iv": "jSnnrYv8/deTMuil",
-      "type": "application/pdf"
+      "iv": "9jXQt4HoAnHSCTpx"
     },
     {
       "id": "fe5257a97449d04c",
-      "name": "4th Sem.pdf",
       "file": "fe5257a97449d04c.enc",
-      "iv": "C6VwIQN8ljhWOJFW",
-      "type": "application/pdf"
+      "iv": "3lIesIKovMKmCkjH"
     },
     {
       "id": "111a530a7bfac4cb",
-      "name": "5th Sem.pdf",
       "file": "111a530a7bfac4cb.enc",
-      "iv": "+W9ff5tz049syzC8",
-      "type": "application/pdf"
+      "iv": "djE9JKy76Dla2SFb"
     }
   ]
 }
