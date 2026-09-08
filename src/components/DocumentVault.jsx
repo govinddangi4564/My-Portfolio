@@ -80,8 +80,8 @@ export default function DocumentVault({ isOpen, onClose }) {
 
   const inputClass = "w-full rounded-xl border border-zinc-700 bg-zinc-950 py-3 px-3 font-mono text-sm text-white outline-none focus:border-emerald-400";
 
-  return <AnimatePresence>{isOpen && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 z-[1100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-    <motion.section initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96, y: 12 }} onClick={(event) => event.stopPropagation()} className="relative w-full max-w-lg my-auto rounded-3xl border border-emerald-500/30 bg-[#090c14] p-5 sm:p-7 shadow-[0_25px_70px_rgba(0,0,0,0.85)]" role="dialog" aria-modal="true" aria-labelledby="vault-title">
+  return <AnimatePresence>{isOpen && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 z-[1100] flex items-start sm:items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto overscroll-contain">
+    <motion.section initial={{ opacity: 0, scale: 0.96, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96, y: 12 }} onClick={(event) => event.stopPropagation()} data-lenis-prevent className="relative w-full max-w-lg my-auto max-h-[calc(100dvh-1rem)] sm:max-h-[calc(100dvh-2rem)] overflow-y-scroll touch-pan-y overscroll-contain rounded-3xl border border-emerald-500/30 bg-[#090c14] p-4 sm:p-7 shadow-[0_25px_70px_rgba(0,0,0,0.85)]" role="dialog" aria-modal="true" aria-labelledby="vault-title">
       <button onClick={onClose} type="button" className="absolute top-4 right-4 p-2 rounded-full bg-surface border border-[var(--border)] text-muted hover:text-white" aria-label="Close document vault"><X size={16} /></button>
       <div className="w-11 h-11 mb-4 rounded-2xl bg-emerald-400 text-black flex items-center justify-center"><FileKey2 size={21} /></div>
       <h2 id="vault-title" className="font-syne text-xl font-bold text-white">Secure document vault</h2>

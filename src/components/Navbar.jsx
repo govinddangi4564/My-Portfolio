@@ -50,7 +50,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
         }`}
       >
         {/* LOGO + Recruiter HUD indicator */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <a
             href="#"
             onClick={() => sound.playClick()}
@@ -61,7 +61,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
                 GD
               </div>
             </div>
-            <span className="font-mono text-[0.82rem] text-white font-semibold">
+            <span className="hidden min-[500px]:inline font-mono text-[0.82rem] text-white font-semibold">
               govind<span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple font-bold">.dev</span>
             </span>
           </a>
@@ -82,7 +82,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
         </div>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 bg-zinc-900/50 p-1 rounded-full border border-zinc-800/80">
+        <div className="hidden lg:flex items-center gap-1 bg-zinc-900/50 p-1 rounded-full border border-zinc-800/80">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.replace('#', '');
             return (
@@ -111,7 +111,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
               sound.playClick();
               onOpenCommandPalette();
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full border border-zinc-800 bg-zinc-900/70 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all font-mono text-[0.68rem]"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full border border-zinc-800 bg-zinc-900/70 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all font-mono text-[0.68rem]"
             title="Search Commands & Projects (Ctrl + K)"
           >
             <Search size={13} />
@@ -125,7 +125,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
             onClick={() => {
               onToggleSound();
             }}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-900/60"
+            className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-900/60"
             aria-label="Toggle Sound Effects"
             title={`Audio Haptics: ${soundEnabled ? 'Enabled' : 'Muted'}`}
           >
@@ -138,7 +138,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
               sound.playClick();
               onToggleTheme();
             }}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-900/60"
+            className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-full border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-900/60"
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
             {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
@@ -158,11 +158,22 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
             <kbd className="hidden lg:inline text-[0.55rem] px-1 py-0.2 rounded bg-black/40 text-zinc-400 border border-zinc-800">~</kbd>
           </button>
 
+          <button
+            type="button"
+            onClick={() => { sound.playClick(); onOpenRecruiterModal(); }}
+            className="sm:hidden inline-flex shrink-0 items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-mono text-[0.62rem] hover:border-brand-pink/40 hover:text-white transition-all"
+            title="View Recruiter Scorecard"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <span>Open for SDE Roles</span>
+            <span className="text-[0.55rem] px-1 rounded bg-zinc-800 text-zinc-300 font-bold">HUD</span>
+          </button>
+
           {/* Signature Gradient Border Connect Button */}
           <a
             href="#contact"
             onClick={() => sound.playClick()}
-            className="group cursor-pointer rounded-lg bg-gradient-to-r from-brand-pink to-brand-purple p-[1px] hover:scale-[1.02] transition-all"
+            className="hidden sm:block group cursor-pointer rounded-lg bg-gradient-to-r from-brand-pink to-brand-purple p-[1px] hover:scale-[1.02] transition-all"
           >
             <div className="flex items-center gap-1.5 rounded-[7px] bg-zinc-950 px-3.5 sm:px-4 py-1.5 text-white font-mono text-[0.7rem] sm:text-[0.74rem] uppercase font-bold group-hover:bg-gradient-to-r group-hover:from-brand-pink group-hover:to-brand-purple transition-all">
               <Sparkles size={12} className="hidden sm:inline" />
@@ -172,7 +183,7 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center rounded-full text-zinc-400 hover:text-white transition-colors ml-1"
+            className="lg:hidden w-8 h-8 shrink-0 flex items-center justify-center rounded-full text-zinc-400 hover:text-white transition-colors ml-1"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
@@ -187,13 +198,19 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden nav-pill max-w-[1100px] mx-auto mt-2 overflow-hidden bg-neutral-950/95 backdrop-blur-2xl border border-zinc-800"
+            className="lg:hidden nav-pill max-w-[1100px] mx-auto mt-2 overflow-hidden bg-neutral-950/95 backdrop-blur-2xl border border-zinc-800"
           >
             <div className="flex flex-col items-center gap-1.5 py-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[0.68rem] mb-2">
+              <button
+                type="button"
+                onClick={() => { sound.playClick(); onOpenRecruiterModal(); }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[0.68rem] mb-2 hover:border-brand-pink/40 hover:text-white transition-all"
+                title="View Recruiter Scorecard"
+              >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Available for Full-Stack Roles</span>
-              </div>
+                <span>Open for SDE Roles</span>
+                <span className="text-[0.55rem] px-1 rounded bg-zinc-800 text-zinc-300 font-bold">HUD</span>
+              </button>
               {navLinks.map((link) => (
                 <a
                   key={link.label}
@@ -204,6 +221,17 @@ export default function Navbar({ theme, onToggleTheme, onOpenTerminal, onOpenCom
                   {link.label}
                 </a>
               ))}
+              <div className="flex items-center gap-2 pt-2 sm:hidden">
+                <button type="button" onClick={() => { setMobileOpen(false); onOpenCommandPalette(); }} className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-3 py-2 font-mono text-[0.68rem] text-zinc-300">
+                  <Search size={14} /> Search
+                </button>
+                <button type="button" onClick={onToggleSound} className="inline-flex items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300" aria-label="Toggle Sound Effects">
+                  {soundEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+                </button>
+                <button type="button" onClick={onToggleTheme} className="inline-flex items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 p-2 text-zinc-300" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
+                  {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                </button>
+              </div>
               <button
                 onClick={() => { setMobileOpen(false); onOpenTerminal(); }}
                 className="font-mono text-[0.78rem] uppercase tracking-[1.5px] text-brand-pink flex items-center gap-2 py-2"

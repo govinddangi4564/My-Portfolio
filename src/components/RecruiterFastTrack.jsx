@@ -43,7 +43,7 @@ export default function RecruiterFastTrack({ isOpen, onClose, onOpenDocumentVaul
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
+          className="fixed inset-0 z-[1000] flex items-start sm:items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto overscroll-contain"
           onClick={onClose}
         >
           <motion.div
@@ -51,7 +51,7 @@ export default function RecruiterFastTrack({ isOpen, onClose, onOpenDocumentVaul
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.2 }}
-            className="w-full max-w-2xl bg-[#090c14] rounded-3xl border border-emerald-500/30 shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_35px_rgba(16,185,129,0.15)] overflow-hidden font-mono text-text p-5 sm:p-7 relative"
+            data-lenis-prevent className="w-full max-w-2xl max-h-[calc(100dvh-1rem)] sm:max-h-[calc(100dvh-2rem)] my-auto bg-[#090c14] rounded-3xl border border-emerald-500/30 shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_35px_rgba(16,185,129,0.15)] overflow-y-scroll touch-pan-y overscroll-contain font-mono text-text p-4 sm:p-7 relative"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
